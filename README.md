@@ -5,6 +5,7 @@
 + Bước 3: Tạo branch mới "git checkout -b <tên của bạn> "
 + Bước 4: Dùng "git switch <tên của bạn>" để check đúng nhánh của mình chưa
 + Bước 5: Cách push code
+   git add .
    git commit -m "<tên message>"
    git push origin <Tên nhánh của bạn>
 
