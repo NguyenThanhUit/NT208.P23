@@ -1,6 +1,6 @@
 ﻿namespace AuctionService.Entites;
 
-public class Auctions
+public class Auction
 {
     public string? ID { get; set; }
     public string? productID { get; set; }

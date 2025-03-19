@@ -1,6 +1,6 @@
 ﻿namespace AuctionService.Entites;
 
-public class Bids
+public class Bid
 {
     public string? ID { get; set; }
     public string? userID { get; set; }
@@ -9,5 +9,5 @@ public class Bids
 
     //Foreign key
     public string? auctionID { get; set; }
-    public Auctions? auction { get; set; }
+    public Auction? auction { get; set; }
 }
