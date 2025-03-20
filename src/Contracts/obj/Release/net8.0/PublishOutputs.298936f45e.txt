@@ -1,0 +1,3 @@
+C:\Users\Legion\NT208.P23\src\out\Contracts.dll
+C:\Users\Legion\NT208.P23\src\out\Contracts.deps.json
+C:\Users\Legion\NT208.P23\src\out\Contracts.pdb
