@@ -1,0 +1,48 @@
+import { create } from "zustand";
+
+type State = {
+    pageNumber: number; // Thứ tự của trang hiện tại
+    pageSize: number; // Số lượng item trong 1 trang
+    pageCount: number; // Tổng số trang
+    searchTerm: string; // Từ khóa tìm kiếm (ví dụ: createAt, name)
+    searchValue: string; // Giá trị mà người dùng nhập
+    orderBy: string; // Sắp xếp theo trường nào
+    Seller?: string; // Người bán
+    Buyer?: string; // Người mua
+};
+
+type Actions = {
+    setParams: (params: Partial<State>) => void; // Hàm cập nhật tham số của State
+    reset: () => void; // Reset state về mặc định
+    setSearchValue: (value: string) => void; // Cập nhật giá trị tìm kiếm
+};
+
+// Giá trị khởi tạo
+const initialState: State = {
+    pageNumber: 1,
+    pageSize: 4,
+    pageCount: 3,
+    searchTerm: "",
+    searchValue: "",
+    orderBy: "price",
+    Seller: undefined,
+    Buyer: undefined,
+};
+
+// Dùng Zustand để quản lý state
+export const useParamStore = create<State & Actions>((set) => ({
+    ...initialState, // Giá trị ban đầu cho state
+
+    setParams: (newParams: Partial<State>) => {
+        set((state) => ({
+            ...state,
+            ...newParams, // Cập nhật bất kỳ giá trị nào được truyền vào
+        }));
+    },
+
+    setSearchValue: (value: string) => {
+        set((state) => ({ ...state, searchValue: value }));
+    },
+
+    reset: () => set(initialState), // Reset về trạng thái ban đầu
+}));

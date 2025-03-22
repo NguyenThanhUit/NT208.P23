@@ -19,8 +19,8 @@ public class OrderSvcHttpClient
     public async Task<List<Product>> GetProductForSearch()
     {
         // Lấy danh sách sản phẩm mới nhất
-        var lastUpdated = await DB.Find<Product>() // Không cần <Product, string>
-                               .Sort(x => x.Descending(x => x.CreatedAt))
+        var lastUpdated = await DB.Find<Product>()
+                               .Sort(x => x.Ascending(x => x.Price)) //Sap xep theo thoi gian tao giam dan
                                .ExecuteAsync();
 
         //Http request duoc gui tu OrderService

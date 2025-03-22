@@ -17,7 +17,7 @@ namespace OrderService.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -40,7 +40,7 @@ namespace OrderService.Data.Migrations
                     b.Property<string>("Seller")
                         .HasColumnType("text");
 
-                    b.Property<int?>("SoldAmount")
+                    b.Property<int>("SoldAmount")
                         .HasColumnType("integer");
 
                     b.Property<int>("Status")
@@ -88,17 +88,12 @@ namespace OrderService.Data.Migrations
             modelBuilder.Entity("OrderService.Entities.Order", b =>
                 {
                     b.HasOne("OrderService.Entities.Product", "Product")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("OrderService.Entities.Product", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

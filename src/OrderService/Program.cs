@@ -18,17 +18,16 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 // Đăng ký MassTransit **trước khi gọi builder.Build()**
 builder.Services.AddMassTransit(x =>
 {
-    //Message outbox có tác dụng lưu trữ message khi service bus down
-    // x.AddEntityFrameworkOutbox<AuctionDbContext> (o =>{
+    // Kích hoạt Message Outbox để đảm bảo độ tin cậy
+    // x.AddEntityFrameworkOutbox<OrderDbContext>(o =>
+    // {
     //     o.QueryDelay = TimeSpan.FromSeconds(10);
     //     o.UsePostgres();
-    //     o.UseBusOutbox(); 
+    //     o.UseBusOutbox();
     // });
 
     x.UsingRabbitMq((context, cfg) =>
     {
-
-        //Thêm để dùng khi chạy Dockerfile
         cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
         {
             host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
@@ -43,10 +42,10 @@ builder.Services.AddMassTransit(x =>
 var app = builder.Build();
 
 // Middleware
-// app.UseAuthentication();
+app.UseAuthentication();  // Đặt trước Authorization
 app.UseAuthorization();
-app.UseAuthentication();
 app.MapControllers();
+
 // Khởi tạo database
 try
 {
@@ -54,7 +53,7 @@ try
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.Message);
+    Console.WriteLine($"Database Initialization Error: {e}");
 }
 
 // Chạy ứng dụng

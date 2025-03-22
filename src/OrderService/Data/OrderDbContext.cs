@@ -5,18 +5,16 @@ namespace OrderService.Data;
 
 public class OrderDbContext : DbContext
 {
-    public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options)
-    {
-    }
+    public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options) { }
 
-    public DbSet<Order> Orders { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.Entity<Order>()
+        modelBuilder.Entity<Order>()
             .HasOne(o => o.Product)
-            .WithMany(p => p.Orders)
+            .WithMany()
             .HasForeignKey(o => o.ProductId);
     }
 }

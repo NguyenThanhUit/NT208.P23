@@ -7,6 +7,7 @@ services:
       - 5432:5432
     volumes:
       - /var/lib/postgresql/data
+    
   mongodb:
     image: mongo
     environment:
@@ -34,6 +35,7 @@ services:
       dockerfile: src/OrderService/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
       - RabbitMq__Host=rabbitmq
       - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=orders
     ports:

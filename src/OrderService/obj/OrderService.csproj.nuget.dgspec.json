@@ -109,25 +109,21 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "MassTransit.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.3.7, )"
+            },
             "MassTransit.RabbitMQ": {
               "target": "Package",
               "version": "[8.4.0-develop.2236, )"
             },
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[8.0.14, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
             "Microsoft.EntityFrameworkCore.Design": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[9.0.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[9.0.4, )"
             }
           },
           "imports": [
