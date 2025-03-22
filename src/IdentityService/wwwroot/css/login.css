@@ -1,0 +1,133 @@
+/* Reset mặc định và căn giữa toàn bộ trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Màu nền nhẹ để giống ảnh */
+}
+
+/* Container chính của form */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Box chứa form */
+.box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px; /* Chiều rộng cố định để giống ảnh */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Tiêu đề SIGN IN */
+.box h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Form group (Username và Password) */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #000;
+    width: 100px; /* Đặt chiều rộng cố định cho nhãn để căn chỉnh đều */
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    flex: 1; /* Ô input chiếm toàn bộ không gian còn lại */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e6e6e6; /* Màu nền xám nhạt giống ảnh */
+    outline: none;
+}
+
+/* Checkbox "Remember Me" */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-left: 100px; /* Căn chỉnh với ô input phía trên */
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.checkbox-group label {
+    font-size: 14px;
+    color: #000;
+}
+
+/* Button group (Sign In và Sign Up) */
+.button-group {
+    display: flex;
+    justify-content: center; /* Căn giữa hai nút */
+    gap: 10px; /* Khoảng cách giữa hai nút */
+    margin-bottom: 15px;
+}
+
+.button-group .signout-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px; /* Kích thước cố định cho nút */
+}
+
+.button-group .signin-btn {
+    background-color: #666;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+}
+
+/* Liên kết Home với biểu tượng */
+.home-link {
+    text-align: center;
+}
+
+.home-link a {
+    font-size: 14px;
+    color: #000;
+    text-decoration: none; /* Bỏ gạch chân */
+}
+
+/* Biểu tượng Home */
+.home-link a::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>'); /* Biểu tượng ngôi nhà */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}

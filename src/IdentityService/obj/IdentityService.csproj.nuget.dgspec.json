@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
+    "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
+    "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+        "projectUniqueName": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
         "projectName": "IdentityService",
-        "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
-        "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\obj\\",
+        "projectPath": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+        "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
+        "outputPath": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,13 +65,13 @@
               "target": "Package",
               "version": "[8.0.3, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[8.0.3, )"
-            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -97,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
