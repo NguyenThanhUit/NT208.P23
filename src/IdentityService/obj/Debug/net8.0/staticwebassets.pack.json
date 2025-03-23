@@ -1,6 +1,22 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\auction.png",
+      "PackagePath": "staticwebassets\\auction.png"
+    },
+    {
+      "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\c.png",
+      "PackagePath": "staticwebassets\\c.png"
+    },
+    {
+      "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\register.css",
+      "PackagePath": "staticwebassets\\css\\register.css"
+    },
+    {
       "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -19,6 +35,10 @@
     {
       "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\home.png",
+      "PackagePath": "staticwebassets\\home.png"
     },
     {
       "Id": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\wwwroot\\js\\signin-redirect.js",
