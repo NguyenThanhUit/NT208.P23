@@ -57,8 +57,8 @@ const AddProductForm = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-2xl p-6 space-y-4 w-200">
-      <h2 className="text-xl font-semibold text-gray-700">Add New Product</h2>
+    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-2xl p-20 space-y-4 w-200">
+      <h2 className="text-3xl font-semibold text-gray-700 text-center mb-6">NEW PRODUCT</h2>
       <div>
         <label htmlFor="productName" className="block text-gray-600">Product Name</label>
         <input
@@ -150,23 +150,23 @@ const AddProductForm = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
           className="border border-gray-300 rounded-md p-2 w-full h-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
-          minRows={3}
+          minRows={4}
           maxRows={6}
         />
       </div>
 
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-between content-center space-x-4">
         <button
           type="submit"
-          className={`bg-blue-600 text-white p-2 rounded-md transition duration-200 hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-black text-white p-3 rounded-md w-full transition duration-200 hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={loading}
         >
-          {loading ? 'Adding...' : 'Add Product'}
+          {loading ? 'Adding...' : 'ADD'}
         </button>
         <button
           type="button"
           onClick={handleReset}
-          className="bg-gray-300 text-gray-700 p-2 rounded-md transition duration-200 hover:bg-gray-400"
+          className="bg-gray-300 text-gray-700 p-2 w-full rounded-md transition duration-200 hover:bg-gray-400"
         >
           Reset
         </button>
