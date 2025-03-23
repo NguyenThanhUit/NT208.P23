@@ -1,4 +1,7 @@
-@page
+@* Đánh dấu đây là một Razor Page *@
+@page 
+
+@* Liên kết trang này với lớp Index trong phần xử lý (chứa logic xử lý: OnGet, OnPost). *@
 @model IdentityService.Pages.Register.Index
 
 <!DOCTYPE html>
@@ -10,15 +13,21 @@
     <link rel="stylesheet" href="~/css/register.css">
 </head>
 <body>
+    @* Hiển thị thông báo lỗi nếu dữ liệu người dùng nhập không hợp lệ
+        Đây là một partial view (một đoạn HTML tái sử dụng). *@
     <partial name="_ValidationSummary" />
 
     <div class="row justify-content-center">
         <div class="register-page">
             <div class="box">
+                @* Tiêu đề  *@
                 <h2>SIGN UP</h2>
+                @* asp-page: khi gửi form, dữ liệu sẽ được gửi đến trang /Account/Register/Index *@
                 <form asp-page="/Account/Register/Index">
+                    @* Tạo một thẻ <input> ẩn để lưu giá trị ReturnUrl (đường dẫn chuyển hướng sau đăng ký) *@
                     <input type="hidden" asp-for="Input.ReturnUrl" />
 
+                    @* Các thông tin đăng ký *@
                     <div class="form-group">
                         <label asp-for="Input.FullName"></label>
                         <input type="text" placeholder="Fullname" asp-for="Input.FullName" autofocus>
@@ -48,11 +57,8 @@
                         <label asp-for="Input.Address"></label>
                         <input type="text"  placeholder="Address" asp-for="Input.Address" >
                     </div>
-
-                    @* <a class="pb-2 d-block" asp-page="../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">
-                        Already Registered? Login
-                    </a> *@
-
+                    
+                    @* Nút đăng nhập và đăng ký *@
                     <div class="button-group">
                         <button class="signup-btn" type="submit" name="Input.Button" value="SignUp">Sign Up</button>
                         <button class="signin-btn" type="button" name="Input.Button" value="SignIn">
@@ -60,9 +66,11 @@
                         </button>
                     </div>  
 
+                    @* Ảnh Home: Click để trở về trang chủ *@
                     <a href="http://localhost:5000/"><img src="~/home.png"></a> 
                 </form>
 
+                @* Thông báo đăng ký thành công: Kiểm tra RegisterSuccess từ phần Index (PageModel) *@
                 @if(Model.RegisterSuccess)
                 {
                     <div class="alert alert-success mt-2">

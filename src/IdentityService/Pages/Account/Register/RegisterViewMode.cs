@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IdentityService;
 
+// Lưu trữ dữ liệu từ form đăng ký mà người dùng nhập vào
 public class RegisterViewModel
 {
     public Guid ID {get; set;}
