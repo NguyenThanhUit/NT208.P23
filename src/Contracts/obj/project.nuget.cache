@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/xfeZxymJYI=",
+  "dgSpecHash": "Sv/XoMCI0Mw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\Contracts.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\huynh\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.14\\microsoft.netcore.app.ref.8.0.14.nupkg.sha512",
+    "C:\\Users\\huynh\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.14\\microsoft.windowsdesktop.app.ref.8.0.14.nupkg.sha512",
+    "C:\\Users\\huynh\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.14\\microsoft.aspnetcore.app.ref.8.0.14.nupkg.sha512"
+  ],
   "logs": []
 }
