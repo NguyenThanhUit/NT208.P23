@@ -37,8 +37,7 @@ namespace IdentityService.Pages.Register
 
         public async Task<IActionResult> OnPost()
         {
-            // Get back to home page if Button = cancel
-            if(Input.Button != "register")
+            if(Input.Button != "SignUp")
                 return Redirect("~/");
 
             if(ModelState.IsValid)
