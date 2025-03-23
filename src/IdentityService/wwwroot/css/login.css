@@ -1,133 +1,128 @@
-/* Reset mặc định và căn giữa toàn bộ trang */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Đảm bảo bố cục tổng thể */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0; /* Màu nền nhẹ để giống ảnh */
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* Container chính của form */
+/* Phần nội dung chính (căn giữa form) */
 .login-page {
+    flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    padding: 10px;
 }
 
-/* Box chứa form */
+/* Container của form */
 .box {
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    width: 400px; /* Chiều rộng cố định để giống ảnh */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
-/* Tiêu đề SIGN IN */
+/* Tiêu đề "SIGN IN" */
 .box h2 {
-    text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #000;
+    color: #333;
+    text-transform: uppercase;
 }
 
-/* Form group (Username và Password) */
-.form-group {
+/* Form */
+.box form {
     display: flex;
+    flex-direction: column;
     align-items: center;
+}
+
+/* Ô input (Username và Password) */
+.box .form-group {
     margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
 }
 
-.form-group label {
-    font-size: 14px;
-    color: #000;
-    width: 100px; /* Đặt chiều rộng cố định cho nhãn để căn chỉnh đều */
+.box .form-group label {
+    display: block;
+    color: #555;
+    margin-bottom: 5px;
+    text-transform: capitalize;
 }
 
-.form-group input[type="text"],
-.form-group input[type="password"] {
-    flex: 1; /* Ô input chiếm toàn bộ không gian còn lại */
+.box .form-group input {
+    width: 100%;
     padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #e6e6e6; /* Màu nền xám nhạt giống ảnh */
+    background-color: #f0f0f0;
     outline: none;
 }
 
 /* Checkbox "Remember Me" */
-.checkbox-group {
+.box .checkbox-group {
     display: flex;
-    align-items: center;
     margin-bottom: 20px;
-    padding-left: 100px; /* Căn chỉnh với ô input phía trên */
+    width: 100%;
 }
 
-.checkbox-group input[type="checkbox"] {
-    margin-right: 5px;
+.box .checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
 }
 
-.checkbox-group label {
-    font-size: 14px;
-    color: #000;
-}
-
-/* Button group (Sign In và Sign Up) */
-.button-group {
+/* Nút Sign In và Sign Up */
+.box .button-group {
     display: flex;
-    justify-content: center; /* Căn giữa hai nút */
-    gap: 10px; /* Khoảng cách giữa hai nút */
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 15px;
 }
 
-.button-group .signout-btn {
-    background-color: #000;
-    color: #fff;
-    border: none;
+.box .button-group .signin-btn {
+    background-color: #333; 
+    color: white; 
     padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100px; /* Kích thước cố định cho nút */
-}
-
-.button-group .signin-btn {
-    background-color: #666;
-    color: #fff;
     border: none;
-    padding: 10px 20px;
-    font-size: 14px;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
-    width: 100px;
+    width: 48%;
+    text-transform: capitalize;
 }
 
-/* Liên kết Home với biểu tượng */
-.home-link {
-    text-align: center;
+.box .button-group .signup-btn {
+    background-color: #666; 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 48%;
+    text-transform: capitalize;
 }
 
-.home-link a {
-    font-size: 14px;
-    color: #000;
-    text-decoration: none; /* Bỏ gạch chân */
+.box .button-group .signup-btn a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: capitalize;
 }
 
-/* Biểu tượng Home */
-.home-link a::before {
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>'); /* Biểu tượng ngôi nhà */
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px;
+/* Nút Home */
+.box a img {
+    width: 30px;
+    height: 30px;
+    border: none;
 }
