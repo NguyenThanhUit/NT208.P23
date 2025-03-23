@@ -31,6 +31,10 @@ namespace IdentityService.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    FullName = table.Column<string>(type: "text", nullable: true),
+                    Address = table.Column<string>(type: "text", nullable: true),
+                    CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -41,7 +45,6 @@ namespace IdentityService.Data.Migrations
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    Address = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
