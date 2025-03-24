@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {}
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
+        "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
         "projectName": "GatewayService",
-        "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
+        "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
         "packagesPath": "C:\\Users\\huynh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\obj\\",
+        "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\GatewayService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -64,11 +64,11 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.14, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[8.0.14, )"
             },
             "Yarp.ReverseProxy": {
               "target": "Package",

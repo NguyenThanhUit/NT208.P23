@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj": {}
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj": {
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+        "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
         "packagesPath": "C:\\Users\\huynh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\obj\\",
+        "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

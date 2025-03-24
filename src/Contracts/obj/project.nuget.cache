@@ -1,12 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "Sv/XoMCI0Mw=",
+  "dgSpecHash": "LcUq4rix5oo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ 4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+  "projectFilePath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\NT208.P23\\NT208.P23\\src\\Contracts\\Contracts.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\huynh\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.14\\microsoft.netcore.app.ref.8.0.14.nupkg.sha512",
     "C:\\Users\\huynh\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.14\\microsoft.windowsdesktop.app.ref.8.0.14.nupkg.sha512",
     "C:\\Users\\huynh\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.14\\microsoft.aspnetcore.app.ref.8.0.14.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+    }
+  ]
 }
