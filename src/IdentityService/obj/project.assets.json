@@ -3855,11 +3855,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+      "projectUniqueName": "D:\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
       "projectName": "IdentityService",
-      "projectPath": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+      "projectPath": "D:\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
       "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
-      "outputPath": "D:\\HK4\\LTW\\Project\\NT208.P23\\src\\IdentityService\\obj\\",
+      "outputPath": "D:\\NT208.P23\\src\\IdentityService\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
