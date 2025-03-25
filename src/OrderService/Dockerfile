@@ -8,6 +8,7 @@ COPY src/OrderService/OrderService.csproj src/OrderService/OrderService.csproj
 COPY src/SearchService/SearchService.csproj src/SearchService/SearchService.csproj
 COPY src/GatewayService/GatewayService.csproj src/GatewayService/GatewayService.csproj 
 COPY src/Contracts/Contracts.csproj src/Contracts/Contracts.csproj
+COPY src/IdentityService/IdentityService.csproj src/IdentityService/IdentityService.csproj
 # Restore package deps
 RUN dotnet restore NT208.P23.sln
 # Copy the app folders 

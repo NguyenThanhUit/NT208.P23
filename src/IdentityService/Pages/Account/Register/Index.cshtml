@@ -1,59 +1,79 @@
+@* Đánh dấu đây là một Razor Page *@
 @page
+
+@* Liên kết trang này với lớp Index trong phần xử lý (chứa logic xử lý: OnGet, OnPost). *@
 @model IdentityService.Pages.Register.Index
 
-<div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN UP</title>
+    <link rel="stylesheet" href="~/css/register.css">
+</head>
+
+<body>
+    @* Hiển thị thông báo lỗi nếu dữ liệu người dùng nhập không hợp lệ
+        Đây là một partial view (một đoạn HTML tái sử dụng). *@
     <partial name="_ValidationSummary" />
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h2>Register</h2>
-                </div>
-                <div class="card-body">
-                    <form asp-page="/Account/Register/Index">
-                        <input type="hidden" asp-for="Input.ReturnUrl" />
+        <div class="register-page">
+            <div class="box">
+                @* Tiêu đề  *@
+                <h2>SIGN UP</h2>
+                @* asp-page: khi gửi form, dữ liệu sẽ được gửi đến trang /Account/Register/Index *@
+                <form asp-page="/Account/Register/Index">
+                    @* Tạo một thẻ <input> ẩn để lưu giá trị ReturnUrl (đường dẫn chuyển hướng sau đăng ký) *@
+                    <input type="hidden" asp-for="Input.ReturnUrl" />
 
-                        <div class="form-group">
-                            <label asp-for="Input.FullName"></label>
-                            <input class="form-control" placeholder="FullName" asp-for="Input.FullName" autofocus>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label asp-for="Input.UserName"></label>
-                            <input class="form-control" placeholder="UserName" asp-for="Input.UserName">
-                        </div>
+                    @* Các thông tin đăng ký *@
+                    <div class="form-group">
+                        <label asp-for="Input.FullName"></label>
+                        <input type="text" placeholder="Fullname" asp-for="Input.FullName" autofocus>
+                    </div>
 
-                        <div class="form-group">
-                            <label asp-for="Input.PassWord"></label>
-                            <input type="password" class="form-control" placeholder="PassWord" asp-for="Input.PassWord" autocomplete="off">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label asp-for="Input.Email"></label>
-                            <input class="form-control" placeholder="Email" asp-for="Input.Email" >
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input type="email" placeholder="Email" asp-for="Input.Email">
+                    </div>
 
-                        <div class="form-group">
-                            <label asp-for="Input.Telephone"></label>
-                            <input class="form-control" placeholder="Telephone" asp-for="Input.Telephone" >
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Input.UserName"></label>
+                        <input type="text" placeholder="Username" asp-for="Input.UserName">
+                    </div>
 
-                        <div class="form-group">
-                            <label asp-for="Input.Address"></label>
-                            <input class="form-control" placeholder="Address" asp-for="Input.Address" >
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Telephone"></label>
+                        <input type="number" placeholder="Telephone" asp-for="Input.Telephone">
+                    </div>
 
-                        <a class="pb-2 d-block" asp-page="../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">
-                            Already Registered? Login
-                        </a>
-                        
-                        <button class="btn btn-primary" name="Input.Button" value="register">Register</button>
-                        <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PassWord"></label>
+                        <input type="password" placeholder="Password" asp-for="Input.PassWord" autocomplete="off">
+                    </div>
 
-                @if(Model.RegisterSuccess)
+                    <div class="form-group">
+                        <label asp-for="Input.Address"></label>
+                        <input type="text" placeholder="Address" asp-for="Input.Address">
+                    </div>
+
+                    @* Nút đăng nhập và đăng ký *@
+                    <div class="button-group">
+                        <button class="signup-btn" type="submit" name="Input.Button" value="SignUp">Sign Up</button>
+                        <button class="signin-btn" type="button" name="Input.Button" value="SignIn">
+                            <a asp-page="../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">Sign In</a>
+                        </button>
+                    </div>
+
+                    @* Ảnh Home: Click để trở về trang chủ *@
+                    <a href="http://localhost:5000/"><img src="~/home.png"></a>
+                </form>
+
+                @* Thông báo đăng ký thành công: Kiểm tra RegisterSuccess từ phần Index (PageModel) *@
+                @if (Model.RegisterSuccess)
                 {
                     <div class="alert alert-success mt-2">
                         <strong>Successfully registered</strong> - You now can login
@@ -62,4 +82,4 @@
             </div>
         </div>
     </div>
-</div>
+</body>

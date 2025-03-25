@@ -37,6 +37,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
       - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=orders
     ports:
       - 7001:80
@@ -62,6 +63,20 @@ services:
       rabbitmq:
         condition: service_healthy
       mongodb:
+        condition: service_started
+  identity-svc:
+    image: nguyenthanh/identity-svc:latest
+    build: 
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=identity
+    ports:
+      - 5001:80
+    depends_on:
+      postgres:
         condition: service_started
   gateway-svc:
     image: nguyenthanh/gateway-svc:latest
