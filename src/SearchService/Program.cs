@@ -3,6 +3,8 @@ using Polly.Extensions.Http;
 using Polly;
 using MassTransit;
 using System.Net;
+using SearchService;
+using SearchService.Consumers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +21,8 @@ builder.Services.AddMassTransit(x =>
 {
     //Them consumer
     x.AddConsumersFromNamespaceContaining<OrderCreatedConsumer>();
+    x.AddConsumersFromNamespaceContaining<OrderUpdatedConsumer>();
+
 
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
 

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SessionProvider } from "next-auth/react"; // ✅ Thêm SessionProvider
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* ✅ Bọc ứng dụng trong SessionProvider */}
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+        <Navbar></Navbar>
+        {children}
+        <Footer></Footer>
       </body>
     </html>
   );

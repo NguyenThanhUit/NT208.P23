@@ -7,7 +7,7 @@ public class Order
 {
     [Key]
     public Guid Id { get; set; }
-    public decimal TotalPrice { get; set; }
+    public int TotalPrice { get; set; }
     public string Buyer { get; set; } = string.Empty;
     public string Seller { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

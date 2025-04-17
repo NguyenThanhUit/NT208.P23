@@ -64,6 +64,23 @@ services:
         condition: service_healthy
       mongodb:
         condition: service_started
+  buyings-svc:
+    image: nguyenthanh/buyings-svc:latest
+    build:
+      context: .
+      dockerfile: src/BuyingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BuyingDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7003:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
   identity-svc:
     image: nguyenthanh/identity-svc:latest
     build: 

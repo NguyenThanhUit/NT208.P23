@@ -1,27 +1,42 @@
 'use client';
-import { useParamStore } from "@/hooks/useParamStore";
+
+import { getCurrentUser } from "@/app/actions/authactions";
+import UserLogged from "./UserLogged";
+import LoginButton from "./LoginButton";
+import Link from "next/link";
+import { FiShoppingCart } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { useCartStore } from "@/app/function/cartStore";
+import { Order } from "..";
 import { usePathname, useRouter } from "next/navigation";
-import CurrentUser from "./CurrentUser";
-import { signIn } from "next-auth/react";
-import { useSession } from "next-auth/react"; // ✅ Thêm useSession
+import { Button } from "flowbite-react";
 
-export default function Navbar() {
-    const reset = useParamStore(state => state.reset);
-    const router = useRouter();
+export default function Navbar({ orders }: { orders: Order[] }) {
+    const [user, setUser] = useState<any>(null);
+    const totalQuantity = useCartStore((state) => state.getTotalQuantity());
+
+    const router = useRouter(); // Hook điều hướng của Next.js
     const pathName = usePathname();
-    const { data: session, status } = useSession(); // ✅ Lấy session để kiểm tra đăng nhập
 
-    function doReset() {
-        if (pathName !== '/') router.push('/');
-        reset();
-    }
+    useEffect(() => {
+        getCurrentUser().then(setUser);
+    }, []);
+
+    const handleLogoClick = () => {
+        router.push("/"); // Điều hướng về trang chủ khi click vào logo
+    };
 
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
-            <div onClick={doReset} className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'>
+            {/* Logo */}
+            <div
+                className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
+                onClick={handleLogoClick} // Thêm sự kiện click vào logo
+            >
                 <div>E-Shop</div>
             </div>
 
+            {/* Navigation Buttons */}
             <div className="flex gap-4 pl-80">
                 <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
                     Sản phẩm
@@ -31,18 +46,23 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* Hiển thị user nếu đã đăng nhập */}
-            {status === "loading" ? (
-                <p>Loading...</p>
-            ) : session ? (
-                <CurrentUser />
-            ) : (
-                <button
-                    onClick={() => signIn('id-server', { callbackUrl: '/', prompt: 'login' })}
-                    className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">
-                    ĐĂNG NHẬP/ĐĂNG KÝ
-                </button>
-            )}
+            {/* Right Side */}
+            <div className="flex items-center gap-4">
+                {/* Cart Icon */}
+                <Link href={`/Order/Cart/`}>
+                    <div className="relative cursor-pointer">
+                        <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
+                        {totalQuantity > 0 && (
+                            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
+                                {totalQuantity}
+                            </span>
+                        )}
+                    </div>
+                </Link>
+
+                {/* User */}
+                {user ? <UserLogged user={user} /> : <LoginButton />}
+            </div>
         </header>
     );
 }

@@ -9,7 +9,7 @@ public class CreateOrderDto
     [Required]
     public string Description { get; set; }
     [Required]
-    public decimal TotalPrice { get; set; }
+    public int Price { get; set; }
     [Required]
     public string Category { get; set; }
     [Required]

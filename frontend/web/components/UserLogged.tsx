@@ -1,40 +1,42 @@
 'use client'
 import { useParamStore } from "@/hooks/useParamStore";
 import { Dropdown, DropdownDivider, DropdownItem } from "flowbite-react";
-import { Link } from "lucide-react";
-import { User } from "next-auth"
+import Link from "next/link";
+import { User } from "next-auth";
 import { signOut } from "next-auth/react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router"
-import { AiFillCar, AiFillTrophy, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai'
+import { AiFillCar, AiFillTrophy, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
+import { HiCog, HiUser } from 'react-icons/hi';
 
-import { HiCog, HiUser } from 'react-icons/hi'
-//Dùng để return khi đăng nhập thành công
+// Dùng để return khi đăng nhập thành công
 type Props = {
     user: User
 }
+
 export default function UserLogged({ user }: Props) {
-    const router = useRouter(); //Dung de route
-    const pathName = usePathname();
     const setParams = useParamStore(state => state.setParams);
+
     return (
-        <Dropdown inline label={`Welcome ${user.name}`}>
-            <DropdownItem icon={HiUser}>
-                My Auctions
+        <Dropdown inline label={<span className="text-black">Welcome {user.name}</span>}>
+            {/* Đặt màu chữ cho DropdownItem thành màu đen */}
+            <DropdownItem className="text-black" icon={HiUser}>
+                <Link href={`/Order/History`}>
+                    Lịch sử mua hàng
+                </Link>
             </DropdownItem>
-            <DropdownItem icon={AiFillTrophy}>
+            <DropdownItem className="text-black" icon={AiFillTrophy}>
                 Auctions won
             </DropdownItem>
-            <DropdownItem icon={AiFillCar}>
-                <Link href={'/orders/create'}>
-                    Create Shop
+            <DropdownItem className="text-black" icon={AiFillCar}>
+                <Link href={'/Order/Create'}>
+                    Tạo đơn hàng
                 </Link>
             </DropdownItem>
             <DropdownDivider>
-                <DropdownItem icon={AiOutlineLogout} onClick={() => signOut({ callbackUrl: '/' })}>
+                {/* Đặt màu chữ cho item logout thành màu đen */}
+                <DropdownItem className="text-black" icon={AiOutlineLogout} onClick={() => signOut({ callbackUrl: '/' })}>
                     Sign out
                 </DropdownItem>
             </DropdownDivider>
         </Dropdown>
-    )
+    );
 }

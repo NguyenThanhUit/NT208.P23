@@ -2,13 +2,12 @@
 import { useEffect, useState } from "react";
 import qs from "query-string";
 import { Order, PageResult } from ".";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+
 import ProductList from "./components/ProductList";
-import { getData } from "./actions/fetchData";
 import SearchFilterBar from "./Paginations/SearchFilterBar";
 import { useParamStore } from "./hooks/useParamStore";
 import { useShallow } from "zustand/shallow";
+import { getData } from "./app/actions/orderactions";
 
 export default function Homepage() {
     const [data, setData] = useState<PageResult<Order> | null>(null);
@@ -27,34 +26,25 @@ export default function Homepage() {
 
     const setParams = useParamStore(state => state.setParams);
 
-    const queryParams = qs.stringify(params);
-
-    function setPageNumber(pageNumber: number) {
-        setParams({ pageNumber });
-    }
+    const url = qs.stringify({ url: '', query: params });
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const result = await getData(queryParams);
-                console.log("Fetched data:", result);
-                setData(result);
-            } catch (err) {
-                console.error("Error fetching data:", err);
-                setError("Không thể tải dữ liệu.");
-            } finally {
+        setLoading(true);
+        setError(null);
+        console.log("Request URL:", url);  // In ra URL để kiểm tra
+        getData(url).then(data => {
+            console.log("Fetched Data:", data);  // In ra dữ liệu đã fetch
+            setData(data);
+            setLoading(false);
+        })
+            .catch(err => {
+                setError('Lỗi khi tải dữ liệu');
                 setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [queryParams]);
+            });
+    }, [url, setData]);
 
     return (
         <div>
-            <Navbar />
             <div className="bg-white">
                 <SearchFilterBar />
             </div>
@@ -62,13 +52,13 @@ export default function Homepage() {
                 {loading && <p className="text-center text-gray-500">Đang tải sản phẩm...</p>}
                 {error && <p className="text-center text-red-500">{error}</p>}
 
-                {data?.results?.length ? (
+                {/* Kiểm tra nếu có data và results trước khi lấy length */}
+                {data?.results && data.results.length > 0 ? (
                     <ProductList orders={data.results} />
                 ) : (
                     !loading && !error && <p className="text-center text-gray-500">Không có sản phẩm nào.</p>
                 )}
             </main>
-            <Footer />
         </div>
     );
 }

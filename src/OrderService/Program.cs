@@ -2,6 +2,7 @@ using OrderService.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MassTransit;
+using OrderService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddMassTransit(x =>
     //     o.UsePostgres();
     //     o.UseBusOutbox();
     // });
+    x.AddConsumersFromNamespaceContaining<BuyingItemConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {

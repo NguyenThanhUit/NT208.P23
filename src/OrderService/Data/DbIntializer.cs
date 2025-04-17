@@ -43,101 +43,101 @@ public class DbInitializer
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Mechanical Keyboard",
-        Description = "RGB Mechanical Gaming Keyboard",
-        Price = 89.99m,
-        Category = "Electronics",
-        ImageUrl = "https://example.com/keyboard.jpg",
+        Name = "GTA V",
+        Description = "test",
+        Price = 89,
+        Category = "Đối kháng",
+        ImageUrl = "https://cdn.pixabay.com/photo/2023/04/17/14/36/ai-generated-7932616_1280.jpg",
         StockQuantity = 30
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Wireless Headphones",
+        Name = "CSGO",
         Description = "Noise Cancelling Over-Ear Headphones",
-        Price = 129.99m,
-        Category = "Electronics",
-        ImageUrl = "https://example.com/headphones.jpg",
+        Price = 129,
+        Category = "Đối kháng",
+        ImageUrl = "https://i.pinimg.com/474x/a1/39/a4/a139a4fc8994a34275c17aeea9e50fe7.jpg",
         StockQuantity = 20
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Smartphone",
+        Name = "Dota 2",
         Description = "Latest 5G smartphone with high-end features",
-        Price = 799.99m,
-        Category = "Electronics",
-        ImageUrl = "https://example.com/smartphone.jpg",
+        Price = 799,
+        Category = "Chiến thuật",
+        ImageUrl = "https://i.pinimg.com/474x/b0/3a/9a/b03a9ab25a3e9449a6bc4645f97ba213.jpg",
         StockQuantity = 15
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Gaming Chair",
+        Name = "Pubg",
         Description = "Ergonomic gaming chair with lumbar support",
-        Price = 199.99m,
-        Category = "Furniture",
-        ImageUrl = "https://example.com/chair.jpg",
+        Price = 199,
+        Category = "Bắn súng",
+        ImageUrl = "https://i.pinimg.com/474x/51/6a/74/516a74d6d701c86c007f668d7cf2891a.jpg",
         StockQuantity = 10
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Smart Watch",
+        Name = "NARAKA",
         Description = "Fitness tracking smartwatch with heart rate monitor",
-        Price = 149.99m,
-        Category = "Electronics",
-        ImageUrl = "https://example.com/smartwatch.jpg",
+        Price = 149,
+        Category = "Hành động",
+        ImageUrl = "https://i.pinimg.com/736x/6f/f6/b4/6ff6b40a0d7c7c59428603129fd4f2a7.jpg",
         StockQuantity = 25
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Gaming Laptop",
+        Name = "RUST",
         Description = "High-performance gaming laptop with RTX 3080",
-        Price = 1999.99m,
-        Category = "Electronics",
-        ImageUrl = "https://example.com/laptop.jpg",
+        Price = 199,
+        Category = "Hành động",
+        ImageUrl = "https://i.pinimg.com/474x/07/61/aa/0761aa4b3ef67b90a666f8b1da12648f.jpg",
         StockQuantity = 8
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "External Hard Drive",
+        Name = "DEAD BY DAYLIGHT",
         Description = "2TB USB-C external hard drive",
-        Price = 79.99m,
-        Category = "Accessories",
-        ImageUrl = "https://example.com/hdd.jpg",
+        Price = 79,
+        Category = "Sinh tồn",
+        ImageUrl = "https://i.pinimg.com/736x/9d/c8/4c/9dc84c7cfde98e444f4d7e3345792e8e.jpg",
         StockQuantity = 40
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Wireless Router",
+        Name = "APEX LEGEND",
         Description = "Wi-Fi 6 high-speed router with mesh support",
-        Price = 129.99m,
-        Category = "Networking",
-        ImageUrl = "https://example.com/router.jpg",
+        Price = 129,
+        Category = "Bắn súng",
+        ImageUrl = "https://i.pinimg.com/736x/27/f6/12/27f612230d8e16a14e95f6368b2b5cf0.jpg",
         StockQuantity = 18
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Bluetooth Speaker",
+        Name = "BLACK MYTH WUKONG",
         Description = "Portable waterproof Bluetooth speaker",
-        Price = 59.99m,
-        Category = "Audio",
-        ImageUrl = "https://example.com/speaker.jpg",
+        Price = 59,
+        Category = "Nhập vai",
+        ImageUrl = "https://i.pinimg.com/474x/24/75/93/247593454f25aea68e5d4157016d1f4c.jpg",
         StockQuantity = 22
     },
     new Product
     {
         Id = Guid.NewGuid(),
-        Name = "Action Camera",
+        Name = "VALHEIM",
         Description = "4K action camera with image stabilization",
-        Price = 299.99m,
-        Category = "Cameras",
-        ImageUrl = "https://example.com/camera.jpg",
+        Price = 299,
+        Category = "Nhập vai",
+        ImageUrl = "https://i.pinimg.com/474x/95/c4/b6/95c4b6cae9bf1183a9aab5470275c8fc.jpg",
         StockQuantity = 12
     }
 };

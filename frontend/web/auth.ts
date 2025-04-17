@@ -24,7 +24,30 @@ export const { handlers, signIn, auth } = NextAuth({
             idToken: true // Nhận ID token (chứa thông tin người dùng sau khi xác thực)
         } as OIDCConfig<Omit<Profile, 'username'>>), // Ép kiểu theo OIDCConfig (loại bỏ 'username' để tránh xung đột)
     ],
-    callbacks: {} // Thêm callbacks nếu cần
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            return url.startsWith(baseUrl) ? url : baseUrl
+        },
+        async authorized({ auth }) {
+            return !!auth
+        },
+        async jwt({ token, profile, account }) {
+            if (account && account.access_token) {
+                token.accessToken = account.access_token
+            }
+            if (profile) {
+                token.username = profile.username
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.user.username = token.username;
+                session.accessToken = token.accessToken;
+            }
+            return session;
+        }
+    }
 
 });
 

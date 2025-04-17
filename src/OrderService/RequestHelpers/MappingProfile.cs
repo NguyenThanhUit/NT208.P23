@@ -21,7 +21,14 @@ namespace OrderService.RequestHelpers
             //Cho phep mot item moi duoc tao tu Create OrderDto khi khoi tao Order
             CreateMap<CreateOrderDto, Product>();
             //Anh xa du lieu 
-            CreateMap<OrderDto, OrderCreated>();
+            CreateMap<OrderDto, OrderCreated>()
+    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id.GetHashCode()));
+
+            CreateMap<OrderDto, CreateOrderDto>();
+            CreateMap<BuyingPlaced, Product>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ProductName))  // Map ProductName từ BuyingPlaced
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.TotalAmount))  // Tổng giá trị từ BuyingPlaced
+                .ForMember(dest => dest.StockQuantity, opt => opt.MapFrom(src => 0));  // Sử dụng một giá trị mặc định cho StockQuantity nếu cần
         }
     }
 }

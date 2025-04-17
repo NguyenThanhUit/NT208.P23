@@ -46,8 +46,8 @@ namespace OrderService.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -74,8 +74,8 @@ namespace OrderService.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer");
