@@ -1,0 +1,8 @@
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.csproj.AssemblyReference.cache
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.GeneratedMSBuildEditorConfig.editorconfig
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.AssemblyInfoInputs.cache
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.AssemblyInfo.cs
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.csproj.CoreCompileInputs.cache
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.MvcApplicationPartsAssemblyInfo.cs
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.MvcApplicationPartsAssemblyInfo.cache
+D:\HK4\LTW\NT208 - Project\NT208.P23\src\AuctionService\obj\Debug\net8.0\AuctionService.sourcelink.json

@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Legion\\.nuget\\packages\\": {}
+    "C:\\Users\\nghoa\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+      "projectUniqueName": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\Contracts\\Contracts.csproj",
       "projectName": "Contracts",
-      "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\Contracts.csproj",
-      "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\obj\\",
+      "projectPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+      "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
+      "outputPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

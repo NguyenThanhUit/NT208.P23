@@ -1,0 +1,84 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{56D584BE-C4EC-47F8-8F94-079EF62CEA47}|src\\Contracts\\Contracts.csproj|d:\\hk4\\ltw\\nt208 - project\\nt208.p23\\src\\contracts\\contracts.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{56D584BE-C4EC-47F8-8F94-079EF62CEA47}|src\\Contracts\\Contracts.csproj|solutionrelative:src\\contracts\\contracts.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DD00416-5327-615F-6AB4-CF9364434F3A}|src\\AuctionService\\AuctionService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\auctionservice\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DD00416-5327-615F-6AB4-CF9364434F3A}|src\\AuctionService\\AuctionService.csproj|solutionrelative:src\\auctionservice\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEB2BEEA-77D9-45AA-8185-CDFD1397C867}|src\\IdentityService\\IdentityService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\identityservice\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEB2BEEA-77D9-45AA-8185-CDFD1397C867}|src\\IdentityService\\IdentityService.csproj|solutionrelative:src\\identityservice\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Contracts",
+              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+              "RelativeDocumentMoniker": "src\\Contracts\\Contracts.csproj",
+              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\Contracts\\Contracts.csproj",
+              "RelativeToolTip": "src\\Contracts\\Contracts.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-30T07:45:04.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuctionsController.cs",
+              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\AuctionService\\Controllers\\AuctionsController.cs",
+              "RelativeDocumentMoniker": "src\\AuctionService\\Controllers\\AuctionsController.cs",
+              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\AuctionService\\Controllers\\AuctionsController.cs",
+              "RelativeToolTip": "src\\AuctionService\\Controllers\\AuctionsController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T13:50:12.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "src\\IdentityService\\Models\\ApplicationUser.cs",
+              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "src\\IdentityService\\Models\\ApplicationUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T13:49:04.888Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

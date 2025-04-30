@@ -1,215 +1,215 @@
 {
   "Files": [
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\auction.png",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\auction.png",
       "PackagePath": "staticwebassets\\auction.png"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\c.png",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\c.png",
       "PackagePath": "staticwebassets\\c.png"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\login.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\login.css",
       "PackagePath": "staticwebassets\\css\\login.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\register.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\register.css",
       "PackagePath": "staticwebassets\\css\\register.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.min.css",
       "PackagePath": "staticwebassets\\css\\site.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.scss",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\css\\site.scss",
       "PackagePath": "staticwebassets\\css\\site.scss"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\duende-logo.svg",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\duende-logo.svg",
       "PackagePath": "staticwebassets\\duende-logo.svg"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\favicon.ico",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\home.png",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\home.png",
       "PackagePath": "staticwebassets\\home.png"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\js\\signin-redirect.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\js\\signin-redirect.js",
       "PackagePath": "staticwebassets\\js\\signin-redirect.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\js\\signout-redirect.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\js\\signout-redirect.js",
       "PackagePath": "staticwebassets\\js\\signout-redirect.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\LICENSE",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\css\\bootstrap-glyphicons.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.eot",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.eot",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.eot"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.svg",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.svg",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.svg"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.ttf",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.ttf",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.ttf"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff2",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff2",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\fonts\\glyphicons\\glyphicons-halflings-regular.woff2"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.less",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.less",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.less"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap4-glyphicons\\maps\\glyphicons-fontawesome.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\README.md",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\README.md",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\README.md"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\README.md",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\README.md",
       "PackagePath": "staticwebassets\\lib\\jquery\\README.md"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.js",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.js"
     },
     {
-      "Id": "D:\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
+      "Id": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
     },
     {

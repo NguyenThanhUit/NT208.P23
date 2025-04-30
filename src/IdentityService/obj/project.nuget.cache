@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MHl3G3ebM9YuV7m83RpQGgxH3fc0SSWnMokN7mKZofzowP9xLzmqpaCFWJohZw+Am523KIU/D6dK/H08ctudZg==",
+  "dgSpecHash": "lbWiecb/dk/U2nsBsy7Y4sWvOOVPDagl6tTE7xRn2cdSEBLNqAs0gQjGvu/G/ysKq5Bdb5c2nAo516kNqsgLlg==",
   "success": true,
-  "projectFilePath": "D:\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+  "projectFilePath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nghoa\\.nuget\\packages\\duende.identityserver\\7.0.4\\duende.identityserver.7.0.4.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\duende.identityserver.aspnetidentity\\7.0.4\\duende.identityserver.aspnetidentity.7.0.4.nupkg.sha512",
@@ -26,7 +26,7 @@
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.4\\microsoft.entityframeworkcore.8.0.4.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.4\\microsoft.entityframeworkcore.abstractions.8.0.4.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.4\\microsoft.entityframeworkcore.analyzers.8.0.4.nupkg.sha512",
-    "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.3\\microsoft.entityframeworkcore.design.8.0.3.nupkg.sha512",
+    "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.4\\microsoft.entityframeworkcore.design.8.0.4.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.4\\microsoft.entityframeworkcore.relational.8.0.4.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.3\\microsoft.entityframeworkcore.tools.8.0.3.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
