@@ -4,6 +4,8 @@ using AuctionService.Data;
 using AuctionService.Entities;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Contracts;
+using MassTransit;
 namespace AuctionService.Controllers;
 
 [ApiController]
@@ -12,10 +14,12 @@ public class AuctionsController : ControllerBase
 {
     private readonly AuctionDbContext _context;
     private readonly IMapper _mapper;
-    public AuctionsController(AuctionDbContext context, IMapper mapper)
+    private readonly IPublishEndpoint _publishEndpoint;
+    public AuctionsController(AuctionDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
     {
         _context = context;
         _mapper = mapper;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet]
@@ -48,9 +52,15 @@ public class AuctionsController : ControllerBase
         auction.sellerID = "test"; //TODO: get the user id from the token
         _context.Auctions.Add(auction);
 
+        var newAuction = _mapper.Map<AuctionCreated>(auction);
+        await _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(newAuction));
+
         var result = await _context.SaveChangesAsync() > 0;
+        
+        
+
         if (!result) return BadRequest("Couldn't create auction");
-        return CreatedAtAction(nameof(GetAuctionByID), new { auction.ID }, _mapper.Map<AuctionDto>(auction));
+        return CreatedAtAction(nameof(GetAuctionByID), new { auction.ID }, newAuction);
     }
     [HttpPut("{id}")]
     public async Task<ActionResult<AuctionDto>> UpdateAuction(Guid id, UpdateAuctionDto updateAuctionDto)

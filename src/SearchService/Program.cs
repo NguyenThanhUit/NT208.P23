@@ -57,16 +57,16 @@ app.Lifetime.ApplicationStarted.Register(async () =>
 app.Run();
 // Sử dụng thư viện Polly qua NuGet Microsoft.Extensions.Http.Polly
 
-// Phương thức trả về một chính sách retry bất đồng bộ cho các yêu cầu HTTP
-static IAsyncPolicy<HttpResponseMessage> GetPolicy()
-    => HttpPolicyExtensions
-        // Xử lý các lỗi tạm thời (transient errors) như timeout, 5xx lỗi máy chủ
-        .HandleTransientHttpError()
+// // Phương thức trả về một chính sách retry bất đồng bộ cho các yêu cầu HTTP
+// static IAsyncPolicy<HttpResponseMessage> GetPolicy()
+//     => HttpPolicyExtensions
+//         // Xử lý các lỗi tạm thời (transient errors) như timeout, 5xx lỗi máy chủ
+//         .HandleTransientHttpError()
 
-        // Thêm điều kiện: cũng thử lại nếu gặp lỗi 404 (Not Found)
-        .OrResult(static msg => msg.StatusCode == HttpStatusCode.NotFound)
+//         // Thêm điều kiện: cũng thử lại nếu gặp lỗi 404 (Not Found)
+//         .OrResult(static msg => msg.StatusCode == HttpStatusCode.NotFound)
 
-        // Chính sách thử lại mãi mãi (không giới hạn số lần retry)
-        // Mỗi lần thử lại sẽ chờ 3 giây
-        .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(3));
+//         // Chính sách thử lại mãi mãi (không giới hạn số lần retry)
+//         // Mỗi lần thử lại sẽ chờ 3 giây
+//         .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(3));
 

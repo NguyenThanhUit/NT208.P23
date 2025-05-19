@@ -1,6 +1,7 @@
 using AutoMapper;
 using AuctionService.Entities;
 using AuctionService.DTOs;
+using Contracts;
 namespace AuctionService.RequestHelpers;
 
 public class MappingProfiles : Profile
@@ -11,6 +12,7 @@ public class MappingProfiles : Profile
         CreateMap<Items, AuctionDto>();
         CreateMap<CreateAuctionDto, Auction>()
             .ForMember(d => d.item, o => o.MapFrom(s => s));
-        CreateMap<CreateAuctionDto, Items >();
+        CreateMap<CreateAuctionDto, Items>();
+        CreateMap<AuctionDto, AuctionCreated>();
     }
 }   
