@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {}
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {
+    "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\GatewayService\\GatewayService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
+        "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
         "projectName": "GatewayService",
-        "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
-        "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\GatewayService\\obj\\",
+        "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\GatewayService\\GatewayService.csproj",
+        "packagesPath": "C:\\Users\\huynh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\GatewayService\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\huynh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -59,6 +66,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.16, 8.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -67,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

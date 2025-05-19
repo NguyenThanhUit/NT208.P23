@@ -47,10 +47,10 @@
           }
         }
       },
-      "MassTransit/8.3.7-develop.2222": {
+      "MassTransit/8.4.1": {
         "type": "package",
         "dependencies": {
-          "MassTransit.Abstractions": "8.3.7-develop.2222",
+          "MassTransit.Abstractions": "8.4.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
@@ -68,7 +68,7 @@
           }
         }
       },
-      "MassTransit.Abstractions/8.3.7-develop.2222": {
+      "MassTransit.Abstractions/8.4.1": {
         "type": "package",
         "compile": {
           "lib/net8.0/MassTransit.Abstractions.dll": {
@@ -81,11 +81,11 @@
           }
         }
       },
-      "MassTransit.RabbitMQ/8.3.7-develop.2222": {
+      "MassTransit.RabbitMQ/8.4.1": {
         "type": "package",
         "dependencies": {
-          "MassTransit": "8.3.7-develop.2222",
-          "RabbitMQ.Client": "7.1.0"
+          "MassTransit": "8.4.1",
+          "RabbitMQ.Client": "7.1.2"
         },
         "compile": {
           "lib/net8.0/MassTransit.RabbitMqTransport.dll": {
@@ -98,24 +98,8 @@
           }
         }
       },
-      "Microsoft.AspNetCore.OpenApi/8.0.7": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.OpenApi": "1.4.3"
-        },
-        "compile": {
-          "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
-            "related": ".xml"
-          }
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+      "Microsoft.AspNetCore.OpenApi/9.0.5": {
+        "type": "package"
       },
       "Microsoft.CSharp/4.7.0": {
         "type": "package",
@@ -486,19 +470,6 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.OpenApi/1.4.3": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Microsoft.Win32.Registry/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -606,7 +577,7 @@
           }
         }
       },
-      "RabbitMQ.Client/7.1.0": {
+      "RabbitMQ.Client/7.1.2": {
         "type": "package",
         "dependencies": {
           "System.IO.Pipelines": "8.0.0",
@@ -852,10 +823,10 @@
         "lib/netstandard2.1/DnsClient.xml"
       ]
     },
-    "MassTransit/8.3.7-develop.2222": {
-      "sha512": "YwlK6dym3I5ippK7Ww5ri4SY2AU4XvumgHGeN22Rl4U9y42IsGvyh9QP6sLS1koJJhLoAaxqKjsExHx9euwazg==",
+    "MassTransit/8.4.1": {
+      "sha512": "UtbpB34CdFKVxJuxlfXPDUyiqF8BT1c0gkYOIZlT3BYaHz9Z9hknGT0O0K/5cKOLHV8+h9Yu++wn6iAps2kLYg==",
       "type": "package",
-      "path": "masstransit/8.3.7-develop.2222",
+      "path": "masstransit/8.4.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -868,15 +839,15 @@
         "lib/net9.0/MassTransit.xml",
         "lib/netstandard2.0/MassTransit.dll",
         "lib/netstandard2.0/MassTransit.xml",
-        "masstransit.8.3.7-develop.2222.nupkg.sha512",
+        "masstransit.8.4.1.nupkg.sha512",
         "masstransit.nuspec",
         "mt-logo-small.png"
       ]
     },
-    "MassTransit.Abstractions/8.3.7-develop.2222": {
-      "sha512": "i11cBvB35n4FOj5xIjRL4KXL+mRCiUODAVdjq1YN9FM9bgLFRL4+GKH/7vtepya9hIw6pcfA0/OOe4h/PbZPuA==",
+    "MassTransit.Abstractions/8.4.1": {
+      "sha512": "sf0f0Mj3B8lJFt5As2rSFiszOx4YhMDdQmV0CIzQG6PcWGO1ozped+YMJRdBqqTgvtHTjjWJOEMfgYtfXrPu2A==",
       "type": "package",
-      "path": "masstransit.abstractions/8.3.7-develop.2222",
+      "path": "masstransit.abstractions/8.4.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -889,15 +860,15 @@
         "lib/net9.0/MassTransit.Abstractions.xml",
         "lib/netstandard2.0/MassTransit.Abstractions.dll",
         "lib/netstandard2.0/MassTransit.Abstractions.xml",
-        "masstransit.abstractions.8.3.7-develop.2222.nupkg.sha512",
+        "masstransit.abstractions.8.4.1.nupkg.sha512",
         "masstransit.abstractions.nuspec",
         "mt-logo-small.png"
       ]
     },
-    "MassTransit.RabbitMQ/8.3.7-develop.2222": {
-      "sha512": "csMTq1W8/cJaEMpF1K737HrINDZ8P8U/t1wfkcFqKcn66aQOejMkkRpDbbwm/zUCoZ6Yqm01zplALGotdftiFA==",
+    "MassTransit.RabbitMQ/8.4.1": {
+      "sha512": "ji0l5I/QByOIdI9A/66qMtLr+cNHW2jYH4+U7hKPbRc5Y9zHCLjYGbI3x5fQhuWzNrp3lRtOZYrXmHCfv/kVFQ==",
       "type": "package",
-      "path": "masstransit.rabbitmq/8.3.7-develop.2222",
+      "path": "masstransit.rabbitmq/8.4.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -910,23 +881,24 @@
         "lib/net9.0/MassTransit.RabbitMqTransport.xml",
         "lib/netstandard2.0/MassTransit.RabbitMqTransport.dll",
         "lib/netstandard2.0/MassTransit.RabbitMqTransport.xml",
-        "masstransit.rabbitmq.8.3.7-develop.2222.nupkg.sha512",
+        "masstransit.rabbitmq.8.4.1.nupkg.sha512",
         "masstransit.rabbitmq.nuspec",
         "mt-logo-small.png"
       ]
     },
-    "Microsoft.AspNetCore.OpenApi/8.0.7": {
-      "sha512": "9SBDNvlwA88r5oD7yUbTmwr9ylkmZWdPQgohBWCdz6cESDAo6JgCD5vEOZS/nq2WIL5SCn3/RamAStcdiRzd4g==",
+    "Microsoft.AspNetCore.OpenApi/9.0.5": {
+      "sha512": "yZLOciYlpaOO/mHPOpgeSZTv8Lc7fOOVX40eWJJoGs/S9Ny9CymDuKKQofGE9stXGGM9EEnnuPeq0fhR8kdFfg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.openapi/8.0.7",
+      "path": "microsoft.aspnetcore.openapi/9.0.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll",
-        "lib/net8.0/Microsoft.AspNetCore.OpenApi.xml",
-        "microsoft.aspnetcore.openapi.8.0.7.nupkg.sha512",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll",
+        "lib/net9.0/Microsoft.AspNetCore.OpenApi.xml",
+        "microsoft.aspnetcore.openapi.9.0.5.nupkg.sha512",
         "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
@@ -1569,20 +1541,6 @@
         "version.txt"
       ]
     },
-    "Microsoft.OpenApi/1.4.3": {
-      "sha512": "rURwggB+QZYcSVbDr7HSdhw/FELvMlriW10OeOzjPT7pstefMo7IThhtNtDudxbXhW+lj0NfX72Ka5EDsG8x6w==",
-      "type": "package",
-      "path": "microsoft.openapi/1.4.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/Microsoft.OpenApi.dll",
-        "lib/netstandard2.0/Microsoft.OpenApi.pdb",
-        "lib/netstandard2.0/Microsoft.OpenApi.xml",
-        "microsoft.openapi.1.4.3.nupkg.sha512",
-        "microsoft.openapi.nuspec"
-      ]
-    },
     "Microsoft.Win32.Registry/5.0.0": {
       "sha512": "dDoKi0PnDz31yAyETfRntsLArTlVAVzUzCIvvEDsDsucrl33Dl8pIJG06ePTJTI3tGpeyHS9Cq7Foc/s4EeKcg==",
       "type": "package",
@@ -1720,10 +1678,10 @@
         "polly.extensions.http.nuspec"
       ]
     },
-    "RabbitMQ.Client/7.1.0": {
-      "sha512": "8hRFMyGSKGGdO3nsLBiJPzvX3DXmLH57M/ucTod3JCYrAnk9ccTOTpFZUe2nriOCNTSRVizE3gNfzSsNePJJwQ==",
+    "RabbitMQ.Client/7.1.2": {
+      "sha512": "y3c6ulgULScWthHw5PLM1ShHRLhxg0vCtzX/hh61gRgNecL3ZC3WoBW2HYHoXOVRqTl99Br9E7CZEytGZEsCyQ==",
       "type": "package",
-      "path": "rabbitmq.client/7.1.0",
+      "path": "rabbitmq.client/7.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1733,7 +1691,7 @@
         "lib/net8.0/RabbitMQ.Client.xml",
         "lib/netstandard2.0/RabbitMQ.Client.dll",
         "lib/netstandard2.0/RabbitMQ.Client.xml",
-        "rabbitmq.client.7.1.0.nupkg.sha512",
+        "rabbitmq.client.7.1.2.nupkg.sha512",
         "rabbitmq.client.nuspec"
       ]
     },
@@ -2079,39 +2037,46 @@
     "net8.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "Contracts >= 1.0.0",
-      "MassTransit.RabbitMQ >= 8.3.7-develop.2222",
-      "Microsoft.AspNetCore.OpenApi >= 8.0.7",
+      "MassTransit.RabbitMQ >= 8.4.1",
+      "Microsoft.AspNetCore.OpenApi >= 9.0.5",
       "Microsoft.Extensions.Http.Polly >= 9.0.2",
       "MongoDB.Entities >= 24.1.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Legion\\.nuget\\packages\\": {}
+    "C:\\Users\\huynh\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\SearchService\\SearchService.csproj",
+      "projectUniqueName": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\SearchService\\SearchService.csproj",
       "projectName": "SearchService",
-      "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\SearchService\\SearchService.csproj",
-      "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\SearchService\\obj\\",
+      "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\SearchService\\SearchService.csproj",
+      "packagesPath": "C:\\Users\\huynh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\SearchService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\huynh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\Contracts.csproj": {
-              "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\Contracts\\Contracts.csproj"
+            "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\Contracts\\Contracts.csproj": {
+              "projectPath": "C:\\Users\\huynh\\OneDrive\\Desktop\\UIT-learning\\Kỳ_4\\Lập trình ứng dụng web - NT208.P23\\Project\\NT208.P23\\src\\Contracts\\Contracts.csproj"
             }
           }
         }
@@ -2125,7 +2090,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -2137,11 +2103,11 @@
           },
           "MassTransit.RabbitMQ": {
             "target": "Package",
-            "version": "[8.3.7-develop.2222, )"
+            "version": "[8.4.1, )"
           },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
-            "version": "[8.0.7, )"
+            "version": "[9.0.5, )"
           },
           "Microsoft.Extensions.Http.Polly": {
             "target": "Package",
@@ -2163,6 +2129,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.16, 8.0.16]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2171,8 +2155,19 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1202",
+      "level": "Error",
+      "message": "Package Microsoft.AspNetCore.OpenApi 9.0.5 is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Package Microsoft.AspNetCore.OpenApi 9.0.5 supports: net9.0 (.NETCoreApp,Version=v9.0)",
+      "libraryId": "Microsoft.AspNetCore.OpenApi",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
