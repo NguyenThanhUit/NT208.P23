@@ -117,10 +117,10 @@ namespace AuctionService.Controllers
             if (auction == null)
                 return NotFound();
 
-            if (auction.EndsAt < DateTime.UtcNow)
+            if (auction.EndAt < DateTime.UtcNow)
                 return BadRequest("Auction has ended.");
 
-            if (bidDto.Amount <= auction.CurrentPrice)
+            if (bidDto.Amount <= auction.CurrentHighBid)
                 return BadRequest("Bid must be higher than current price.");
 
             // TODO: Set BidderID from authenticated user
@@ -132,7 +132,7 @@ namespace AuctionService.Controllers
                 PlacedAt = DateTime.UtcNow
             };
 
-            auction.CurrentPrice = bidDto.Amount;
+            auction.CurrentHighBid = bidDto.Amount;
             auction.WinnerID = bid.BidderID;
 
             _context.Bids.Add(bid);
