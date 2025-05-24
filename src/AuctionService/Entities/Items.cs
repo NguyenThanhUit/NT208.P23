@@ -11,7 +11,6 @@ public class Items
     public int price { get; set; }
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     public DateTime modifiedAt { get; set; } = DateTime.UtcNow;
-
     public Auction auction { get; set; }
     public Guid auctionID { get; set; }
 }
