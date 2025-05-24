@@ -1,16 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-namespace AuctionService.Entities;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("Items")]
-public class Items
+namespace AuctionService.Entities
 {
-    public Guid ID { get; set; }
-    public string name { get; set; }
-    public string des { get; set; }
-    public string category { get; set; }
-    public int price { get; set; }
-    public DateTime createdAt { get; set; } = DateTime.UtcNow;
-    public DateTime modifiedAt { get; set; } = DateTime.UtcNow;
-    public Auction auction { get; set; }
-    public Guid auctionID { get; set; }
+    [Table("Items")]
+    public class Items
+    {
+        public Guid ID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public int Price { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime ModifiedAt { get; set; } = DateTime.UtcNow;
+        public Auction Auction { get; set; }
+        public Guid AuctionID { get; set; }
+    }
 }

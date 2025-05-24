@@ -1,15 +1,18 @@
-﻿namespace AuctionService.Entities;
+﻿using System;
 
-public class Auction
+namespace AuctionService.Entities
 {
-    public Guid ID { get; set; }
-    public int? reservePrice { get; set; } = 0; 
-    public string sellerID { get; set; }
-    public string winnerID { get; set; }
-    public int currentHighBid { get; set; }
-    public DateTime createdAt { get; set; } = DateTime.UtcNow;
-    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime endAt { get; set; } = DateTime.UtcNow;
-    public Status status { get; set; }
-    public Items item { get; set; }
+    public class Auction
+    {
+        public Guid ID { get; set; }
+        public int? ReservePrice { get; set; } = 0; 
+        public string SellerID { get; set; }
+        public string WinnerID { get; set; }
+        public int CurrentHighBid { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime EndAt { get; set; } = DateTime.UtcNow;
+        public Status Status { get; set; }
+        public Items Item { get; set; }
+    }
 }
