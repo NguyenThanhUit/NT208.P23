@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace AuctionService.Controllers
 {
+    private string UserId => User.FindFirst("sub")?.Value;
+
     [ApiController]
     [Route("api/auctions")]
     public class AuctionsController : ControllerBase
@@ -56,8 +58,8 @@ namespace AuctionService.Controllers
             var auction = _mapper.Map<Auction>(auctionDto);
             auction.ID = Guid.NewGuid();
             auction.CreatedAt = DateTime.UtcNow;
-            // TODO: Set SellerID from authenticated user
-            auction.SellerID = "test";
+            // Set SellerID from authenticated user
+            auction.SellerID = UserId;
 
             _context.Auctions.Add(auction);
             await _context.SaveChangesAsync();
@@ -77,7 +79,9 @@ namespace AuctionService.Controllers
             if (auction == null)
                 return NotFound();
 
-            // TODO: Check if the authenticated user is the seller
+            // Check if the authenticated user is the seller
+            if (auction.SellerID != UserId)
+                return Forbid();
 
             // Update only provided fields
             auction.Item.Name = updateDto.Name ?? auction.Item.Name;
@@ -100,7 +104,9 @@ namespace AuctionService.Controllers
             if (auction == null)
                 return NotFound();
 
-            // TODO: Check if the authenticated user is the seller
+            // Check if the authenticated user is the seller
+            if (auction.SellerID != UserId)
+                return Forbid();
 
             _context.Auctions.Remove(auction);
             await _context.SaveChangesAsync();
@@ -127,7 +133,7 @@ namespace AuctionService.Controllers
             var bid = new Bid
             {
                 AuctionID = id,
-                BidderID = "test",
+                BidderID = UserId,
                 Amount = bidDto.Amount,
                 PlacedAt = DateTime.UtcNow
             };
