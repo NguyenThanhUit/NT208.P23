@@ -2,13 +2,12 @@
 import { Order, PageResult } from "@/index";
 import { fetchWrapper } from "../lib/fetchWrapper";
 import { FieldValues } from "react-hook-form";
-import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export async function getData(query: string): Promise<PageResult<Order>> {
     try {
-        // const data = await fetchWrapper.get(`search${query}`);
-        const data = await fetchWrapper.get(`search`);
-        // console.log("Fetched Data from API:", data);  // Kiểm tra dữ liệu trả về từ API
+        // const data = await fetchWrapper.get(`http://localhost:6001/search?${query}`);
+        const data = await fetchWrapper.get(`search?${query}`);
         return {
             results: data.data?.map((item: any) => ({
                 id: item.id,
@@ -40,19 +39,117 @@ export async function getData(query: string): Promise<PageResult<Order>> {
 
 
 export async function getDetailedProduct(id: string): Promise<Order> {
-    return await fetchWrapper.get(`orders/${id}`);
+    const data = await fetchWrapper.get(`orders/${id}`);
+    return {
+        id: data.id,
+        TotalPrice: data.totalPrice,
+        Seller: data.seller,
+        Buyer: data.buyer,
+        CreatedAt: data.createdAt,
+        Status: data.status,
+        SoldAmount: Number(data.soldAmount || 0),
+        Name: data.name,
+        Description: data.description,
+        Price: data.price,
+        Category: data.category,
+        ImageUrl: data.imageUrl,
+        StockQuantity: Number(data.stockQuantity || 0),
+    };
 }
 
-export async function createOrder(data: FieldValues) {
-    return await fetchWrapper.post('orders', data);
+
+export async function createProduct(data: FieldValues) {
+    const result = await fetchWrapper.post(`orders`, data);
+    return result;
 }
-// orderactions.ts
+
+export async function depositMoneyviaVnPay(money: number, description: string) {
+    const res = await fetch(
+        `http://localhost:6001/vnpay/CreatePaymentUrl?money=${money}&description=${encodeURIComponent(description)}`
+    );
+
+    if (!res.ok) {
+        throw new Error("Không thể tạo liên kết thanh toán VNPAY");
+    }
+
+    const url = await res.text();
+    return url;
+}
+
+
+
+export async function updateProduct(data: FieldValues, id: string) {
+    const res = await fetchWrapper.put(`orders/${id}`, data);
+    revalidatePath(`orders/${id}`);
+    return res;
+}
+export async function deleteProduct(id: string) {
+    await fetchWrapper.del(`orders/${id}`);
+}
+export async function depositMoney(data: { amount: number }) {
+    const result = await fetchWrapper.post('wallets/deposit', data);
+    return result;
+}
+export async function getTotalMoney(userId: string): Promise<{ balance: number }> {
+    return await fetchWrapper.get(`wallets/${userId}`);
+}
+
+
+// export async function depositMoney(userId: string, amount: number, token: string) {
+//     try {
+//         console.log("[depositMoney] Gửi request nạp tiền:", { userId, amount });
+
+//         const response = await fetch("http://localhost:7004/api/wallets/deposit", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Authorization": `Bearer ${token}`,
+//             },
+//             body: JSON.stringify({ userId, amount }),
+//         });
+
+//         console.log("[depositMoney] Response status:", response.status);
+
+//         if (!response.ok) {
+//             const text = await response.text();
+
+//             console.error("[depositMoney] Response lỗi (raw):", text);
+
+//             let errorMessage = "Nạp tiền thất bại";
+
+//             if (response.status === 401) {
+//                 errorMessage = "Bạn chưa đăng nhập hoặc token không hợp lệ.";
+//             } else {
+//                 try {
+//                     const errorData = JSON.parse(text);
+//                     errorMessage = errorData.message || errorMessage;
+//                     console.error("[depositMoney] Response lỗi (parsed JSON):", errorData);
+//                 } catch {
+//                     if (text) errorMessage = text;
+//                 }
+//             }
+
+//             throw new Error(errorMessage);
+//         }
+
+//         const data = await response.json();
+//         console.log("[depositMoney] Response thành công:", data);
+
+//         return data;
+//     } catch (error) {
+//         console.error("[depositMoney] Lỗi khi nạp tiền:", error);
+//         throw error;
+//     }
+// }
+
+
+
 
 export async function placeBuying(
     orderID: string,
     paymentMethod: string,
     buyer: string,
-    items: { seller: string; productName: string; quantity: number }[]
+    items: { seller: string; productName: string; quantity: number, price: number }[]
 ) {
     try {
         const requestData = {
@@ -107,7 +204,7 @@ export async function getOrderHistory(buyer: string) {
         throw new Error("Failed to fetch order history");
     }
 
-    return await response.json(); // Trả về danh sách các giao dịch
+    return await response.json()
 }
 
 

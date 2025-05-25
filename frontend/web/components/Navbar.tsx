@@ -9,21 +9,31 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/app/function/cartStore";
 import { Order } from "..";
 import { usePathname, useRouter } from "next/navigation";
-import { Button } from "flowbite-react";
 
 export default function Navbar({ orders }: { orders: Order[] }) {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
     const totalQuantity = useCartStore((state) => state.getTotalQuantity());
 
-    const router = useRouter(); // Hook điều hướng của Next.js
+    const router = useRouter();
     const pathName = usePathname();
 
     useEffect(() => {
-        getCurrentUser().then(setUser);
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser(currentUser);
+            } catch (err) {
+                console.error("Lỗi khi lấy thông tin người dùng:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
     }, []);
 
     const handleLogoClick = () => {
-        router.push("/"); // Điều hướng về trang chủ khi click vào logo
+        router.push("/");
     };
 
     return (
@@ -31,7 +41,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
             {/* Logo */}
             <div
                 className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
-                onClick={handleLogoClick} // Thêm sự kiện click vào logo
+                onClick={handleLogoClick}
             >
                 <div>E-Shop</div>
             </div>
@@ -48,20 +58,28 @@ export default function Navbar({ orders }: { orders: Order[] }) {
 
             {/* Right Side */}
             <div className="flex items-center gap-4">
-                {/* Cart Icon */}
-                <Link href={`/Order/Cart/`}>
-                    <div className="relative cursor-pointer">
-                        <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
-                        {totalQuantity > 0 && (
-                            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
-                                {totalQuantity}
-                            </span>
-                        )}
-                    </div>
-                </Link>
+                {/* Cart Icon - Only show if user is logged in */}
+                {user && !loading && (
+                    <Link href={`/Order/Cart/`}>
+                        <div className="relative cursor-pointer">
+                            <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
+                            {totalQuantity > 0 && (
+                                <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
+                                    {totalQuantity}
+                                </span>
+                            )}
+                        </div>
+                    </Link>
+                )}
 
                 {/* User */}
-                {user ? <UserLogged user={user} /> : <LoginButton />}
+                {loading ? (
+                    <div className="text-gray-500">Đang tải...</div>
+                ) : user ? (
+                    <UserLogged user={user} />
+                ) : (
+                    <LoginButton />
+                )}
             </div>
         </header>
     );

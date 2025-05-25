@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderService.DTOs;
 using OrderService.Entities;
 using Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderService.Controllers;
 
@@ -63,14 +64,21 @@ public class OrderController : ControllerBase
     /// </summary>
     /// <param name="orderDto">Dữ liệu đơn hàng gửi lên</param>
     /// <returns>Đơn hàng đã tạo</returns>
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<OrderDto>> CreateOrder(CreateOrderDto orderDto)
     {
         // Chuyển đổi từ DTO sang Entity để lưu vào database
         var order = _mapper.Map<Order>(orderDto);
 
-        // Tạm thời đặt Seller là "Test", có thể thay thế bằng user từ authentication
-        order.Seller = "Test";
+
+        var username = User.Identity?.Name;
+        if (string.IsNullOrEmpty(username))
+        {
+            return Unauthorized("User is not authenticated");
+        }
+        order.Seller = username;
+        // order.Seller = "Test";
 
         // Thêm đơn hàng vào context
         _context.Orders.Add(order);
@@ -119,6 +127,19 @@ public class OrderController : ControllerBase
         await _publishEndpoint.Publish(_mapper.Map<OrderUpdated>(updatedOrder));
 
         return Ok(updatedOrder); // Trả về thông tin đơn hàng đã cập nhật
+    }
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteOrder(Guid id)
+    {
+        var order = await _context.Orders.FindAsync(id);
+        if (order.Seller != User.Identity?.Name) return Forbid();
+        if (order == null) return NotFound();
+        _context.Orders.Remove(order);
+        await _publishEndpoint.Publish<ProductDeleted>(new { Id = order.Id.ToString() });
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) return BadRequest();
+        return Ok();
     }
     public class UpdateOrderDto
     {

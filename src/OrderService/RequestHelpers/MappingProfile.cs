@@ -21,8 +21,8 @@ namespace OrderService.RequestHelpers
             //Cho phep mot item moi duoc tao tu Create OrderDto khi khoi tao Order
             CreateMap<CreateOrderDto, Product>();
             //Anh xa du lieu 
-            CreateMap<OrderDto, OrderCreated>()
-    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id.GetHashCode()));
+            CreateMap<OrderDto, OrderCreated>();
+
 
             CreateMap<OrderDto, CreateOrderDto>();
             CreateMap<BuyingPlaced, Product>()

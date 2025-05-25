@@ -2,7 +2,7 @@
 
 public class OrderCreated
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public int TotalPrice { get; set; }
     public string Buyer { get; set; }
     public string Seller { get; set; }

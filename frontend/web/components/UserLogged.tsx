@@ -1,42 +1,43 @@
-'use client'
-import { useParamStore } from "@/hooks/useParamStore";
+'use client';
+
+import { signOut } from "next-auth/react";
 import { Dropdown, DropdownDivider, DropdownItem } from "flowbite-react";
 import Link from "next/link";
-import { User } from "next-auth";
-import { signOut } from "next-auth/react";
-import { AiFillCar, AiFillTrophy, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
+import { AiFillCar, AiFillTrophy, AiOutlineLogout } from 'react-icons/ai';
 import { HiCog, HiUser } from 'react-icons/hi';
+import { User } from "next-auth";
 
-// Dùng để return khi đăng nhập thành công
 type Props = {
     user: User
-}
+};
 
 export default function UserLogged({ user }: Props) {
-    const setParams = useParamStore(state => state.setParams);
+    function handleSignOut() {
+        signOut({ callbackUrl: '/' });
+    }
 
     return (
-        <Dropdown inline label={<span className="text-black">Welcome {user.name}</span>}>
-            {/* Đặt màu chữ cho DropdownItem thành màu đen */}
+        <Dropdown inline label={
+            <span className="text-black font-medium">
+                Welcome {user.name} + {user.email}
+            </span>
+        }>
             <DropdownItem className="text-black" icon={HiUser}>
-                <Link href={`/Order/History`}>
-                    Lịch sử mua hàng
-                </Link>
+                <Link href="/Order/History">Lịch sử mua hàng</Link>
             </DropdownItem>
             <DropdownItem className="text-black" icon={AiFillTrophy}>
-                Auctions won
+                <Link href="/account/Detail">Thông tin cá nhân</Link>
             </DropdownItem>
             <DropdownItem className="text-black" icon={AiFillCar}>
-                <Link href={'/Order/Create'}>
-                    Tạo đơn hàng
-                </Link>
+                <Link href="/Product/Create">Tạo sản phẩm</Link>
             </DropdownItem>
-            <DropdownDivider>
-                {/* Đặt màu chữ cho item logout thành màu đen */}
-                <DropdownItem className="text-black" icon={AiOutlineLogout} onClick={() => signOut({ callbackUrl: '/' })}>
-                    Sign out
-                </DropdownItem>
-            </DropdownDivider>
+            <DropdownItem className="text-black" icon={HiCog}>
+                <Link href="/recharge">Nạp tiền</Link>
+            </DropdownItem>
+            <DropdownDivider />
+            <DropdownItem className="text-black" icon={AiOutlineLogout} onClick={handleSignOut}>
+                Đăng xuất
+            </DropdownItem>
         </Dropdown>
     );
 }

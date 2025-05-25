@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MassTransit;
 using OrderService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,22 @@ builder.Services.AddMassTransit(x =>
         cfg.ConfigureEndpoints(context);
     });
 });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    // Thêm JWT Bearer handler để xử lý token
+    .AddJwtBearer(option =>
+    {
+        // Đặt Authority - URL của IdentityServer để xác thực token
+        option.Authority = builder.Configuration["IdentityServiceUrl"];
+
+        // Cho phép sử dụng HTTP (không HTTPS), tiện cho môi trường phát triển
+        option.RequireHttpsMetadata = false;
+
+        // Bỏ qua kiểm tra audience (aud) - giúp token có thể dùng cho nhiều dịch vụ
+        option.TokenValidationParameters.ValidateAudience = false;
+
+        // Xác định tên người dùng dựa trên claim "username" trong token
+        option.TokenValidationParameters.NameClaimType = "username";
+    });
 
 // Sau khi đăng ký dịch vụ xong, mới gọi `builder.Build()`
 var app = builder.Build();

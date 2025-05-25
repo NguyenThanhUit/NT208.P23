@@ -22,6 +22,7 @@ builder.Services.AddMassTransit(x =>
     //Them consumer
     x.AddConsumersFromNamespaceContaining<OrderCreatedConsumer>();
     x.AddConsumersFromNamespaceContaining<OrderUpdatedConsumer>();
+    x.AddActivitiesFromNamespaceContaining<BuyingPlacedConsumer>();
 
 
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));

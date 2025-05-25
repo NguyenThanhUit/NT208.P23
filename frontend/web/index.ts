@@ -1,19 +1,24 @@
+
+export interface Deposit {
+    userId: string;
+    amount: number;
+}
+
 export interface Order {
     id: string;
-    TotalPrice: number; // Kiểu number thay vì string
-    Seller: string;
-    Buyer: string;
-    CreatedAt: string;
-    Status: string;
-    SoldAmount: number; // Kiểu number thay vì string
+    TotalPrice?: number;
+    Seller?: string;
+    Buyer?: string;
+    CreatedAt?: string;
+    Status?: string;
+    SoldAmount?: number;
     Name: string;
     Description: string;
-    Price: number; // Kiểu number thay vì string
+    Price: number;
     Category: string;
     ImageUrl: string;
     StockQuantity: number;
 }
-
 
 export interface PageResult<T> {
     results: T[];

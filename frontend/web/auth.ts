@@ -21,7 +21,6 @@ export const { handlers, signIn, auth } = NextAuth({
                     // auctionApp: scope tùy chỉnh của bạn (có thể cho phép truy cập API riêng)
                 }
             },
-            idToken: true // Nhận ID token (chứa thông tin người dùng sau khi xác thực)
         } as OIDCConfig<Omit<Profile, 'username'>>), // Ép kiểu theo OIDCConfig (loại bỏ 'username' để tránh xung đột)
     ],
     callbacks: {
@@ -37,6 +36,7 @@ export const { handlers, signIn, auth } = NextAuth({
             }
             if (profile) {
                 token.username = profile.username
+                token.email = profile.email || "unknow"
             }
             return token;
         },
@@ -44,6 +44,7 @@ export const { handlers, signIn, auth } = NextAuth({
             if (token) {
                 session.user.username = token.username;
                 session.accessToken = token.accessToken;
+                session.user.email = token.email;
             }
             return session;
         }

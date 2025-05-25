@@ -1,4 +1,5 @@
 namespace OrderService.Entities;
+
 public enum Status
 {
     Pending,

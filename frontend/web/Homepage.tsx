@@ -8,16 +8,28 @@ import SearchFilterBar from "./Paginations/SearchFilterBar";
 import { useParamStore } from "./hooks/useParamStore";
 import { useShallow } from "zustand/shallow";
 import { getData } from "./app/actions/orderactions";
+import { useOrderStore } from "./hooks/useOrderStore";
+
 
 export default function Homepage() {
     const [data, setData] = useState<PageResult<Order> | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const { order, totalCount, pageCount } = useOrderStore(
+        useShallow(state => ({
+            order: state.orders,
+            totalCount: state.totalCount,
+            pageCount: state.pageCount
+        }))
+    )
+
+    const setdata = useOrderStore(state => state.setData);
+
     const params = useParamStore(useShallow(state => ({
         pageNumber: state.pageNumber,
         pageSize: state.pageSize,
-        pageCount: state.pageCount,
+        // pageCount: state.pageCount,
         searchTerm: state.searchTerm,
         orderBy: state.orderBy,
         seller: state.Seller,
@@ -26,7 +38,11 @@ export default function Homepage() {
 
     const setParams = useParamStore(state => state.setParams);
 
-    const url = qs.stringify({ url: '', query: params });
+    const url = '?' + qs.stringify(params);
+
+    function setPageNumber(pageNumber: number) {
+        setParams({ pageNumber });
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -48,16 +64,22 @@ export default function Homepage() {
             <div className="bg-white">
                 <SearchFilterBar />
             </div>
-            <main className="bg-white w-full min-h-screen p-4 flex">
+            <main className="bg-white w-full min-h-screen p-4 flex-col">
                 {loading && <p className="text-center text-gray-500">Đang tải sản phẩm...</p>}
                 {error && <p className="text-center text-red-500">{error}</p>}
-
                 {/* Kiểm tra nếu có data và results trước khi lấy length */}
                 {data?.results && data.results.length > 0 ? (
                     <ProductList orders={data.results} />
                 ) : (
                     !loading && !error && <p className="text-center text-gray-500">Không có sản phẩm nào.</p>
                 )}
+                {/* <div className='flex justify-center mt-4'>
+                    <AppPagination
+                        pageChanged={setPageNumber}
+                        currentPage={params.pageNumber}
+                        pageCount={pageCount}
+                    />
+                </div> */}
             </main>
         </div>
     );

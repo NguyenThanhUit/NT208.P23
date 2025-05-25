@@ -11,6 +11,7 @@ declare module "next-auth" {
     interface Session {
         user: {
             username: string; // Thêm 'username' cho user (ngoài name, email, image mặc định)
+            email: string;
         } & DefaultSession["user"]; // Giữ lại các thuộc tính mặc định của user (name, email, image)
 
         accessToken: string; // Thêm 'accessToken' để lưu token xác thực từ Identity Provider
@@ -22,6 +23,7 @@ declare module "next-auth" {
      */
     interface Profile {
         username: string; // Thêm 'username' để lấy từ Profile sau khi đăng nhập
+        email: string;
     }
 
     /**
@@ -30,6 +32,7 @@ declare module "next-auth" {
      */
     interface User {
         username: string; // Thêm 'username' cho đối tượng User
+        email: string;
     }
 }
 
@@ -38,5 +41,6 @@ declare module 'next-auth/jwt' {
     interface JWT {
         username: string; // Thêm 'username' vào JWT (JSON Web Token)
         accessToken: string; // Thêm 'accessToken' để lưu trữ token xác thực
+        email: string;
     }
 }

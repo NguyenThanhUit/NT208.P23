@@ -2,7 +2,7 @@ using Contracts;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Data;
-using OrderService.Entities;
+
 
 namespace OrderService
 {
@@ -17,7 +17,7 @@ namespace OrderService
 
         public async Task Consume(ConsumeContext<BuyingPlaced> context)
         {
-            Console.WriteLine("-> Consuming order placed");
+            Console.WriteLine("-> Consuming buying placed");
 
             // Log chi tiết thông tin tiêu thụ
             Console.WriteLine($"Received message: OrderID = {context.Message.orderID}, ProductName = {context.Message.ProductName}, Buyer = {context.Message.Buyer}, TotalAmount = {context.Message.TotalAmount}");
@@ -38,12 +38,7 @@ namespace OrderService
             // Giảm số lượng tồn kho
             product.StockQuantity -= 1;
 
-            // Đảm bảo số lượng không bị âm
-            if (product.StockQuantity < 0)
-            {
-                product.StockQuantity = 0;
-                Console.WriteLine("Product stock quantity was below 0, set to 0");
-            }
+
 
             // In ra thông tin sản phẩm sau khi giảm số lượng
             Console.WriteLine($"Product after update: Name = {product.Name}, Stock Quantity = {product.StockQuantity}");

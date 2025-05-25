@@ -73,12 +73,29 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
       - ConnectionStrings__BuyingDbConnection=mongodb://root:mongopw@mongodb
     ports:
       - 7003:80
     depends_on:
       rabbitmq:
         condition: service_healthy
+      mongodb:
+        condition: service_started
+  deposits-svc:
+    image: nguyenthanh/deposits-svc:latest
+    build:
+      context: .
+      dockerfile: src/WalletService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__DepositDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7004:80
+    depends_on:
       mongodb:
         condition: service_started
   identity-svc:

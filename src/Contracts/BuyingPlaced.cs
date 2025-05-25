@@ -9,6 +9,6 @@ namespace Contracts
         public int TotalAmount { get; set; }
         public DateTime createdAt { get; set; }
         public string ProductName { get; set; }
-        public string BuyingStatus { get; set; } // Status sẽ là 'Completed' khi đơn hàng thành công
+        public string BuyingStatus { get; set; }
     }
 }

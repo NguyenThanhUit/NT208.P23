@@ -1,3 +1,4 @@
+// app/function/cartStore.ts
 import { create } from 'zustand';
 
 interface CartItem {
@@ -14,6 +15,7 @@ interface CartState {
     addToCart: (item: CartItem) => void;
     increaseQuantity: (id: string) => void;
     decreaseQuantity: (id: string) => void;
+    removeFromCart: (id: string) => void;
     getTotalQuantity: () => number;
     clearCart: () => void;
 }
@@ -22,8 +24,13 @@ export const useCartStore = create<CartState>((set, get) => {
     const savedCart = typeof window !== 'undefined' ? localStorage.getItem('cartItems') : null;
     const initialItems = savedCart ? JSON.parse(savedCart) : [];
 
+    const updateLocalStorage = (items: CartItem[]) => {
+        localStorage.setItem('cartItems', JSON.stringify(items));
+    };
+
     return {
         items: initialItems,
+
         addToCart: (item) => {
             const items = get().items;
             const index = items.findIndex((i) => i.id === item.id);
@@ -36,33 +43,64 @@ export const useCartStore = create<CartState>((set, get) => {
                 updatedItems = [...items, item];
             }
 
-            localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+            updateLocalStorage(updatedItems);
             set({ items: updatedItems });
         },
+
         increaseQuantity: (id) => {
             const items = get().items;
             const index = items.findIndex((i) => i.id === id);
             if (index >= 0) {
                 const updatedItems = [...items];
-                updatedItems[index].quantity += 1; // Increase quantity by 1
-                localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+                updatedItems[index].quantity += 1;
+                updateLocalStorage(updatedItems);
                 set({ items: updatedItems });
             }
         },
+
         decreaseQuantity: (id) => {
             const items = get().items;
             const index = items.findIndex((i) => i.id === id);
-            if (index >= 0 && items[index].quantity > 1) {
-                const updatedItems = [...items];
-                updatedItems[index].quantity -= 1; // Decrease quantity by 1, prevent going below 1
-                localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+
+            if (index >= 0) {
+                const currentItem = items[index];
+                let updatedItems = [...items];
+
+                if (currentItem.quantity <= 1) {
+                    // Nếu còn 1 sản phẩm, xóa sản phẩm đó
+                    updatedItems = updatedItems.filter((item) => item.id !== id);
+
+                    // Nếu sau khi xóa mà giỏ hàng trống -> gọi clearCart
+                    if (updatedItems.length === 0) {
+                        get().clearCart();
+                        return;
+                    }
+                } else {
+                    updatedItems[index].quantity -= 1;
+                }
+
+                updateLocalStorage(updatedItems);
                 set({ items: updatedItems });
             }
         },
+
+        removeFromCart: (id) => {
+            const updatedItems = get().items.filter(item => item.id !== id);
+
+            if (updatedItems.length === 0) {
+                get().clearCart();
+                return;
+            }
+
+            updateLocalStorage(updatedItems);
+            set({ items: updatedItems });
+        },
+
         getTotalQuantity: () => {
             return get().items.reduce((acc, item) => acc + item.quantity, 0);
         },
-        clearCart: () => { // Clear the cart
+
+        clearCart: () => {
             localStorage.removeItem('cartItems');
             set({ items: [] });
         }

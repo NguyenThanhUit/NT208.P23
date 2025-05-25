@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
 using SearchService;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 [Route("api/search")]
 [ApiController]
@@ -22,11 +20,14 @@ public class SearchController : ControllerBase
         // Sắp xếp
         query = searchParams.OrderBy switch
         {
-            "priceascending" => query.Sort(x => x.Ascending(a => a.Price)), 
-            "pricedescending" => query.Sort(x => x.Descending(a => a.Price)), 
-            "new" => query.Sort(x => x.Descending(a => a.CreatedAt)), 
+            "priceascending" => query.Sort(x => x.Ascending(a => a.Price)),
+            "pricedescending" => query.Sort(x => x.Descending(a => a.Price)),
+            "new" => query.Sort(x => x.Descending(a => a.CreatedAt)),
             _ => query.Sort(x => x.Ascending(a => a.CreatedAt))
         };
+
+        query.PageNumber(searchParams.PageNumber);
+        query.PageSize(searchParams.PageSize);
 
 
 
@@ -37,7 +38,8 @@ public class SearchController : ControllerBase
         return Ok(new
         {
             data = result.Results,  // Danh sách sản phẩm
-            total = result.TotalCount // Tổng số sản phẩm tìm được
+            total = result.TotalCount, // Tổng số sản phẩm tìm được
+            pageCount = result.PageCount
         });
     }
 }
