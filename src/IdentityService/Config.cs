@@ -15,7 +15,7 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("auctionApp", "Auction app full access"),
+            new ApiScope("orderApp", "Order app full access"),
         };
 
     // request token
@@ -32,6 +32,33 @@ public static class Config
                 RedirectUris = {"https://www.getpostman.com/oauth2/callback"},
                 ClientSecrets = new[] {new Secret("NotASecret".Sha256())},
                 AllowedGrantTypes = {GrantType.ResourceOwnerPassword}
+            },
+            new Client
+            {
+                ClientId = "nextApp", // Client ID của app Next.js
+                ClientName = "nextApp", // Tên app hiển thị
+                
+                // Bí mật của client, dùng để xác thực client
+                ClientSecrets = { new Secret("secret".Sha256()) },
+                
+                // Sử dụng grant types kết hợp Code flow (dùng cho app frontend) và Client Credentials (cho app server-to-server)
+                AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                
+                // Cho phép/không yêu cầu Proof Key for Code Exchange (PKCE)
+                RequirePkce = false,
+                
+                // URL callback của Next.js sau khi xác thực thành công (Auth.js hoặc NextAuth)
+                RedirectUris = { "http://localhost:3000/api/auth/callback/id-server" },
+                
+                // Cho phép offline access để lấy refresh token
+                AllowOfflineAccess = true, // <-- Sửa lỗi chính tả: AllowwOfflineAccess -> AllowOfflineAccess
+                
+                // Các phạm vi mà client này có thể truy cập
+                AllowedScopes = { "openid", "profile", "orderApp" },
+                
+                // Thời gian sống của access token (30 ngày = 3600s * 24h * 30d)
+                AccessTokenLifetime = 3600 * 24 * 30,
+                AlwaysIncludeUserClaimsInIdToken = true, //Lay ID token
             }
         };
 }

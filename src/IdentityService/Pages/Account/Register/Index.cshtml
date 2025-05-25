@@ -1,17 +1,19 @@
 @* Đánh dấu đây là một Razor Page *@
-@page 
+@page
 
 @* Liên kết trang này với lớp Index trong phần xử lý (chứa logic xử lý: OnGet, OnPost). *@
 @model IdentityService.Pages.Register.Index
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGN UP</title>
     <link rel="stylesheet" href="~/css/register.css">
 </head>
+
 <body>
     @* Hiển thị thông báo lỗi nếu dữ liệu người dùng nhập không hợp lệ
         Đây là một partial view (một đoạn HTML tái sử dụng). *@
@@ -32,12 +34,12 @@
                         <label asp-for="Input.FullName"></label>
                         <input type="text" placeholder="Fullname" asp-for="Input.FullName" autofocus>
                     </div>
-                    
+
                     <div class="form-group">
                         <label asp-for="Input.Email"></label>
-                        <input type="email" placeholder="Email" asp-for="Input.Email" >
+                        <input type="email" placeholder="Email" asp-for="Input.Email">
                     </div>
-                    
+
                     <div class="form-group">
                         <label asp-for="Input.UserName"></label>
                         <input type="text" placeholder="Username" asp-for="Input.UserName">
@@ -45,7 +47,7 @@
 
                     <div class="form-group">
                         <label asp-for="Input.Telephone"></label>
-                        <input type="number" placeholder="Telephone" asp-for="Input.Telephone" >
+                        <input type="number" placeholder="Telephone" asp-for="Input.Telephone">
                     </div>
 
                     <div class="form-group">
@@ -55,23 +57,23 @@
 
                     <div class="form-group">
                         <label asp-for="Input.Address"></label>
-                        <input type="text"  placeholder="Address" asp-for="Input.Address" >
+                        <input type="text" placeholder="Address" asp-for="Input.Address">
                     </div>
-                    
+
                     @* Nút đăng nhập và đăng ký *@
                     <div class="button-group">
                         <button class="signup-btn" type="submit" name="Input.Button" value="SignUp">Sign Up</button>
                         <button class="signin-btn" type="button" name="Input.Button" value="SignIn">
-                            <a asp-page="../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">Sign In</a> 
+                            <a asp-page="../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">Sign In</a>
                         </button>
-                    </div>  
+                    </div>
 
                     @* Ảnh Home: Click để trở về trang chủ *@
-                    <a href="http://localhost:5000/"><img src="~/home.png"></a> 
+                    <a href="http://localhost:5000/"><img src="~/home.png"></a>
                 </form>
 
                 @* Thông báo đăng ký thành công: Kiểm tra RegisterSuccess từ phần Index (PageModel) *@
-                @if(Model.RegisterSuccess)
+                @if (Model.RegisterSuccess)
                 {
                     <div class="alert alert-success mt-2">
                         <strong>Successfully registered</strong> - You now can login

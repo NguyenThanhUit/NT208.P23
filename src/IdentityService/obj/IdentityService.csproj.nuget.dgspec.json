@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
+    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
   },
   "projects": {
-    "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
+    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+        "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
         "projectName": "IdentityService",
-        "projectPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
-        "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
-        "outputPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\obj\\",
+        "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+        "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,16 +63,6 @@
               "target": "Package",
               "version": "[8.0.3, )"
             },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.3, )"
@@ -107,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,71 @@
+/* Định dạng toàn bộ body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Căn giữa và định dạng vùng chứa trang đăng ký */
+.register-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+}
+
+/* Tạo kiểu hộp chứa form */
+.box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+}
+
+/* Định dạng tiêu đề trong hộp */
+.box h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Sắp xếp các phần tử trong form */
+.box form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Định dạng nhóm trường nhập liệu */
+.form-group {
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 15px;
+}
+
+/* Định dạng nhãn (label) */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+}
+
+/* Định dạng ô nhập liệu (input) */
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #e6e6e6;
+    box-sizing: border-box;
+}
