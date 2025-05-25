@@ -28,7 +28,11 @@ namespace IdentityService
             // username - additional claim which is sent back with token
             var claims = new List<Claim>
             {
-                new Claim("username", user.UserName)
+                new Claim("username", user.UserName),
+                new Claim("email", user.Email),
+                new Claim("phoneNumber", user.PhoneNumber ?? ""),
+                new Claim("address", user.Address ?? ""),
+                new Claim("wallet", user.Wallet.ToString())
             }; 
 
             context.IssuedClaims.AddRange(claims);

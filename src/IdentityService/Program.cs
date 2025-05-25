@@ -1,5 +1,12 @@
-﻿using IdentityService;
+﻿using Microsoft.AspNetCore.Identity;
+using IdentityService;
 using Serilog;
+using IdentityService.Models;
+using Duende.IdentityServer.Services;
+using DotNetEnv;
+
+// Tải file .env
+Env.Load();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -16,20 +23,17 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
 
+    // Cấu hình email 
+    builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+    // Đăng ký SMSSender
+    builder.Services.AddScoped<ISMSSender, SMSSender>();
+
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
 
-    // this seeding is only for the template to bootstrap the DB and users.
-    // in production you will likely want a different approach.
-        // if (args.Contains("/seed"))
-        // {
-        //     Log.Information("Seeding database...");
-        //     //SeedData.EnsureSeedData(app);
-        //     Log.Information("Done seeding database. Exiting.");
-        //     return;
-        // }
-
+    // Khởi tạo 1 số thông tin người dùng ban đầu
     SeedData.EnsureSeedData(app);
 
     app.Run();

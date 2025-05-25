@@ -14,8 +14,15 @@ public class ApplicationUser : IdentityUser
     public string? Address {get; set;}
     public DateTime CreateAt {get; set;} = DateTime.UtcNow;
     public DateTime UpdatedAt {get; set;} = DateTime.UtcNow;
+
+    // Ví điện tử
+    public long? Wallet {get; set;} 
+
+    // Thuộc tính để xác thực OTP
+    public string? OTPCode { get; set; } 
+    public DateTime? OTPExpiry { get; set; }
 }
 
 // Update Database
-// Tạo migration: dotnet ef migrations add AddFullNameAndAddress
+// Tạo migration: dotnet ef migrations add InitialCreation -o Data/Migrations
 // Áp dụng Migration vào CSDL: dotnet ef database update

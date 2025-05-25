@@ -1,26 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\",
+  "WorkspaceRootPath": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|d:\\hk4\\ltw\\nt208 - project\\nt208.p23\\src\\identityservice\\pages\\account\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|solutionrelative:pages\\account\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\pages\\account\\login\\loginoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\account\\login\\loginoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Account\\Login\\Index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\pages\\externallogin\\callback.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|solutionrelative:pages\\externallogin\\callback.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Account\\Verify\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\pages\\home\\error\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|solutionrelative:pages\\home\\error\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\SMS.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Account\\Verify\\SMS.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F37D0603-73EE-F14C-807C-3198CDBAE5BA}|IdentityService.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Account\\Verify\\Email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Register\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Account\\Register\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\pages\\account\\login\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\account\\login\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Pages\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\pages\\account\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\account\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\pages\\home\\error\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\home\\error\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,64 +62,144 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Account\\Login\\Index.cshtml",
-              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml",
-              "RelativeToolTip": "Pages\\Account\\Login\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAABJAAAA",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Account\\Verify\\Index.cshtml",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Account\\Verify\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAABFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-26T15:55:53.066Z",
+              "WhenOpened": "2025-05-25T08:27:05.022Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Callback.cshtml",
-              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\ExternalLogin\\Callback.cshtml",
-              "RelativeDocumentMoniker": "Pages\\ExternalLogin\\Callback.cshtml",
-              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\ExternalLogin\\Callback.cshtml",
-              "RelativeToolTip": "Pages\\ExternalLogin\\Callback.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-26T15:47:45.828Z"
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Account\\Login\\Index.cshtml.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml.cs",
+              "RelativeToolTip": "Pages\\Account\\Login\\Index.cshtml.cs",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAJIAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T08:22:33.176Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\Home\\Error\\Index.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Home\\Error\\Index.cshtml",
-              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Pages\\Home\\Error\\Index.cshtml",
-              "RelativeToolTip": "Pages\\Home\\Error\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Register\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Account\\Register\\Index.cshtml",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Register\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Account\\Register\\Index.cshtml",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAADsAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-26T15:47:29.214Z"
+              "WhenOpened": "2025-05-25T08:21:14.247Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
+              "Title": "Email.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Email.cs",
+              "RelativeDocumentMoniker": "Pages\\Account\\Verify\\Email.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\Email.cs",
+              "RelativeToolTip": "Pages\\Account\\Verify\\Email.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAADYAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T15:46:28.412Z"
+              "WhenOpened": "2025-05-25T07:28:54.221Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "D:\\HK4\\LTW\\NT208 - Project\\NT208.P23\\src\\IdentityService\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAADOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-26T15:37:08.773Z"
+              "DocumentIndex": 3,
+              "Title": "SMS.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\SMS.cs",
+              "RelativeDocumentMoniker": "Pages\\Account\\Verify\\SMS.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Verify\\SMS.cs",
+              "RelativeToolTip": "Pages\\Account\\Verify\\SMS.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAwAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T07:10:48.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T07:08:03.581Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-30T11:28:13.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginOptions.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\LoginOptions.cs",
+              "RelativeDocumentMoniker": "Pages\\Account\\Login\\LoginOptions.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\LoginOptions.cs",
+              "RelativeToolTip": "Pages\\Account\\Login\\LoginOptions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T11:25:13.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ViewModel.cs",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\ViewModel.cs",
+              "RelativeDocumentMoniker": "Pages\\Account\\Login\\ViewModel.cs",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\ViewModel.cs",
+              "RelativeToolTip": "Pages\\Account\\Login\\ViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T11:24:55.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Account\\Login\\Index.cshtml",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Account\\Login\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Account\\Login\\Index.cshtml",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABQAAABRAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-26T15:55:53.066Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Home\\Error\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Home\\Error\\Index.cshtml",
+              "ToolTip": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\Pages\\Home\\Error\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Home\\Error\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-26T15:47:29.214Z"
             }
           ]
         },

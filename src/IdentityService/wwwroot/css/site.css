@@ -37,3 +37,10 @@
 .grants-page .card label {
   font-weight: bold;
 }
+
+body {
+    background-image: url('/bg-image.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}

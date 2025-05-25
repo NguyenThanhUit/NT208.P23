@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Data",
+    "\\Pages",
+    "\\Pages\\Account",
+    "\\Pages\\Account\\Login",
+    "\\Pages\\Account\\Register",
+    "\\Pages\\Account\\Verify",
+    "\\Pages\\Home",
+    "\\Pages\\Home\\Error"
+  ],
+  "SelectedNode": "\\Pages\\Account\\Login\\LoginOptions.cs",
+  "PreviewInSolutionExplorer": false
+}

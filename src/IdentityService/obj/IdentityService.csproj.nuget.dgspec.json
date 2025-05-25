@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
+    "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\IdentityService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
+    "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\IdentityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
+        "projectUniqueName": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\IdentityService.csproj",
         "projectName": "IdentityService",
-        "projectPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
-        "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Legion\\NT208.P23\\src\\IdentityService\\obj\\",
+        "projectPath": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\IdentityService.csproj",
+        "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
+        "outputPath": "D:\\DA-LTW\\NT208.P23 - CopyTest\\src\\IdentityService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Legion\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,9 +45,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Duende.IdentityServer.AspNetIdentity": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "Infobip.Api.Sdk": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             },
             "Microsoft.AspNetCore.Authentication.Google": {
               "target": "Package",
@@ -55,11 +65,11 @@
               "target": "Package",
               "version": "[8.0.3, )"
             },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "Microsoft.AspNetCore.Identity": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[2.3.1, )"
             },
-            "Microsoft.AspNetCore.Identity.UI": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.3, )"
             },
@@ -95,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

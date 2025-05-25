@@ -64,6 +64,12 @@ namespace IdentityService.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("OTPCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("OTPExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
@@ -85,6 +91,9 @@ namespace IdentityService.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<long?>("Wallet")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
