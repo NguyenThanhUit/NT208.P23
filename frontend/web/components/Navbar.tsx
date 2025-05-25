@@ -30,6 +30,10 @@ export default function Navbar({ orders }: { orders: Order[] }) {
         router.push("/auction");
     };
 
+    const handleCreateAuctionClick = () => {
+        router.push("/auction/create");
+    };
+
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
             {/* Logo */}
@@ -50,6 +54,12 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                     onClick={handleAuctionClick}
                 >
                     Đấu giá
+                </button>
+                <button
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100"
+                    onClick={handleCreateAuctionClick}
+                >
+                    Tạo buổi đấu giá
                 </button>
             </div>
 
