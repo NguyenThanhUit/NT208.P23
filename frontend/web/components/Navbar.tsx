@@ -15,7 +15,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
     const [user, setUser] = useState<any>(null);
     const totalQuantity = useCartStore((state) => state.getTotalQuantity());
 
-    const router = useRouter(); // Hook điều hướng của Next.js
+    const router = useRouter();
     const pathName = usePathname();
 
     useEffect(() => {
@@ -23,7 +23,11 @@ export default function Navbar({ orders }: { orders: Order[] }) {
     }, []);
 
     const handleLogoClick = () => {
-        router.push("/"); // Điều hướng về trang chủ khi click vào logo
+        router.push("/");
+    };
+
+    const handleAuctionClick = () => {
+        router.push("/auction");
     };
 
     return (
@@ -31,7 +35,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
             {/* Logo */}
             <div
                 className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
-                onClick={handleLogoClick} // Thêm sự kiện click vào logo
+                onClick={handleLogoClick}
             >
                 <div>E-Shop</div>
             </div>
@@ -41,7 +45,10 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                 <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
                     Sản phẩm
                 </button>
-                <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
+                <button
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100"
+                    onClick={handleAuctionClick}
+                >
                     Đấu giá
                 </button>
             </div>
