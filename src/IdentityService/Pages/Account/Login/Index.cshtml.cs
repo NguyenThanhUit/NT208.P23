@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text;
 
 namespace IdentityService.Pages.Login;
 
@@ -19,25 +20,37 @@ namespace IdentityService.Pages.Login;
 [AllowAnonymous]
 public class Index : PageModel
 {
+    // Tạo / Lấy thông tin người dùng từ CSDL
     private readonly UserManager<ApplicationUser> _userManager;
+
+    // Hỗ trợ đăng nhập (kiểm tra username, password)
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IIdentityServerInteractionService _interaction;
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
 
+    // Gửi email 
+    private readonly IEmailSender _emailSender;
+
+    // Gửi SMS
+    private readonly ISMSSender _smsSender;
+
     public ViewModel View { get; set; } = default!;
-        
+
+    // 
     [BindProperty]
     public InputModel Input { get; set; } = default!;
-        
+
     public Index(
         IIdentityServerInteractionService interaction,
         IAuthenticationSchemeProvider schemeProvider,
         IIdentityProviderStore identityProviderStore,
         IEventService events,
         UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager)
+        SignInManager<ApplicationUser> signInManager,
+        IEmailSender emailSender,
+        ISMSSender smsSender)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -45,12 +58,14 @@ public class Index : PageModel
         _schemeProvider = schemeProvider;
         _identityProviderStore = identityProviderStore;
         _events = events;
+        _emailSender = emailSender;
+        _smsSender = smsSender;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
     {
         await BuildModelAsync(returnUrl);
-            
+
         if (View.IsExternalLoginOnly)
         {
             // we only have one option for logging in and it's an external provider
@@ -59,14 +74,14 @@ public class Index : PageModel
 
         return Page();
     }
-        
+
+    // Thực hiện khi gửi form
     public async Task<IActionResult> OnPost()
     {
         // check if we are in the context of an authorization request
         var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
-        // the user clicked the "cancel" button
-        if (Input.Button != "SignIn")
+        if (Input.Button != "LogIn")
         {
             if (context != null)
             {
@@ -88,63 +103,76 @@ public class Index : PageModel
 
                 return Redirect(Input.ReturnUrl ?? "~/");
             }
-            else
-            {
-                // since we don't have a valid context, then we just go back to the home page
-                return Redirect("~/");
-            }
+            // Go back to the home page
+            else return Redirect("~/");
         }
+
 
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(Input.Username!, Input.Password!, Input.RememberLogin, lockoutOnFailure: true);
-            if (result.Succeeded)
+            var user = await _userManager.FindByNameAsync(Input.Username!);
+            if (user != null)
             {
-                var user = await _userManager.FindByNameAsync(Input.Username!);
-                await _events.RaiseAsync(new UserLoginSuccessEvent(user!.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-                Telemetry.Metrics.UserLogin(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider);
-
-                if (context != null)
+                // Kiểm tra username và password mà không đăng nhập ngay
+                var result = await _userManager.CheckPasswordAsync(user, Input.Password!);
+                if (result)
                 {
-                    // This "can't happen", because if the ReturnUrl was null, then the context would be null
-                    ArgumentNullException.ThrowIfNull(Input.ReturnUrl, nameof(Input.ReturnUrl));
+                    // Nếu xác thực username, password thành công: gửi OTP
+                    // Tạo mã OTP 6 chữ số
+                    string OTP = GenerateOTP();
+                    user.OTPCode = OTP;
+                    user.OTPExpiry = DateTime.UtcNow.AddMinutes(5);
+                    await _userManager.UpdateAsync(user);
 
-                    if (context.IsNativeClient())
+                    // Gửi email
+                    if (Input.VerificationMethod == "Email")
                     {
-                        // The client is native, so this change in how to
-                        // return the response is for better UX for the end user.
-                        return this.LoadingPage(Input.ReturnUrl);
+                        user.EmailConfirmed = true;
+
+                        await _emailSender.SendEmail(
+                            user.Email,
+                            "Xác thực tài khoản E-Shop",
+                            $"Mã OTP của bạn là: {OTP}. Mã sẽ hết hạn sau 5 phút."
+                        );
+                    }
+                    // Gửi SMS
+                    else if (Input.VerificationMethod == "SMS")
+                    {
+                        user.PhoneNumberConfirmed = true;
+
+                        string phoneNumber = "+84" + user.PhoneNumber.Substring(1);
+
+                        Console.WriteLine(phoneNumber);
+                        await _smsSender.SendSMS(
+                            phoneNumber,
+                            $"Xác thực tài khoản E-Shop. Mã OTP của bạn là: {OTP}. Mã sẽ hết hạn sau 5 phút."
+                        );
                     }
 
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    return Redirect(Input.ReturnUrl ?? "~/");
-                }
-
-                // request for a local page
-                if (Url.IsLocalUrl(Input.ReturnUrl))
-                {
-                    return Redirect(Input.ReturnUrl);
-                }
-                else if (string.IsNullOrEmpty(Input.ReturnUrl))
-                {
-                    return Redirect("~/");
-                }
-                else
-                {
-                    // user might have clicked on a malicious link - should be logged
-                    throw new ArgumentException("invalid return URL");
+                    return RedirectToPage("/Account/Verify/Index", new
+                    {
+                        returnUrl = Input.ReturnUrl,
+                        username = Input.Username,
+                        rememberLogin = Input.RememberLogin
+                    });
                 }
             }
-
-            const string error = "invalid credentials";
-            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, error, clientId:context?.Client.ClientId));
-            Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, error);
-            ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
 
-        // something went wrong, show form with error
+        const string error = "invalid credentials";
+        await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, error, clientId: context?.Client.ClientId));
+        Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, error);
+        ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
+
+        // Nếu có lỗi, tải lại trang và hiển thị lỗi
         await BuildModelAsync(Input.ReturnUrl);
         return Page();
+    }
+
+    private string GenerateOTP()
+    {
+        Random random = new Random();
+        return random.Next(100000, 999999).ToString();
     }
 
     private async Task BuildModelAsync(string? returnUrl)
@@ -153,7 +181,7 @@ public class Index : PageModel
         {
             ReturnUrl = returnUrl
         };
-            
+
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
         if (context?.IdP != null && await _schemeProvider.GetSchemeAsync(context.IdP) != null)
         {
@@ -169,7 +197,7 @@ public class Index : PageModel
 
             if (!local)
             {
-                View.ExternalProviders = new[] { new ViewModel.ExternalProvider ( authenticationScheme: context.IdP ) };
+                View.ExternalProviders = new[] { new ViewModel.ExternalProvider(authenticationScheme: context.IdP) };
             }
 
             return;

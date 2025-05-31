@@ -15,9 +15,6 @@ async function get(url: string) {
 
 async function post(url: string, body: {}) {
     const headers = await getHeaders();
-    if (headers.Authorization) {
-        console.log('Token sent in POST:', headers.Authorization);
-    }
 
     const requestOptions = {
         method: 'POST',

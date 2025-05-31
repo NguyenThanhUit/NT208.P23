@@ -8,15 +8,36 @@ public class DbInitializers
     public static async Task InitDb(WebApplication app)
     {
         await DB.InitAsync("SearchDB", MongoClientSettings.FromConnectionString(app.Configuration.GetConnectionString("MongoDbConnection")));
-        //Chỉ mục cho việc tìm kiếm
+
+
         await DB.Index<Product>()
             .Key(x => x.Name, KeyType.Text)
             .CreateAsync();
 
-        using var scope = app.Services.CreateScope();
-        var httpClient = scope.ServiceProvider.GetService<OrderSvcHttpClient>();
-        var products = await httpClient.GetProductForSearch();
-        if (products.Count > 0) await DB.SaveAsync(products);
 
+        await DB.Index<Item>()
+            .Key(x => x.Name, KeyType.Text)
+            .Key(x => x.Category, KeyType.Text)
+            .Key(x => x.Year, KeyType.Text)
+            .CreateAsync();
+
+        using var scope = app.Services.CreateScope();
+
+        //OrderService
+        var orderHttpClient = scope.ServiceProvider.GetService<OrderSvcHttpClient>();
+        var products = await orderHttpClient.GetProductForSearch();
+        if (products?.Count > 0)
+        {
+            await DB.SaveAsync(products);
+        }
+
+        // AuctionService
+        var auctionHttpClient = scope.ServiceProvider.GetService<AuctionSvcHTTPClient>();
+        var items = await auctionHttpClient.GetItemForSearchDb();
+        Console.WriteLine(items.Count + " items returned from auction service");
+        if (items?.Count > 0)
+        {
+            await DB.SaveAsync(items);
+        }
     }
 }

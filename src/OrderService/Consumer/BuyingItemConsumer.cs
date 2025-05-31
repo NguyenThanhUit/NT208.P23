@@ -36,7 +36,7 @@ namespace OrderService
             Console.WriteLine($"Product before update: Name = {product.Name}, Stock Quantity = {product.StockQuantity}");
 
             // Giảm số lượng tồn kho
-            product.StockQuantity -= 1;
+            product.StockQuantity = product.StockQuantity - context.Message.Quantity;
 
 
 

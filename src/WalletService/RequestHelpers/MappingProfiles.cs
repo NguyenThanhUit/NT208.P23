@@ -11,7 +11,7 @@ namespace WalletService
             CreateMap<BuyingPlaced, Wallet>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Buyer))
                 .ForMember(dest => dest.Balance, opt => opt.MapFrom(src => src.TotalAmount))
-                .ForMember(dest => dest.ID, opt => opt.Ignore()); // ID do MongoDB.Entities quản lý
+                .ForMember(dest => dest.ID, opt => opt.Ignore());
         }
     }
 }

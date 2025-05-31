@@ -16,7 +16,7 @@ public class BuyingPlacedConsumer : IConsumer<BuyingPlaced>
         {
             Console.WriteLine("Khong tim thay san pham");
         }
-        product.StockQuantity = product.StockQuantity - 1;
+        product.StockQuantity = product.StockQuantity - message.Quantity;
         await product.SaveAsync();
     }
 }

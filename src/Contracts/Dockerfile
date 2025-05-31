@@ -9,8 +9,10 @@ COPY src/SearchService/SearchService.csproj src/SearchService/SearchService.cspr
 COPY src/GatewayService/GatewayService.csproj src/GatewayService/GatewayService.csproj 
 COPY src/Contracts/Contracts.csproj src/Contracts/Contracts.csproj
 COPY src/IdentityService/IdentityService.csproj src/IdentityService/IdentityService.csproj
-COPY src/BuyingService/BuyService.csproj src/BuyingService/BuyingService.csproj
+COPY src/BuyingService/BuyingService.csproj src/BuyingService/BuyingService.csproj
 COPY src/WalletService/WalletService.csproj src/WalletService/WalletService.csproj
+COPY src/AuctionService/AuctionService.csproj src/AuctionService/AuctionService.csproj
+COPY src/NotificationService/NotificationService.csproj src/NotificationService/NotificationService.csproj
 # Restore package deps
 RUN dotnet restore NT208.P23.sln
 # Copy the app folders 

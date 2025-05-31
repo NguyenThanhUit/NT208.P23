@@ -5,6 +5,7 @@ using MassTransit;
 using System.Net;
 using SearchService;
 using SearchService.Consumers;
+using Contracts;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,12 +18,14 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // //Thêm HTTP client
 builder.Services.AddHttpClient<OrderSvcHttpClient>().AddPolicyHandler(GetPolicy());
+builder.Services.AddHttpClient<AuctionSvcHTTPClient>().AddPolicyHandler(GetPolicy());
 builder.Services.AddMassTransit(x =>
 {
     //Them consumer
     x.AddConsumersFromNamespaceContaining<OrderCreatedConsumer>();
     x.AddConsumersFromNamespaceContaining<OrderUpdatedConsumer>();
     x.AddActivitiesFromNamespaceContaining<BuyingPlacedConsumer>();
+    x.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
 
 
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));

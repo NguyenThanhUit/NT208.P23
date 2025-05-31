@@ -57,6 +57,7 @@ services:
       - RabbitMq__Host=rabbitmq
       - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
       - OrderServiceUrl=http://order-svc
+      - AuctionServiceUrl=http://auctions-svc
     ports:
       - 7002:80
     depends_on:
@@ -98,6 +99,63 @@ services:
     depends_on:
       mongodb:
         condition: service_started
+  auctions-svc:
+    image: nguyenthanh/auctions-svc:latest
+    build: 
+      context: .
+      dockerfile: src/AuctionService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://+:7777
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=auctions
+      - IdentityServiceUrl=http://identity-svc
+      - Kestrel__Endpoints__Grpc__Protocols=Http2
+      - Kestrel__Endpoints__Grpc__Url=http://+:7777
+      - Kestrel__Endpoints__WebApi__Protocols=http1
+      - Kestrel__Endpoints__WebApi__Url=http://+:80
+    ports:
+      - 7005:80
+      - 7777:7777
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+  bid-svc:
+    image: nguyenthanh/bid-svc:latest
+    build:
+      context: .
+      dockerfile: src/BiddingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
+      - IdentityServiceUrl=http://identity-svc
+      - GrpcAuction=http://auctions-svc:7777
+    ports:
+      - 7006:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+  notify-svc:
+    image: nguyenthanh/notify-svc:latest
+    build:
+      context: .
+      dockerfile: src/NotificationService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+    ports:
+      - 7007:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   identity-svc:
     image: nguyenthanh/identity-svc:latest
     build: 

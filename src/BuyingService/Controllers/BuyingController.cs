@@ -34,7 +34,8 @@ namespace BuyingService.Controllers
                     Seller = item.Seller,
                     createdAt = DateTime.UtcNow,
                     Finished = false,
-                    ProductName = item.ProductName
+                    ProductName = item.ProductName,
+                    Quantity = item.Quantity,
                 };
 
                 await DB.SaveAsync(order);
@@ -56,10 +57,30 @@ namespace BuyingService.Controllers
 
             await DB.SaveAsync(buying);
 
-            var eventMessage = _mapper.Map<BuyingPlaced>(buying);
-            await _publishEndpoint.Publish(eventMessage);
+            // Gửi từng item như một sự kiện riêng biệt
+            foreach (var item in buying.Items)
+            {
+                var eventMessage = new BuyingPlaced
+                {
+                    Id = buying.ID,
+                    orderID = buying.OrderId,
+                    Buyer = buying.Buyer,
+                    PaymentMethod = buying.PaymentMethod,
+                    TotalAmount = buying.TotalAmount,
+                    createdAt = buying.CreatedAt,
+                    BuyingStatus = buying.BuyingStatus.ToString(),
+                    ProductName = item.ProductName,
+                    Quantity = item.Quantity
+                };
 
-            return Ok(new { message = "Đơn hàng đã được tạo thành công", data = _mapper.Map<BuyingDto>(buying) });
+                await _publishEndpoint.Publish(eventMessage);
+            }
+
+            return Ok(new
+            {
+                message = "Đơn hàng đã được tạo thành công",
+                data = _mapper.Map<BuyingDto>(buying)
+            });
         }
 
         [HttpGet]
@@ -77,7 +98,7 @@ namespace BuyingService.Controllers
         }
     }
 
-    // Dữ liệu cho từng sản phẩm
+
     public class ItemRequest
     {
         public string Seller { get; set; }
@@ -86,7 +107,7 @@ namespace BuyingService.Controllers
         public int Price { get; set; }
     }
 
-    // Yêu cầu tạo đơn hàng với nhiều item
+
     public class CreateOrderRequest
     {
         public string Buyer { get; set; }

@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZWdpc3RlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Legion/NT208.P23/src/IdentityService/Pages/Account/Verify/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxWZXJpZnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Legion/NT208.P23/src/IdentityService/Pages/Ciba/All.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2liYVxBbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

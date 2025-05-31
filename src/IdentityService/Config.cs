@@ -10,6 +10,8 @@ public static class Config
             // Allow accessing ID token and user's profile info
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResources.Email(),
+            new IdentityResources.Address(),
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -54,7 +56,7 @@ public static class Config
                 AllowOfflineAccess = true, // <-- Sửa lỗi chính tả: AllowwOfflineAccess -> AllowOfflineAccess
                 
                 // Các phạm vi mà client này có thể truy cập
-                AllowedScopes = { "openid", "profile", "orderApp" },
+                AllowedScopes = { "openid", "profile","email", "address", "orderApp" },
                 
                 // Thời gian sống của access token (30 ngày = 3600s * 24h * 30d)
                 AccessTokenLifetime = 3600 * 24 * 30,

@@ -6,6 +6,7 @@ namespace BuyingService.Models
         public string Seller { get; set; }
         public string ProductName { get; set; }
         public DateTime createdAt { get; set; }
+        public int Quantity { get; set; }
         public bool Finished { get; set; }
     }
 }

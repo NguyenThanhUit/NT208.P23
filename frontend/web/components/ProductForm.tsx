@@ -16,6 +16,19 @@ import {
     FiAlignLeft
 } from 'react-icons/fi';
 
+const gameGenres = [
+    'Action',
+    'Adventure',
+    'RPG',
+    'Simulation',
+    'Strategy',
+    'Sports',
+    'Puzzle',
+    'Racing',
+    'Horror',
+    'Shooter'
+];
+
 export default function ProductForm() {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
@@ -110,12 +123,11 @@ export default function ProductForm() {
                     error={errors.Price?.message}
                 />
 
-                <FormInput
+                <FormDropdown
                     icon={<FiList />}
-                    label="Danh mục"
-                    type="text"
-                    placeholder="Nhập danh mục sản phẩm"
-                    register={register('Category', { required: 'Danh mục là bắt buộc' })}
+                    label="Thể loại"
+                    options={gameGenres}
+                    register={register('Category', { required: 'Vui lòng chọn thể loại' })}
                     error={errors.Category?.message}
                 />
 
@@ -176,7 +188,7 @@ export default function ProductForm() {
     );
 }
 
-// Input Component
+
 function FormInput({
     label,
     icon,
@@ -213,7 +225,7 @@ function FormInput({
     );
 }
 
-// TextArea Component
+
 function FormTextArea({
     label,
     icon,
@@ -242,6 +254,45 @@ function FormTextArea({
                     rows={4}
                     className="w-full pl-10 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm hover:shadow-md resize-none"
                 />
+            </div>
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        </div>
+    );
+}
+
+function FormDropdown({
+    label,
+    icon,
+    options,
+    register,
+    error
+}: {
+    label: string;
+    icon?: React.ReactNode;
+    options: string[];
+    register: any;
+    error?: string;
+}) {
+    return (
+        <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+            <div className="relative">
+                {icon && (
+                    <span className="absolute left-3 top-3.5 text-gray-400 pointer-events-none">
+                        {icon}
+                    </span>
+                )}
+                <select
+                    {...register}
+                    className="w-full pl-10 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-sm hover:shadow-md"
+                >
+                    <option value="">-- Chọn thể loại --</option>
+                    {options.map((opt) => (
+                        <option key={opt} value={opt}>
+                            {opt}
+                        </option>
+                    ))}
+                </select>
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </div>

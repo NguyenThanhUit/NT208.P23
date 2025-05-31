@@ -7,5 +7,6 @@ public class Order : Entity
     public string Seller { get; set; }
     public DateTime createdAt { get; set; }
     public string ProductName { get; set; }
+    public int Quantity { get; set; }
     public bool Finished { get; set; }
 }

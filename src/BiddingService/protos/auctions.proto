@@ -1,0 +1,40 @@
+// Khai báo sử dụng syntax proto3, phiên bản mới nhất và phổ biến nhất
+syntax = "proto3";
+
+// Thiết lập không gian tên C# khi sinh mã từ file proto
+option csharp_namespace = "AuctionService";
+
+// Định nghĩa service gRPC tên là GrpcAuction
+service GrpcAuction {
+  // Định nghĩa một RPC (Remote Procedure Call) có tên là GetAuction
+  // Nhận vào GetAuctionRequest và trả về GrpcAuctionResponse
+  rpc GetAuction(GetAuctionRequest) returns (GrpcAuctionResponse);
+}
+
+// Định nghĩa message dùng để gửi yêu cầu lấy thông tin đấu giá
+message GetAuctionRequest {
+  // ID của cuộc đấu giá (auction) cần lấy thông tin
+  string id = 1;
+}
+
+// Định nghĩa model đại diện cho một cuộc đấu giá trong phản hồi
+message GrpcAuctionModel {
+  // ID của cuộc đấu giá
+  string id = 1;
+
+  // Người bán (seller) trong cuộc đấu giá
+  string seller = 2;
+
+  // Thời gian kết thúc của cuộc đấu giá (được lưu dưới dạng chuỗi, ví dụ: ISO
+  // 8601)
+  string auctionEnd = 3;
+
+  // Giá sàn (giá tối thiểu) để cuộc đấu giá hợp lệ
+  int32 reservePrice = 4;
+}
+
+// Định nghĩa message trả về khi gọi RPC GetAuction
+message GrpcAuctionResponse {
+  // Thông tin về cuộc đấu giá dưới dạng GrpcAuctionModel
+  GrpcAuctionModel auction = 1;
+}

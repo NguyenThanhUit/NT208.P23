@@ -11,7 +11,11 @@ public class InputModel
     public string? Username { get; set; }
     [Required]
     public string? Password { get; set; }
-    public bool RememberLogin { get; set; }
+    public bool RememberLogin { get; set; } = false;
+    public string? VerificationMethod { get; set; }
     public string? ReturnUrl { get; set; }
     public string? Button { get; set; }
+
+    // Thêm trường nhập mã OTP
+    public string? OTPCode { get; set; }
 }

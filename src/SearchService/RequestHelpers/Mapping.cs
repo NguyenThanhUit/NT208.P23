@@ -8,5 +8,6 @@ public class Mapping : Profile
     public Mapping()
     {
         CreateMap<OrderCreated, Product>();
-    } 
+        CreateMap<AuctionCreated, Item>();
+    }
 }

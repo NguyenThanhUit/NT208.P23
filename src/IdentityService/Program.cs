@@ -15,21 +15,15 @@ try
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
+    builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+    // Đăng ký SMSSender
+    builder.Services.AddScoped<ISMSSender, SMSSender>();
 
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
 
-    // this seeding is only for the template to bootstrap the DB and users.
-    // in production you will likely want a different approach.
-    // if (args.Contains("/seed"))
-    // {
-    //     Log.Information("Seeding database...");
-    //     //SeedData.EnsureSeedData(app);
-    //     Log.Information("Done seeding database. Exiting.");
-    //     return;
-    // }
     app.MapControllers();
     SeedData.EnsureSeedData(app);
     app.Run();

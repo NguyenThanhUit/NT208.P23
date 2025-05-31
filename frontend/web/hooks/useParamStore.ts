@@ -7,6 +7,8 @@ type State = {
     searchTerm: string; // Từ khóa tìm kiếm (ví dụ: createAt, name)
     searchValue: string; // Giá trị mà người dùng nhập
     orderBy: string; // Sắp xếp theo trường nào
+    winner?: string;
+    filterBy: string;
     Seller?: string; // Người bán
     Buyer?: string; // Người mua
 };
@@ -21,10 +23,11 @@ type Actions = {
 const initialState: State = {
     pageNumber: 1,
     pageSize: 12,
-    pageCount: 3,
+    pageCount: 1,
+    filterBy: "",
     searchTerm: "",
     searchValue: "",
-    orderBy: "price",
+    orderBy: "new",
     Seller: undefined,
     Buyer: undefined,
 };

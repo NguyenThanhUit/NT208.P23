@@ -12,6 +12,7 @@ internal static class HostingExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddRazorPages();
+        builder.Services.AddControllers();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -23,14 +24,13 @@ internal static class HostingExtensions
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost3000", policy =>
-                {
-                    policy.WithOrigins("http://localhost:3000")  // Frontend của bạn
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
-                });
+            {
+                policy.WithOrigins("http://localhost:3000")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
+            });
         });
-
 
         builder.Services
             .AddIdentityServer(options =>
@@ -42,12 +42,8 @@ internal static class HostingExtensions
                 // options.IssuerUri = builder.Configuration["IssuerUri"];
                 if (builder.Environment.IsEnvironment("Docker"))
                 {
-                    //Dùng cho Docker
                     options.IssuerUri = "http://localhost:5001";
                 }
-
-                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                // options.EmitStaticAudienceClaim = true;
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
@@ -57,21 +53,11 @@ internal static class HostingExtensions
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.Cookie.SameSite = SameSiteMode.Lax;
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         });
 
         builder.Services.AddAuthentication();
-        // .AddGoogle(options =>
-        // {
-        //     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-        //     // register your IdentityServer with Google at https://console.developers.google.com
-        //     // enable the Google+ API
-        //     // set the redirect URI to https://localhost:5001/signin-google
-        //     options.ClientId = "copy client ID from Google here";
-        //     options.ClientSecret = "copy client secret from Google here";
-        // });
-
 
         return builder.Build();
     }
@@ -89,12 +75,14 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
+
         app.UseIdentityServer();
         app.UseAuthorization();
 
         app.MapRazorPages()
-            .RequireAuthorization();
+           .RequireAuthorization();
 
+        app.MapControllers();
         return app;
     }
 }

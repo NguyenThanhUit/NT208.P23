@@ -10,5 +10,6 @@ namespace Contracts
         public DateTime createdAt { get; set; }
         public string ProductName { get; set; }
         public string BuyingStatus { get; set; }
+        public int Quantity { get; set; }
     }
 }

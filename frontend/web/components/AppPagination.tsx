@@ -13,7 +13,7 @@ export default function AppPagination({ currentPage, pageCount, pageChanged }: P
     return (
         <Pagination
             currentPage={currentPage}
-            onPageChange={e => pageChanged}
+            onPageChange={e => pageChanged(e)}
             totalPages={pageCount}
             layout="pagination" //bo cuc
             showIcons={true} //Icon chuyen trang

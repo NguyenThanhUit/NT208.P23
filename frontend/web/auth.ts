@@ -15,7 +15,7 @@ export const { handlers, signIn, auth } = NextAuth({
             issuer: "http://localhost:5001", // Đường dẫn đến IdentityServer (máy chủ xác thực)
             authorization: { // Cấu hình yêu cầu thêm thông tin gì khi xác thực
                 params: {
-                    scope: 'openid profile orderApp' // Các scope yêu cầu: 
+                    scope: 'openid profile email address orderApp' // Các scope yêu cầu: 
                     // openid: bắt buộc theo OIDC, cung cấp ID token
                     // profile: để lấy thông tin người dùng (tên, email,...)
                     // auctionApp: scope tùy chỉnh của bạn (có thể cho phép truy cập API riêng)
@@ -36,7 +36,8 @@ export const { handlers, signIn, auth } = NextAuth({
             }
             if (profile) {
                 token.username = profile.username
-                token.email = profile.email || "unknow"
+                token.email = profile.email
+                token.address = profile.address
             }
             return token;
         },
@@ -44,7 +45,8 @@ export const { handlers, signIn, auth } = NextAuth({
             if (token) {
                 session.user.username = token.username;
                 session.accessToken = token.accessToken;
-                session.user.email = token.email;
+                // session.user.email = token.email;
+                // session.user.address = token.address;
             }
             return session;
         }

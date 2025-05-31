@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
 using SearchService;
@@ -6,18 +7,16 @@ using SearchService;
 [ApiController]
 public class SearchController : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("products")]
     public async Task<ActionResult<List<Product>>> SearchItem([FromQuery] SearchParams searchParams)
     {
         var query = DB.PagedSearch<Product, Product>();
 
-        // Tìm kiếm full-text nếu có searchTerm
         if (!string.IsNullOrEmpty(searchParams.SearchTerm))
         {
             query = query.Match(Search.Full, searchParams.SearchTerm).SortByTextScore();
         }
 
-        // Sắp xếp
         query = searchParams.OrderBy switch
         {
             "priceascending" => query.Sort(x => x.Ascending(a => a.Price)),
@@ -26,20 +25,88 @@ public class SearchController : ControllerBase
             _ => query.Sort(x => x.Ascending(a => a.CreatedAt))
         };
 
+        query = searchParams.FilterBy switch
+        {
+            "Action" => query.Match(x => x.Category == "Action"),
+            "Adventure" => query.Match(x => x.Category == "Adventure"),
+            "RPG" => query.Match(x => x.Category == "RPG"),
+            "Simulation" => query.Match(x => x.Category == "Simulation"),
+            "Strategy" => query.Match(x => x.Category == "Strategy"),
+            "Sports" => query.Match(x => x.Category == "Sports"),
+            "Puzzle" => query.Match(x => x.Category == "Puzzle"),
+            "Racing" => query.Match(x => x.Category == "Racing"),
+            "Horror" => query.Match(x => x.Category == "Horror"),
+            "Shooter" => query.Match(x => x.Category == "Shooter"),
+            _ => query
+        };
+
+
         query.PageNumber(searchParams.PageNumber);
         query.PageSize(searchParams.PageSize);
 
 
 
-        // Thực hiện truy vấn
         var result = await query.ExecuteAsync();
 
-        // Trả về JSON đúng format
+
         return Ok(new
         {
-            data = result.Results,  // Danh sách sản phẩm
-            total = result.TotalCount, // Tổng số sản phẩm tìm được
+            data = result.Results,
+            total = result.TotalCount,
             pageCount = result.PageCount
+        });
+    }
+    [HttpGet("auctions")]
+    public async Task<ActionResult<List<Item>>> SearchAuctionItem([FromQuery] SearchParams searchParams)
+    {
+
+        var query = DB.PagedSearch<Item, Item>();
+
+
+        if (!string.IsNullOrEmpty(searchParams.SearchTerm))
+        {
+            query.Match(Search.Full, searchParams.SearchTerm).SortByTextScore();
+        }
+
+
+        //Sap xep
+        query = searchParams.OrderBy switch
+        {
+            "name" => query.Sort(x => x.Ascending(a => a.Name)).Sort(x => x.Ascending(a => a.Year)),
+            "new" => query.Sort(x => x.Descending(a => a.CreatedAt)),
+            _ => query.Sort(x => x.Ascending(a => a.AuctionEnd))
+        };
+        //Loc
+        query = searchParams.FilterBy switch
+        {
+            "finished" => query.Match(x => x.AuctionEnd < DateTime.UtcNow),
+            "endingSoon" => query.Match(x => x.AuctionEnd < DateTime.UtcNow.AddHours(6) && x.AuctionEnd > DateTime.UtcNow),
+            _ => query.Match(x => x.AuctionEnd > DateTime.UtcNow)
+        };
+
+        if (!string.IsNullOrEmpty(searchParams.Seller))
+        {
+            query.Match(x => x.Seller == searchParams.Seller);
+        }
+        if (!string.IsNullOrEmpty(searchParams.Winner))
+        {
+            query.Match(x => x.Winner == searchParams.Winner);
+        }
+
+        //So trang
+        query.PageNumber(searchParams.PageNumber);
+
+        //Kich thuoc trang
+        query.PageSize(searchParams.PageSize);
+
+        var result = await query.ExecuteAsync();
+
+
+        return Ok(new
+        {
+            results = result.Results, // Danh sách các mục tìm thấy
+            pageCount = result.PageCount, // Tổng số trang
+            totalCount = result.TotalCount // Tổng số mục
         });
     }
 }

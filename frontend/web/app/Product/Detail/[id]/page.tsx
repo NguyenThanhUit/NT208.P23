@@ -20,6 +20,9 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
     const [error, setError] = useState<string | null>(null);
     const addToCart = useCartStore((state) => state.addToCart);
 
+    // State số lượng sản phẩm muốn thêm
+    const [quantity, setQuantity] = useState(1);
+
     useEffect(() => {
         const fetchData = async () => {
             if (!id) {
@@ -34,7 +37,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                     getCurrentUser(),
                 ]);
 
-                // Log dữ liệu nhận được
                 console.log("Dữ liệu sản phẩm nhận được từ server:", productData);
                 console.log("Thông tin user hiện tại:", currentUser);
 
@@ -61,15 +63,29 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
         }
 
         try {
+            if (quantity < 1) {
+                toast.error("Số lượng phải lớn hơn hoặc bằng 1!", {
+                    position: "top-center",
+                    autoClose: 3000,
+                });
+                return;
+            }
+            if (quantity > product.StockQuantity) {
+                toast.error(`Số lượng tối đa có thể mua là ${product.StockQuantity}`, {
+                    position: "top-center",
+                    autoClose: 3000,
+                });
+                return;
+            }
+
             const cartItem = {
                 id: order.id,
                 name: order.Name,
                 price: order.Price ?? 0,
-                quantity: 1,
+                quantity,
                 imageUrl: order.ImageUrl,
             };
 
-            // Log dữ liệu gửi lên giỏ hàng
             console.log("Dữ liệu thêm vào giỏ hàng:", cartItem);
 
             addToCart(cartItem);
@@ -84,6 +100,14 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                 autoClose: 3000,
             });
         }
+    };
+
+    const increment = () => {
+        setQuantity((q) => Math.min(q + 1, product.StockQuantity));
+    };
+
+    const decrement = () => {
+        setQuantity((q) => Math.max(q - 1, 1));
     };
 
     if (loading) {
@@ -130,7 +154,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                             <p className="text-sm text-gray-500 mb-4">Thể loại: {product.Category}</p>
 
                             <div className="text-3xl font-bold text-green-600 mb-2">
-                                {product.price?.toLocaleString()} <span className="text-lg">VNĐ</span>
+                                {(product.Price ?? 0).toLocaleString()} <span className="text-lg">VNĐ</span>
                             </div>
 
                             <div className="mt-4 text-gray-700 text-base space-y-2">
@@ -141,13 +165,44 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                             </div>
                         </div>
 
-                        <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                            <button
-                                onClick={() => handleAddToCart(product)}
-                                className="inline-flex items-center justify-center px-5 py-3 bg-blue-600 text-white text-base font-medium rounded hover:bg-blue-700 transition"
-                            >
-                                🛒 Thêm vào giỏ hàng
-                            </button>
+                        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+                            {/* Nếu user không phải Seller thì hiển thị thêm vào giỏ hàng */}
+                            {user?.username !== product.Seller && (
+                                <>
+                                    <div className="flex items-center border rounded-md overflow-hidden max-w-[150px]">
+                                        <button
+                                            onClick={decrement}
+                                            className="px-3 py-1 bg-gray-300 hover:bg-gray-400 transition"
+                                            aria-label="Giảm số lượng"
+                                        >
+                                            -
+                                        </button>
+                                        <input
+                                            type="number"
+                                            className="w-12 text-center outline-none"
+                                            value={quantity}
+                                            min={1}
+                                            max={product.StockQuantity}
+                                            readOnly
+                                        />
+                                        <button
+                                            onClick={increment}
+                                            className="px-3 py-1 bg-gray-300 hover:bg-gray-400 transition"
+                                            aria-label="Tăng số lượng"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        onClick={() => handleAddToCart(product)}
+                                        className="inline-flex items-center justify-center px-5 py-3 bg-blue-600 text-white text-base font-medium rounded hover:bg-blue-700 transition"
+                                    >
+                                        🛒 Thêm vào giỏ hàng
+                                    </button>
+                                </>
+                            )}
+
                             <button
                                 onClick={() => window.history.back()}
                                 className="inline-flex items-center justify-center px-5 py-3 bg-gray-800 text-white text-base font-medium rounded hover:bg-gray-900 transition"
@@ -158,6 +213,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

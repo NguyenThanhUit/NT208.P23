@@ -20,7 +20,7 @@ export default function OrderHistoryPage() {
                     return;
                 }
 
-                const orders = await getOrderHistory(user.name);
+                const orders = await getOrderHistory(user.username);
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
             } catch (error) {

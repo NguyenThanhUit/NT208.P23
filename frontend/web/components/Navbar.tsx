@@ -38,7 +38,6 @@ export default function Navbar({ orders }: { orders: Order[] }) {
 
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
-            {/* Logo */}
             <div
                 className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
                 onClick={handleLogoClick}
@@ -46,19 +45,34 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                 <div>E-Shop</div>
             </div>
 
-            {/* Navigation Buttons */}
             <div className="flex gap-4 pl-80">
-                <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
-                    Sản phẩm
-                </button>
-                <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
-                    Đấu giá
-                </button>
+                <Link href="/">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName === "/"
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Sản phẩm
+                    </button>
+                </Link>
+                <Link href="/auctions">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName.startsWith("/auctions")
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Đấu giá
+                    </button>
+                </Link>
             </div>
 
-            {/* Right Side */}
+
+
+
             <div className="flex items-center gap-4">
-                {/* Cart Icon - Only show if user is logged in */}
+                {/* Cart Icon */}
                 {user && !loading && (
                     <Link href={`/Order/Cart/`}>
                         <div className="relative cursor-pointer">

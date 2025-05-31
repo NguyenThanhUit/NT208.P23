@@ -18,7 +18,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.createdAt, opt => opt.MapFrom(src => src.CreatedAt))
             // Ensure ProductName is correctly mapped from the first Order item in the Items list
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src =>
-                src.Items.Count > 0 ? src.Items[0].ProductName : null));
+                src.Items.Count > 0 ? src.Items[0].ProductName : null))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Items.Count > 0 ? src.Items[0].Quantity : 0));
 
         // Mapping for OrderCreated to Order (if required)
         CreateMap<OrderCreated, Order>();

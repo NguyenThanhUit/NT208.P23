@@ -1,19 +1,25 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-        policy.AllowAnyOrigin()
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("http://localhost:3000")
               .AllowAnyMethod()
-              .AllowAnyHeader());
+              .AllowAnyHeader()
+              .AllowCredentials());
 });
 
-builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
-// Áp dụng CORS trước khi reverse proxy
-app.UseCors("AllowAll");
+
+app.UseCors("AllowFrontend");
+
 
 app.MapReverseProxy();
 
