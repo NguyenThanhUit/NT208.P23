@@ -723,3 +723,5 @@ D:\DA-LTW\Test\src\IdentityService\obj\Debug\net8.0\refint\IdentityService.dll
 D:\DA-LTW\Test\src\IdentityService\obj\Debug\net8.0\IdentityService.pdb
 D:\DA-LTW\Test\src\IdentityService\obj\Debug\net8.0\IdentityService.genruntimeconfig.cache
 D:\DA-LTW\Test\src\IdentityService\obj\Debug\net8.0\ref\IdentityService.dll
+D:\DA-LTW\Test\src\IdentityService\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+D:\DA-LTW\Test\src\IdentityService\bin\Debug\net8.0\Twilio.dll

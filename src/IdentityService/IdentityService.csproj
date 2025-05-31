@@ -22,5 +22,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3" />
+		<PackageReference Include="Twilio" Version="7.11.1" />
 	</ItemGroup>
 </Project>

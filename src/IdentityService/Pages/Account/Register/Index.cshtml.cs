@@ -115,11 +115,8 @@ namespace IdentityService.Pages.Register
                     // Gửi SMS
                     else if (Input.VerificationMethod == "SMS")
                     {
-                        string phoneNumber = "+84" + user.PhoneNumber.Substring(1);
-
-                        Console.WriteLine(phoneNumber);
                         await _smsSender.SendSMS(
-                            phoneNumber,
+                            user.PhoneNumber,
                             $"Xác thực tài khoản E-Shop. Mã OTP của bạn là: {OTP}. Mã sẽ hết hạn sau 5 phút."
                         );
                     }
