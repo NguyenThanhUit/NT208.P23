@@ -28,5 +28,4 @@ public class RegisterViewModel
 
     // Thêm trường nhập mã OTP
     public string? OTPCode { get; set; } 
-
 }

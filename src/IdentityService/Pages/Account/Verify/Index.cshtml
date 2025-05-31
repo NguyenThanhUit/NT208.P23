@@ -17,6 +17,9 @@
                 <form method="post">
                     <input type="hidden" asp-for="Input.ReturnUrl" />
                     <input type="hidden" asp-for="Input.Username" />
+                    <input type="hidden" asp-for="Input.VerificationMethod" />
+                    <input type="hidden" asp-for="Input.RememberLogin" />
+                    
                     <div class="form-group">
                         <label asp-for="Input.OTPCode">Mã OTP</label>
                         <input type="text" placeholder="Mã OTP" asp-for="Input.OTPCode" autofocus>

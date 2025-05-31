@@ -35,7 +35,7 @@ public class Index : PageModel
     }
 
     // Lấy returnUrl và username từ form đăng nhập / đăng ký
-    public IActionResult OnGet(string? returnUrl, string? username, bool rememberLogin = false, bool isRegister = false)
+    public IActionResult OnGet(string? returnUrl, string? username, string verificationMethod, bool rememberLogin = false)
     {
         Input = new VerifyInputModel
         {
@@ -43,7 +43,7 @@ public class Index : PageModel
             ReturnUrl = returnUrl,
             Username = username,
             RememberLogin = rememberLogin,
-            IsRegister = isRegister
+            VerificationMethod = verificationMethod,
         };
         return Page();
     }
@@ -66,6 +66,12 @@ public class Index : PageModel
         // Kiểm tra thời hạn của mã OTP
         if (user.OTPCode == Input.OTPCode && user.OTPExpiry > DateTime.UtcNow)
         {
+            // Cập nhật phương thức xác thực
+            if (Input.VerificationMethod == "Email")
+                user.EmailConfirmed = true;
+            else if (Input.VerificationMethod == "SMS")
+                user.PhoneNumberConfirmed = true;
+            
             // Xóa thông tin OTP sau khi xác thực
             user.OTPCode = ""; 
             user.OTPExpiry = null;

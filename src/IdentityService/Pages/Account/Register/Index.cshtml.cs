@@ -106,8 +106,6 @@ namespace IdentityService.Pages.Register
                     // Gửi email
                     if (Input.VerificationMethod == "Email")
                     {
-                        user.EmailConfirmed = true;
-
                         await _emailSender.SendEmail(
                             user.Email,
                             "Xác thực tài khoản E-Shop",
@@ -117,8 +115,6 @@ namespace IdentityService.Pages.Register
                     // Gửi SMS
                     else if (Input.VerificationMethod == "SMS")
                     {
-                        user.PhoneNumberConfirmed = true;
-
                         string phoneNumber = "+84" + user.PhoneNumber.Substring(1);
 
                         Console.WriteLine(phoneNumber);
@@ -132,11 +128,12 @@ namespace IdentityService.Pages.Register
                     RegisterSuccess = true;
 
                     // Chuyển hướng đến trang xác thực OTP
-                    return RedirectToPage("/Account/Verify/Index", new { 
-                        returnUrl = Input.ReturnUrl, 
-                        username = Input.UserName, 
-                        rememberLogin = false,
-                        isRegister = RegisterSuccess });
+                    return RedirectToPage("/Account/Verify/Index", new
+                    {
+                        returnUrl = Input.ReturnUrl,
+                        username = Input.UserName,
+                        verificationMethod = Input.VerificationMethod
+                    });
                 }
 
                 foreach (var error in result.Errors)
