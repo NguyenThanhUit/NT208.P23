@@ -25,15 +25,20 @@ public static class Config
         {
             // Return access token, ID token contain user's information to the client
             // access token: key to request resources from resource server (auction API - auction service)
-            new Client
-            {
-                ClientId = "postman",
-                ClientName = "Postman",
-                AllowedScopes = {"openid", "profile", "orderApp"},
-                RedirectUris = {"https://www.getpostman.com/oauth2/callback"},
-                ClientSecrets = new[] {new Secret("NotASecret".Sha256())},
-                AllowedGrantTypes = {GrantType.ResourceOwnerPassword}
-            },
+            // Google
+            // new Client
+            // {
+            //     ClientId = Environment.GetEnvironmentVariable("CLIENTID"),
+            //     ClientSecrets = { new Secret(Environment.GetEnvironmentVariable("CLIENTSECRET").Sha256()) },
+            //     AllowedGrantTypes = GrantTypes.Code,
+            //     RedirectUris = { "http://localhost:5001/ExternalLogin/Callback" },
+            //     PostLogoutRedirectUris = { "http://localhost:5001" },
+            //     AllowedScopes = { "openid", "profile", "email" },
+            //     RequireConsent = false,
+            //     AllowOfflineAccess = true,
+            //     Enabled = true,
+            // },
+            // E-Shop
             new Client
             {
                 ClientId = "nextApp", // Client ID của app Next.js
@@ -65,4 +70,19 @@ public static class Config
                 AlwaysIncludeUserClaimsInIdToken = true, //Lay ID token
             }
         };
+
+//     public static IEnumerable<IdentityProvider> IdentityProviders =>
+//         new IdentityProvider[]
+//         {
+//             new IdentityProvider
+//             {
+//                 Scheme = "Google",
+//                 DisplayName = "Google",
+//                 Type = "oidc",
+//                 Authority = "https://accounts.google.com",
+//                 ClientId = "your-google-client-id",
+//                 ClientSecret = "your-google-client-secret",
+//                 Scopes = { "openid", "profile", "email" }
+//             }
+//         };
 }

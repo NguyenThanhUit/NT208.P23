@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+0mqYefDJNyc7pMfrO7CA6ACYhEOEf+Gjjw7MV2ZNAeBi3H6rysbl7MT2s1t1a145JQe+IkBFxRiIzIVmLf+nw==",
+  "dgSpecHash": "VJ+aBWc3Oy50MN1sfm0MX7hVV1jr9LsQ2WIF5+V+8BJmeqYxx4sJW/72Wmtx8JfnjLsQfa9/BXbf1t4PQxm7Gw==",
   "success": true,
-  "projectFilePath": "D:\\DA-LTW\\Test\\src\\IdentityService\\IdentityService.csproj",
+  "projectFilePath": "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nghoa\\.nuget\\packages\\dotnetenv\\3.1.1\\dotnetenv.3.1.1.nupkg.sha512",
     "C:\\Users\\nghoa\\.nuget\\packages\\duende.identityserver\\7.0.4\\duende.identityserver.7.0.4.nupkg.sha512",

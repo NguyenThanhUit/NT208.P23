@@ -65,9 +65,12 @@ internal static class HostingExtensions
         {
             app.UseDeveloperExceptionPage();
         }
-
+        
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseCookiePolicy();
+        app.UseAuthentication(); //
         app.UseIdentityServer();
         app.UseAuthorization();
         

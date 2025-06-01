@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DA-LTW\\Test\\src\\IdentityService\\IdentityService.csproj": {}
+    "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {}
   },
   "projects": {
-    "D:\\DA-LTW\\Test\\src\\IdentityService\\IdentityService.csproj": {
+    "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\IdentityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DA-LTW\\Test\\src\\IdentityService\\IdentityService.csproj",
+        "projectUniqueName": "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
         "projectName": "IdentityService",
-        "projectPath": "D:\\DA-LTW\\Test\\src\\IdentityService\\IdentityService.csproj",
+        "projectPath": "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\IdentityService.csproj",
         "packagesPath": "C:\\Users\\nghoa\\.nuget\\packages\\",
-        "outputPath": "D:\\DA-LTW\\Test\\src\\IdentityService\\obj\\",
+        "outputPath": "D:\\DA-LTW\\NT208.P23\\src\\IdentityService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nghoa\\AppData\\Roaming\\NuGet\\NuGet.Config",

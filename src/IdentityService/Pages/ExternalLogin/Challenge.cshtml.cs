@@ -20,7 +20,7 @@ public class Challenge : PageModel
         _interactionService = interactionService;
     }
         
-    public IActionResult OnGet(string scheme, string? returnUrl)
+    public IActionResult OnPost(string scheme, string? returnUrl)
     {
         if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
@@ -32,17 +32,17 @@ public class Challenge : PageModel
         }
             
         // start challenge and roundtrip the return URL and scheme 
-        var props = new AuthenticationProperties
+        var properties = new AuthenticationProperties
         {
-            RedirectUri = Url.Page("/externallogin/callback"),
+            RedirectUri = Url.Page("/ExternalLogin/Callback"), // /signin-google /ExternalLogin/Callback
                 
             Items =
             {
-                { "returnUrl", returnUrl }, 
                 { "scheme", scheme },
+                { "returnUrl", returnUrl }
             }
         };
-
-        return Challenge(props, scheme);
+        // Challenge là một phương thức của ASP.NET Core Authentication, kích hoạt luồng OAuth với Google.
+        return Challenge(properties, scheme);
     }
 }
