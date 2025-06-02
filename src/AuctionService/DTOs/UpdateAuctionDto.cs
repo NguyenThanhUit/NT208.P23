@@ -1,9 +1,11 @@
+
 namespace AuctionService.DTOs;
 
 public class UpdateAuctionDto
 {
-    public string name { get; set; }
-    public string des { get; set; }
-    public string category { get; set; }
-    public int? price { get; set; }
+    public String Name { get; set; }
+    public String Description { get; set; }
+    public int? Year { get; set; }
+    public string Key { get; set; }
+    public string Category { get; set; }
 }

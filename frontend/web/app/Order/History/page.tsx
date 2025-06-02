@@ -20,7 +20,7 @@ export default function OrderHistoryPage() {
                     return;
                 }
 
-                const orders = await getOrderHistory(user.name);
+                const orders = await getOrderHistory(user.username);
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
             } catch (error) {
@@ -61,7 +61,7 @@ export default function OrderHistoryPage() {
     }
 
     return (
-        <div className="p-6 max-w-5xl mx-auto">
+        <div className="p-6 max-w-5xl mx-auto h-[80vh] overflow-y-auto">
             <h1 className="text-3xl font-bold mb-6 text-center text-black">🧾 Lịch sử đơn hàng của bạn</h1>
 
             {Object.keys(groupedOrders).length === 0 ? (
@@ -88,7 +88,7 @@ export default function OrderHistoryPage() {
                                             <div>{getStatusBadge(order.buyingStatus)}</div>
                                         </div>
 
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-700">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-gray-700">
                                             <p><strong>👤 Người mua:</strong> {order.buyer}</p>
                                             <p><strong>💰 Tổng tiền:</strong> {Number(order.totalAmount).toLocaleString()} VNĐ</p>
                                             <p>

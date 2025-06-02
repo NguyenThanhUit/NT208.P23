@@ -17,179 +17,104 @@ namespace AuctionService.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("AuctionService.Entities.Auction", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("createdAt")
+                    b.Property<DateTime>("AuctionEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("currentHighBid")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("endAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("reservePrice")
+                    b.Property<int?>("CurrentHighBid")
                         .HasColumnType("integer");
 
-                    b.Property<string>("sellerID")
+                    b.Property<int>("ReservePrice")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Seller")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("status")
+                    b.Property<int?>("SoldAmount")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("updatedAt")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("winnerID")
-                        .IsRequired()
+                    b.Property<string>("Winner")
                         .HasColumnType("text");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Auctions");
                 });
 
-            modelBuilder.Entity("AuctionService.Entities.Items", b =>
+            modelBuilder.Entity("AuctionService.Entities.Item", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("auctionID")
+                    b.Property<Guid>("AuctionId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("category")
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("des")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("modifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("name")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("price")
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Year")
                         .HasColumnType("integer");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("auctionID")
+                    b.HasIndex("AuctionId")
                         .IsUnique();
 
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.InboxState", b =>
+            modelBuilder.Entity("AuctionService.Entities.Item", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime?>("Consumed")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ConsumerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("Delivered")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ExpirationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("LastSequenceNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("LockId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ReceiveCount")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Received")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.HasKey("Id");
-
-                    b.HasAlternateKey("MessageId", "ConsumerId");
-
-                    b.HasIndex("Delivered");
-
-                    b.ToTable("InboxState");
-                });
-
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxState", b =>
-                {
-                    b.Property<Guid>("OutboxId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("Delivered")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("LastSequenceNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("LockId")
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.HasKey("OutboxId");
-
-                    b.HasIndex("Created");
-
-                    b.ToTable("OutboxState");
-                });
-
-            modelBuilder.Entity("AuctionService.Entities.Items", b =>
-                {
-                    b.HasOne("AuctionService.Entities.Auction", "auction")
-                        .WithOne("item")
-                        .HasForeignKey("AuctionService.Entities.Items", "auctionID")
+                    b.HasOne("AuctionService.Entities.Auction", "Auction")
+                        .WithOne("Item")
+                        .HasForeignKey("AuctionService.Entities.Item", "AuctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("auction");
+                    b.Navigation("Auction");
                 });
 
             modelBuilder.Entity("AuctionService.Entities.Auction", b =>
                 {
-                    b.Navigation("item")
+                    b.Navigation("Item")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

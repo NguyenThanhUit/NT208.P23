@@ -2,13 +2,12 @@
 import { Order, PageResult } from "@/index";
 import { fetchWrapper } from "../lib/fetchWrapper";
 import { FieldValues } from "react-hook-form";
-import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export async function getData(query: string): Promise<PageResult<Order>> {
     try {
-        // const data = await fetchWrapper.get(`search${query}`);
-        const data = await fetchWrapper.get(`search`);
-        // console.log("Fetched Data from API:", data);  // Kiểm tra dữ liệu trả về từ API
+        // const data = await fetchWrapper.get(`http://localhost:6001/search?${query}`);
+        const data = await fetchWrapper.get(`search/products${query}`);
         return {
             results: data.data?.map((item: any) => ({
                 id: item.id,
@@ -40,19 +39,68 @@ export async function getData(query: string): Promise<PageResult<Order>> {
 
 
 export async function getDetailedProduct(id: string): Promise<Order> {
-    return await fetchWrapper.get(`orders/${id}`);
+    const data = await fetchWrapper.get(`orders/${id}`);
+    return {
+        id: data.id,
+        TotalPrice: data.totalPrice,
+        Seller: data.seller,
+        Buyer: data.buyer,
+        CreatedAt: data.createdAt,
+        Status: data.status,
+        SoldAmount: Number(data.soldAmount || 0),
+        Name: data.name,
+        Description: data.description,
+        Price: data.price,
+        Category: data.category,
+        ImageUrl: data.imageUrl,
+        StockQuantity: Number(data.stockQuantity || 0),
+    };
 }
 
-export async function createOrder(data: FieldValues) {
-    return await fetchWrapper.post('orders', data);
+
+export async function createProduct(data: FieldValues) {
+    const result = await fetchWrapper.post(`orders`, data);
+    return result;
 }
-// orderactions.ts
+
+export async function depositMoneyviaVnPay(money: number, description: string) {
+    const res = await fetch(
+        `http://localhost:6001/vnpay/CreatePaymentUrl?money=${money}&description=${encodeURIComponent(description)}`
+    );
+
+    if (!res.ok) {
+        throw new Error("Không thể tạo liên kết thanh toán VNPAY");
+    }
+
+    const url = await res.text();
+    return url;
+}
+
+
+
+export async function updateProduct(data: FieldValues, id: string) {
+    const res = await fetchWrapper.put(`orders/${id}`, data);
+    revalidatePath(`orders/${id}`);
+    return res;
+}
+export async function deleteProduct(id: string) {
+    await fetchWrapper.del(`orders/${id}`);
+}
+export async function depositMoney(data: { amount: number }) {
+    const result = await fetchWrapper.post('wallets/deposit', data);
+    return result;
+}
+export async function getTotalMoney(userId: string): Promise<{ balance: number }> {
+    return await fetchWrapper.get(`wallets/${userId}`);
+}
+
+
 
 export async function placeBuying(
     orderID: string,
     paymentMethod: string,
     buyer: string,
-    items: { seller: string; productName: string; quantity: number }[]
+    items: { seller: string; productName: string; quantity: number; price: number }[]
 ) {
     try {
         const requestData = {
@@ -61,7 +109,20 @@ export async function placeBuying(
             Buyer: buyer,
             Items: items,
         };
-        console.log("Dữ liệu gửi đi:", requestData);
+
+        console.log("🛒 Dữ liệu gửi đi:");
+        console.log("Order ID:", orderID);
+        console.log("Buyer:", buyer);
+        console.log("Payment method:", paymentMethod);
+        console.log("Danh sách sản phẩm:");
+
+        items.forEach((item, index) => {
+            console.log(`  #${index + 1}:`);
+            console.log(`    - Tên sản phẩm: ${item.productName}`);
+            console.log(`    - Số lượng: ${item.quantity}`);
+            console.log(`    - Giá: ${item.price}`);
+            console.log(`    - Người bán: ${item.seller}`);
+        });
 
         const response = await fetch("http://localhost:7003/api/buyings/create", {
             method: "POST",
@@ -90,10 +151,11 @@ export async function placeBuying(
 
         return await response.json();
     } catch (error) {
-        console.error("Lỗi khi thanh toán:", error);
+        console.error("❌ Lỗi khi thanh toán:", error);
         throw error;
     }
 }
+
 
 export async function getOrderHistory(buyer: string) {
     const response = await fetch(`http://localhost:7003/api/buyings?buyer=${buyer}`, {
@@ -107,7 +169,7 @@ export async function getOrderHistory(buyer: string) {
         throw new Error("Failed to fetch order history");
     }
 
-    return await response.json(); // Trả về danh sách các giao dịch
+    return await response.json()
 }
 
 

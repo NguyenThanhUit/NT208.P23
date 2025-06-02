@@ -9,59 +9,91 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/app/function/cartStore";
 import { Order } from "..";
 import { usePathname, useRouter } from "next/navigation";
-import { Button } from "flowbite-react";
 
 export default function Navbar({ orders }: { orders: Order[] }) {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
     const totalQuantity = useCartStore((state) => state.getTotalQuantity());
 
-    const router = useRouter(); // Hook điều hướng của Next.js
+    const router = useRouter();
     const pathName = usePathname();
 
     useEffect(() => {
-        getCurrentUser().then(setUser);
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser(currentUser);
+            } catch (err) {
+                console.error("Lỗi khi lấy thông tin người dùng:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
     }, []);
 
     const handleLogoClick = () => {
-        router.push("/"); // Điều hướng về trang chủ khi click vào logo
+        router.push("/");
     };
 
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
-            {/* Logo */}
             <div
                 className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
-                onClick={handleLogoClick} // Thêm sự kiện click vào logo
+                onClick={handleLogoClick}
             >
                 <div>E-Shop</div>
             </div>
 
-            {/* Navigation Buttons */}
             <div className="flex gap-4 pl-80">
-                <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
-                    Sản phẩm
-                </button>
-                <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-800 hover:bg-gray-100">
-                    Đấu giá
-                </button>
+                <Link href="/">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName === "/"
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Sản phẩm
+                    </button>
+                </Link>
+                <Link href="/auctions">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName.startsWith("/auctions")
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Đấu giá
+                    </button>
+                </Link>
             </div>
 
-            {/* Right Side */}
+
+
+
             <div className="flex items-center gap-4">
                 {/* Cart Icon */}
-                <Link href={`/Order/Cart/`}>
-                    <div className="relative cursor-pointer">
-                        <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
-                        {totalQuantity > 0 && (
-                            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
-                                {totalQuantity}
-                            </span>
-                        )}
-                    </div>
-                </Link>
+                {user && !loading && (
+                    <Link href={`/Order/Cart/`}>
+                        <div className="relative cursor-pointer">
+                            <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
+                            {totalQuantity > 0 && (
+                                <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
+                                    {totalQuantity}
+                                </span>
+                            )}
+                        </div>
+                    </Link>
+                )}
 
                 {/* User */}
-                {user ? <UserLogged user={user} /> : <LoginButton />}
+                {loading ? (
+                    <div className="text-gray-500">Đang tải...</div>
+                ) : user ? (
+                    <UserLogged user={user} />
+                ) : (
+                    <LoginButton />
+                )}
             </div>
         </header>
     );

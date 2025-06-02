@@ -7,6 +7,8 @@ type State = {
     searchTerm: string; // Từ khóa tìm kiếm (ví dụ: createAt, name)
     searchValue: string; // Giá trị mà người dùng nhập
     orderBy: string; // Sắp xếp theo trường nào
+    winner?: string;
+    filterBy: string;
     Seller?: string; // Người bán
     Buyer?: string; // Người mua
 };
@@ -20,11 +22,12 @@ type Actions = {
 // Giá trị khởi tạo
 const initialState: State = {
     pageNumber: 1,
-    pageSize: 4,
-    pageCount: 3,
+    pageSize: 12,
+    pageCount: 1,
+    filterBy: "",
     searchTerm: "",
     searchValue: "",
-    orderBy: "price",
+    orderBy: "new",
     Seller: undefined,
     Buyer: undefined,
 };
@@ -34,10 +37,14 @@ export const useParamStore = create<State & Actions>((set) => ({
     ...initialState, // Giá trị ban đầu cho state
 
     setParams: (newParams: Partial<State>) => {
-        set((state) => ({
-            ...state,
-            ...newParams, // Cập nhật bất kỳ giá trị nào được truyền vào
-        }));
+        set((state) => { // set được cung cấp bởi Zustand để cập nhật state
+            // Nếu có pageNumber mới, cập nhật nó
+            if (newParams.pageNumber) {
+                return { ...state, pageNumber: newParams.pageNumber }
+            } else { // Nếu không có pageNumber, reset pageNumber về 1
+                return { ...state, ...newParams, pageNumber: 1 }
+            }
+        })
     },
 
     setSearchValue: (value: string) => {

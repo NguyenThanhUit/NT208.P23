@@ -14,9 +14,11 @@ async function get(url: string) {
 }
 
 async function post(url: string, body: {}) {
+    const headers = await getHeaders();
+
     const requestOptions = {
         method: 'POST',
-        headers: await getHeaders(),
+        headers: headers,
         body: JSON.stringify(body)
     }
 
@@ -24,6 +26,7 @@ async function post(url: string, body: {}) {
 
     return handleResponse(response);
 }
+
 
 async function put(url: string, body: {}) {
     const requestOptions = {

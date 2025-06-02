@@ -1,24 +1,13 @@
 'use client';
 
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import UserLogged from "./UserLogged";
 
 export default function CurrentUser() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
-    if (!session) return null;
+    if (status === "loading") return null;
+    if (!session || !session.user) return null;
 
-    function handleSignOut() {
-        signOut({ callbackUrl: '/' }); // ✅ Xóa session và chuyển về trang chủ
-    }
-
-    return (
-        <div className="flex items-center gap-4">
-            <p className="text-gray-800">{session.user?.name}</p>
-            <button
-                onClick={handleSignOut}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700">
-                ĐĂNG XUẤT
-            </button>
-        </div>
-    );
+    return <UserLogged user={session.user} />;
 }

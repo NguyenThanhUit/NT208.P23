@@ -1,42 +1,69 @@
-'use client'
-import { useParamStore } from "@/hooks/useParamStore";
+'use client';
+
+import { signOut } from "next-auth/react";
 import { Dropdown, DropdownDivider, DropdownItem } from "flowbite-react";
 import Link from "next/link";
+import { AiOutlineProduct, AiFillTrophy, AiOutlineLogout } from 'react-icons/ai';
+import { HiCog } from 'react-icons/hi';
+import { MdShoppingCartCheckout } from "react-icons/md";
 import { User } from "next-auth";
-import { signOut } from "next-auth/react";
-import { AiFillCar, AiFillTrophy, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-import { HiCog, HiUser } from 'react-icons/hi';
 
-// Dùng để return khi đăng nhập thành công
 type Props = {
     user: User
-}
+};
 
 export default function UserLogged({ user }: Props) {
-    const setParams = useParamStore(state => state.setParams);
+    function handleSignOut() {
+        signOut({ callbackUrl: '/' });
+    }
 
     return (
-        <Dropdown inline label={<span className="text-black">Welcome {user.name}</span>}>
-            {/* Đặt màu chữ cho DropdownItem thành màu đen */}
-            <DropdownItem className="text-black" icon={HiUser}>
-                <Link href={`/Order/History`}>
+        <Dropdown
+            inline
+            label={<span className="text-black font-semibold">Welcome, {user.name}</span>}
+            className="w-56"
+        >
+            <DropdownItem icon={MdShoppingCartCheckout}>
+                <Link
+                    href="/Order/History"
+                    className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
+                >
                     Lịch sử mua hàng
                 </Link>
             </DropdownItem>
-            <DropdownItem className="text-black" icon={AiFillTrophy}>
-                Auctions won
-            </DropdownItem>
-            <DropdownItem className="text-black" icon={AiFillCar}>
-                <Link href={'/Order/Create'}>
-                    Tạo đơn hàng
+
+            <DropdownItem icon={AiFillTrophy}>
+                <Link
+                    href="/account/Detail"
+                    className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
+                >
+                    Thông tin cá nhân
                 </Link>
             </DropdownItem>
-            <DropdownDivider>
-                {/* Đặt màu chữ cho item logout thành màu đen */}
-                <DropdownItem className="text-black" icon={AiOutlineLogout} onClick={() => signOut({ callbackUrl: '/' })}>
-                    Sign out
-                </DropdownItem>
-            </DropdownDivider>
+
+            <DropdownItem icon={AiOutlineProduct}>
+                <Link
+                    href="/Create"
+                    className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
+                >
+                    Tạo sản phẩm
+                </Link>
+            </DropdownItem>
+
+            <DropdownItem icon={HiCog}>
+                <Link
+                    href="/recharge"
+                    className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
+                >
+                    Nạp tiền
+                </Link>
+            </DropdownItem>
+
+            <DropdownDivider />
+
+            <DropdownItem icon={AiOutlineLogout} onClick={handleSignOut}>
+                <span className="block w-full text-left text-sm text-red-600 hover:text-red-800">Đăng xuất</span>
+            </DropdownItem>
         </Dropdown>
     );
 }
