@@ -29,18 +29,17 @@ namespace IdentityService
             var claims = new List<Claim>
             {
                 new Claim("username", user.UserName),
-                new Claim("email", user.Email ?? ""),       // thêm email
-                new Claim("address", user.Address ?? ""),   // thêm address (nếu có)
-                // new Claim("phone", user.PhoneNumber),
-                // new Claim("phoneV", user.PhoneNumberConfirmed ? "true" : "false")
+                new Claim("email", user.Email ?? ""),
+                new Claim("address", user.Address ?? ""),
+                new Claim("createdAt", user.CreateAt.ToString("o")),
+                new Claim("Id", user.Id),
+
             };
 
             context.IssuedClaims.AddRange(claims);
 
             // user's fullname - additional claim which is sent back with token 
             context.IssuedClaims.Add(existingClaims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name));
-            // context.IssuedClaims.Add(existingClaims.FirstOrDefault(x => x.Type == JwtClaimTypes.Address));
-            // context.IssuedClaims.Add(existingClaims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email));
 
             // Add username & fullname to token
         }

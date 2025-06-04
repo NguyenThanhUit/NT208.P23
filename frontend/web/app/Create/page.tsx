@@ -16,7 +16,7 @@ export default function CreatePage() {
                     icon={<IoLogoGameControllerA />}
                     title="Tạo sản phẩm"
                     description="Đăng bán sản phẩm bạn muốn giao dịch trên thị trường."
-                    href="/Product/Create"
+                    href="/product/create"
                 />
                 <CreateOptionCard
                     icon={<AiFillThunderbolt />}

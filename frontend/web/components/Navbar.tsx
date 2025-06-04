@@ -66,15 +66,35 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                         Đấu giá
                     </button>
                 </Link>
+                <Link href="/blog">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName.startsWith("/blog")
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Blog
+                    </button>
+                </Link>
+                <Link href="/support">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName.startsWith("/support")
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Hỗ trợ
+                    </button>
+                </Link>
             </div>
 
 
 
 
             <div className="flex items-center gap-4">
-                {/* Cart Icon */}
+
                 {user && !loading && (
-                    <Link href={`/Order/Cart/`}>
+                    <Link href={`/order/cart/`}>
                         <div className="relative cursor-pointer">
                             <FiShoppingCart className="text-2xl text-gray-700 hover:text-gray-900" />
                             {totalQuantity > 0 && (
@@ -86,7 +106,6 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                     </Link>
                 )}
 
-                {/* User */}
                 {loading ? (
                     <div className="text-gray-500">Đang tải...</div>
                 ) : user ? (

@@ -46,9 +46,8 @@ export default function ProductList({ orders }: { orders: Order[] }) {
     const handleAddToCart = (order: Order) => {
         const isOutOfStock = !order.StockQuantity || order.StockQuantity <= 0;
 
-        // LOG
-        console.log("🛒 Adding to cart - Product:", order);
-        console.log("👤 User:", user);
+        // console.log("🛒 Adding to cart - Product:", order);
+        // console.log("👤 User:", user);
 
         if (isOutOfStock) {
             toast.error("Sản phẩm đã hết hàng!", {
@@ -90,6 +89,7 @@ export default function ProductList({ orders }: { orders: Order[] }) {
                 id: order.id,
                 name: order.Name,
                 price: order.Price ?? 0,
+                seller: order.Seller,
                 quantity: 1,
                 imageUrl: order.ImageUrl,
             });
@@ -113,13 +113,12 @@ export default function ProductList({ orders }: { orders: Order[] }) {
                 {orders.map((order) => {
                     const isOutOfStock = !order.StockQuantity || order.StockQuantity <= 0;
                     const isSeller = user?.username === order.Seller;
-
                     return (
                         <div
                             key={order.id}
                             className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col"
                         >
-                            <Link href={`/Product/Detail/${order.id}`} className="block p-4 flex-grow">
+                            <Link href={`/product/detail/${order.id}`} className="block p-4 flex-grow">
                                 <img
                                     src={order.ImageUrl || "https://via.placeholder.com/300x200"}
                                     alt={order.Name}
@@ -134,9 +133,10 @@ export default function ProductList({ orders }: { orders: Order[] }) {
                                     Số lượng: {order.StockQuantity}
                                 </p>
                                 <p className="text-gray-400 text-xs">Người bán: {order.Seller}</p>
+
                             </Link>
 
-                            {/* Ẩn nút khi user là người bán */}
+
                             {!isSeller && (
                                 <Button
                                     onClick={() => handleAddToCart(order)}

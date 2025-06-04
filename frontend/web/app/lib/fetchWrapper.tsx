@@ -8,14 +8,13 @@ async function get(url: string) {
         headers: await getHeaders()
     }
 
+
     const response = await fetch(baseUrl + url, requestOptions);
 
     return handleResponse(response);
 }
-
 async function post(url: string, body: {}) {
     const headers = await getHeaders();
-
     const requestOptions = {
         method: 'POST',
         headers: headers,
@@ -26,6 +25,7 @@ async function post(url: string, body: {}) {
 
     return handleResponse(response);
 }
+
 
 
 async function put(url: string, body: {}) {

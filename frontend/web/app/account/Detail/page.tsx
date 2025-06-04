@@ -2,14 +2,14 @@
 
 import { getCurrentUser } from "@/app/actions/authactions";
 import { useEffect, useState } from "react";
-import { User, Mail, Phone, Wallet } from "lucide-react";
+import { User, Mail, Home, Wallet } from "lucide-react";
 
 interface CustomUser {
     id: string;
     name: string | null;
     email: string | null;
     image?: string | null;
-    phoneNumber?: string | null;
+    address?: string | null;
     walletBalance?: number;
 }
 
@@ -17,12 +17,13 @@ export default function AccountDetailPage() {
     const [user, setUser] = useState<CustomUser | null>(null);
     const [loading, setLoading] = useState(true);
 
+
     const normalizeUser = (rawUser: any): CustomUser => ({
         id: rawUser.id ?? "unknown",
         name: rawUser.name ?? null,
         email: rawUser.email ?? null,
         image: rawUser.image ?? null,
-        phoneNumber: rawUser.phoneNumber ?? null,
+        address: rawUser.address ?? null,
         walletBalance: rawUser.walletBalance ?? 0,
     });
 
@@ -32,6 +33,7 @@ export default function AccountDetailPage() {
                 const currentUser = await getCurrentUser();
                 if (currentUser) {
                     setUser(normalizeUser(currentUser));
+                    console.log("Dữ liệu user trả về từ getCurrentUser:", currentUser);
                 }
             } catch (err) {
                 console.error("Lỗi khi lấy thông tin user:", err);
@@ -66,7 +68,7 @@ export default function AccountDetailPage() {
         <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center p-6">
             <div className="bg-white shadow-xl rounded-2xl w-full max-w-5xl p-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Avatar và tên */}
+
                     <div className="flex flex-col items-center">
                         {user.image ? (
                             <img
@@ -83,10 +85,10 @@ export default function AccountDetailPage() {
                         <p className="text-gray-500">{user.email || "Không có email"}</p>
                     </div>
 
-                    {/* Chi tiết */}
+
                     <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-gray-700">
                         <InfoRow icon={<User className="w-5 h-5" />} label="ID người dùng" value={user.id} />
-                        <InfoRow icon={<Phone className="w-5 h-5" />} label="Số điện thoại" value={user.phoneNumber ?? "Không có"} />
+                        <InfoRow icon={<Home className="w-5 h-5" />} label="Địa chỉ" value={user.address ?? "Không có"} />
                         <InfoRow icon={<Mail className="w-5 h-5" />} label="Email" value={user.email ?? "Không có"} />
                         <InfoRow
                             icon={<Wallet className="w-5 h-5" />}

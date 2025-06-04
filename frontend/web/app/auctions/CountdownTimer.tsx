@@ -1,22 +1,22 @@
-// 'use client' để chỉ định rằng component này sẽ được render phía client (Next.js)
+
 'use client';
 import { useBidStore } from '@/hooks/useBidStore';
-// import { useBidStore } from '@/hooks/useBidStore';
+
 import { usePathname } from 'next/navigation';
-// Import React để sử dụng JSX và các hooks nếu cần
+
 import React from 'react'
 
 
 
-// Import thư viện react-countdown để tạo đồng hồ đếm ngược
+
 import Countdown, { zeroPad } from 'react-countdown';
 
-// Xác định kiểu dữ liệu Props cho component, với auctionEnd là một chuỗi (string) chứa thời gian kết thúc đấu giá
+
 type Props = {
     auctionEnd: string;
 }
 
-// Hàm renderer để tùy chỉnh giao diện của countdown timer
+
 const renderer = ({ days, hours, minutes, seconds, completed }: { days: number, hours: number, minutes: number, seconds: number, completed: boolean }) => {
 
     return (
@@ -34,7 +34,6 @@ const renderer = ({ days, hours, minutes, seconds, completed }: { days: number, 
     )
 };
 
-// Component CountdownTimer nhận vào một prop auctionEnd để xác định thời gian kết thúc đấu giá
 export default function CountdownTimer({ auctionEnd }: Props) {
     const setOpen = useBidStore(state => state.setOpen);
     const pathName = usePathname();
@@ -45,7 +44,7 @@ export default function CountdownTimer({ auctionEnd }: Props) {
     }
     return (
         <div>
-            {/* Sử dụng thư viện react-countdown, truyền vào thời gian kết thúc (date) và hàm renderer để tùy chỉnh giao diện */}
+
             <Countdown date={auctionEnd} renderer={renderer} onComplete={auctionFinished} />
         </div>
     )

@@ -1,4 +1,4 @@
-// components/CreateOptionCard.tsx
+
 import Link from "next/link";
 import { Card } from "flowbite-react";
 import { ReactNode } from "react";

@@ -44,10 +44,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     // Thêm JWT Bearer handler để xử lý token
     .AddJwtBearer(option =>
     {
-        // Đặt Authority - URL của IdentityServer để xác thực token
+
         option.Authority = builder.Configuration["IdentityServiceUrl"];
 
-        // Cho phép sử dụng HTTP (không HTTPS), tiện cho môi trường phát triển
+
         option.RequireHttpsMetadata = false;
 
         // Bỏ qua kiểm tra audience (aud) - giúp token có thể dùng cho nhiều dịch vụ

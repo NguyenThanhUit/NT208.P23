@@ -20,7 +20,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
     const [error, setError] = useState<string | null>(null);
     const addToCart = useCartStore((state) => state.addToCart);
 
-    // State số lượng sản phẩm muốn thêm
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
@@ -130,7 +129,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
             <div className="max-w-7xl mx-auto px-6 py-10">
                 <div className="bg-white shadow-md rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-10 relative">
 
-                    {/* Ảnh sản phẩm */}
                     <div className="w-full">
                         <img
                             src={product.ImageUrl || "https://via.placeholder.com/500"}
@@ -139,7 +137,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                         />
                     </div>
 
-                    {/* Thông tin sản phẩm */}
+
                     <div className="flex flex-col justify-between">
                         {user?.username === product.Seller && (
                             <div className="absolute top-4 right-4 flex gap-2 z-10">
@@ -158,7 +156,17 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                             </div>
 
                             <div className="mt-4 text-gray-700 text-base space-y-2">
-                                <p><span className="font-semibold">Người bán:</span> {product.Seller}</p>
+                                <p>
+                                    <span className="font-semibold">Người bán: </span>
+                                    <a
+                                        href={`/seller/${product.Seller}`}
+                                        className="text-blue-600 hover:underline cursor-pointer"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {product.Seller}
+                                    </a>
+                                </p>
                                 <p><span className="font-semibold">Số lượng còn:</span> {product.StockQuantity}</p>
                                 <p><span className="font-semibold">Mô tả:</span></p>
                                 <p className="whitespace-pre-line">{product.Description || "Không có mô tả."}</p>
@@ -166,7 +174,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                         </div>
 
                         <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
-                            {/* Nếu user không phải Seller thì hiển thị thêm vào giỏ hàng */}
                             {user?.username !== product.Seller && (
                                 <>
                                     <div className="flex items-center border rounded-md overflow-hidden max-w-[150px]">

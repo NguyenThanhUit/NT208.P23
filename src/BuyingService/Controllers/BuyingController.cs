@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using AutoMapper;
 using BuyingService.Models;
 using Contracts;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
 
@@ -9,24 +11,25 @@ namespace BuyingService.Controllers
 {
     [ApiController]
     [Route("api/buyings")]
-    public class OrdersController : ControllerBase
+    public class BuyingsController : ControllerBase
     {
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
+        private readonly IEmailSender _emailSender;
 
-        public OrdersController(IMapper mapper, IPublishEndpoint publishEndpoint)
+        public BuyingsController(IMapper mapper, IPublishEndpoint publishEndpoint, IEmailSender emailSender)
         {
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
+            _emailSender = emailSender;
         }
-
+        [Authorize]
         [HttpPost("create")]
         public async Task<ActionResult<BuyingDto>> CreateOrder([FromBody] CreateOrderRequest request)
         {
             var orders = new List<Models.Order>();
             int totalAmount = 0;
 
-            // Tạo từng order cho mỗi item
             foreach (var item in request.Items)
             {
                 var order = new Models.Order
@@ -44,7 +47,6 @@ namespace BuyingService.Controllers
                 totalAmount += item.Quantity * item.Price;
             }
 
-            // Tạo thông tin mua hàng
             var buying = new Buying
             {
                 OrderId = Guid.NewGuid().ToString(),
@@ -57,7 +59,6 @@ namespace BuyingService.Controllers
 
             await DB.SaveAsync(buying);
 
-            // Gửi từng item như một sự kiện riêng biệt
             foreach (var item in buying.Items)
             {
                 var eventMessage = new BuyingPlaced
@@ -76,12 +77,47 @@ namespace BuyingService.Controllers
                 await _publishEndpoint.Publish(eventMessage);
             }
 
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                Console.WriteLine("[ERROR] Không tìm thấy địa chỉ email hợp lệ trong token.");
+                return BadRequest("Không thể gửi email vì không tìm thấy địa chỉ email.");
+            }
+
+            try
+            {
+                var subject = $"Thông tin đơn hàng {buying.ID}";
+                var body = $"Chào bạn,\n\nĐơn hàng của bạn với mã {buying.ID} đã được tạo thành công.\n" +
+                           $"Tổng tiền: {buying.TotalAmount}.\n" +
+                           $"Phương thức thanh toán: {buying.PaymentMethod}.\n\n" +
+                           "Cảm ơn bạn đã mua hàng!";
+
+                await Task.Delay(10000);
+
+                await _emailSender.SendEmailAsync(userEmail, subject, body);
+
+
+                buying.BuyingStatus = BuyingStatus.Completed;
+                await DB.SaveAsync(buying);
+
+                Console.WriteLine("[LOG] Gửi email thành công và cập nhật trạng thái Completed");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi khi gửi email: {ex.Message}");
+
+            }
+
+
             return Ok(new
             {
                 message = "Đơn hàng đã được tạo thành công",
                 data = _mapper.Map<BuyingDto>(buying)
             });
         }
+
+
 
         [HttpGet]
         public async Task<ActionResult<List<BuyingDto>>> GetAllBuyings()
@@ -96,6 +132,31 @@ namespace BuyingService.Controllers
             var result = _mapper.Map<List<BuyingDto>>(buyings);
             return Ok(result);
         }
+        [Authorize]
+        [HttpGet("my-buyings")]
+        public async Task<ActionResult<List<BuyingDto>>> GetMyBuyings()
+        {
+            var buyer = User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(buyer))
+            {
+                return Unauthorized(new { message = "Không xác định được người dùng." });
+            }
+
+            var buyings = await DB.Find<Buying>()
+                                  .Match(b => b.Buyer == buyer)
+                                  .ExecuteAsync();
+
+            if (buyings == null || !buyings.Any())
+            {
+                return NotFound(new { message = $"Không tìm thấy đơn hàng nào của người dùng {buyer}." });
+            }
+
+            var result = _mapper.Map<List<BuyingDto>>(buyings);
+            return Ok(result);
+        }
+
+
     }
 
 

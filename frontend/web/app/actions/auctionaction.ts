@@ -18,8 +18,10 @@ export async function updateAuctionTest() {
 }
 
 export async function createAuction(data: FieldValues) {
-    return await fetchWrapper.post('auctions', data);
+    const response = await fetchWrapper.post('auctions', data);
+    return response;
 }
+
 
 export async function getDetailedViewData(id: string) { //: Promise<Auction>
     return await fetchWrapper.get(`auctions/${id}`)

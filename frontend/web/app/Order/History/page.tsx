@@ -1,28 +1,35 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getOrderHistory } from '@/app/actions/orderactions';
+import { useRouter } from 'next/navigation';
 import { getCurrentUser } from '@/app/actions/authactions';
-import { FaBoxOpen, FaMoneyBillWave, FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
+import { getOrderUserHistory } from '@/app/actions/orderactions';
+import { FaBoxOpen, FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
 
 export default function OrderHistoryPage() {
+    const router = useRouter();
     const [groupedOrders, setGroupedOrders] = useState<Record<string, any[]>>({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let timer: NodeJS.Timeout;
+
         const fetchData = async () => {
             try {
                 const user = await getCurrentUser();
-
                 if (!user || !user.name) {
                     console.warn('Bạn chưa đăng nhập hoặc không có thông tin người dùng.');
                     setLoading(false);
                     return;
                 }
-
-                const orders = await getOrderHistory(user.username);
+                const orders = await getOrderUserHistory();
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
+
+                const hasProcessingOrder = orders.some((order: { buyingStatus: number; }) => order.buyingStatus === 0);
+                if (hasProcessingOrder) {
+                    timer = setTimeout(fetchData, 10000);
+                }
             } catch (error) {
                 console.error('Lỗi khi lấy lịch sử đơn hàng:', error);
             } finally {
@@ -31,6 +38,10 @@ export default function OrderHistoryPage() {
         };
 
         fetchData();
+
+        return () => {
+            if (timer) clearTimeout(timer);
+        };
     }, []);
 
     function groupOrdersByDate(orders: any[]) {
@@ -48,9 +59,9 @@ export default function OrderHistoryPage() {
             case 0:
                 return <span className="text-yellow-600 font-medium flex items-center gap-1"><FaClock /> Đang xử lý</span>;
             case 1:
-                return <span className="text-green-600 font-medium flex items-center gap-1"><FaCheckCircle /> Hoàn tất</span>;
-            case 2:
                 return <span className="text-red-600 font-medium flex items-center gap-1"><FaTimesCircle /> Đã huỷ</span>;
+            case 2:
+                return <span className="text-green-600 font-medium flex items-center gap-1"><FaCheckCircle /> Hoàn tất</span>;
             default:
                 return <span className="text-gray-500">Không xác định</span>;
         }
@@ -89,10 +100,11 @@ export default function OrderHistoryPage() {
                                         </div>
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-gray-700">
-                                            <p><strong>👤 Người mua:</strong> {order.buyer}</p>
+                                            <p><strong>🏪 Người bán:</strong> {order.sellerId}</p>
+
                                             <p><strong>💰 Tổng tiền:</strong> {Number(order.totalAmount).toLocaleString()} VNĐ</p>
                                             <p>
-                                                <strong>📦 Sản phẩm:</strong>{" "}
+                                                <strong>📦 Tên sản phẩm:</strong>{" "}
                                                 {order.items.map((item: any, index: number) => (
                                                     <span key={index}>
                                                         {item.productName}
@@ -104,6 +116,15 @@ export default function OrderHistoryPage() {
                                             <p><strong>💳 Phương thức thanh toán:</strong> {order.paymentMethod}</p>
                                             <p><strong>🕒 Thời gian mua:</strong> {new Date(order.createdAt).toLocaleString()}</p>
                                         </div>
+
+                                        {order.buyingStatus === 2 && (
+                                            <button
+                                                onClick={() => router.push(`/review/${order.sellerId}`)}
+                                                className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                            >
+                                                Đánh giá người bán
+                                            </button>
+                                        )}
                                     </div>
                                 );
                             })}

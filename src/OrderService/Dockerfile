@@ -14,6 +14,7 @@ COPY src/WalletService/WalletService.csproj src/WalletService/WalletService.cspr
 COPY src/AuctionService/AuctionService.csproj src/AuctionService/AuctionService.csproj
 COPY src/BiddingService/BiddingService.csproj src/BiddingService/BiddingService.csproj
 COPY src/NotificationService/NotificationService.csproj src/NotificationService/NotificationService.csproj
+COPY src/UserService/UserService.csproj src/UserService/UserService.csproj
 # Restore package deps
 RUN dotnet restore NT208.P23.sln
 # Copy the app folders 

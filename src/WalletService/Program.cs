@@ -12,13 +12,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 builder.Services.AddMassTransit(x =>
 {
-    // Kích hoạt Message Outbox để đảm bảo độ tin cậy
-    // x.AddEntityFrameworkOutbox<OrderDbContext>(o =>
-    // {
-    //     o.QueryDelay = TimeSpan.FromSeconds(10);
-    //     o.UsePostgres();
-    //     o.UseBusOutbox();
-    // });
+
     x.AddConsumersFromNamespaceContaining<BuyingItemConsumer>();
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("deposits", false));
 

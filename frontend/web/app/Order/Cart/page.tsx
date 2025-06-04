@@ -16,7 +16,7 @@ interface CartItem {
     price: number;
     quantity: number;
     imageUrl?: string;
-    seller?: string;
+    seller?: string; // Seller bắt buộc phải có
     estimatedShipDate?: string;
     fuelSource?: string;
     isBundle?: boolean;
@@ -28,8 +28,13 @@ export default function CartPage() {
     const [walletBalance, setWalletBalance] = useState<number | null>(null);
     const [paymentMethod, setPaymentMethod] = useState("");
     const [paymentResult, setPaymentResult] = useState("");
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const { items, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCartStore();
+
+    const formatVND = (value: number) => {
+        return value.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+    };
 
     const totalPrice = items.reduce((acc: number, item: CartItem) => acc + item.price * item.quantity, 0);
     const totalQuantity = items.reduce((acc: number, item: CartItem) => acc + item.quantity, 0);
@@ -61,27 +66,38 @@ export default function CartPage() {
             return;
         }
 
+        // Kiểm tra Seller bắt buộc có
+        const missingSellerItems = items.filter(item => !item.seller || item.seller.trim() === "");
+        if (missingSellerItems.length > 0) {
+            setPaymentResult("❌ Có sản phẩm chưa có Seller. Vui lòng kiểm tra lại giỏ hàng.");
+            return;
+        }
+
         if (paymentMethod !== "cod" && walletBalance !== null && totalPrice > walletBalance) {
             setPaymentResult("❌ Số dư ví không đủ để thanh toán đơn hàng này.");
             return;
         }
+
+        setIsProcessing(true);
+        setPaymentResult("");
 
         try {
             const orderID = crypto.randomUUID();
             const buyer = user?.name || "Unknown";
 
             const itemsForOrder = items.map((item: CartItem) => ({
-                seller: item.seller || "Unknown",
+                seller: item.seller!,
                 productName: item.name,
                 quantity: item.quantity,
                 price: item.price,
             }));
+            console.log("Du lieu tu order", itemsForOrder);
 
             await placeBuying(orderID, paymentMethod, buyer, itemsForOrder);
 
             switch (paymentMethod) {
                 case "credit":
-                    setPaymentResult(`✅ Thanh toán thành công bằng thẻ tín dụng: $${totalPrice.toFixed(2)}`);
+                    setPaymentResult(`✅ Thanh toán thành công bằng thẻ tín dụng: ${formatVND(totalPrice)}`);
                     break;
                 case "momo":
                     setPaymentResult("✅ Thanh toán thành công qua ví MoMo.");
@@ -92,6 +108,8 @@ export default function CartPage() {
         } catch (error) {
             console.error("Lỗi khi thanh toán:", error);
             setPaymentResult("❌ Có lỗi xảy ra khi xử lý thanh toán.");
+        } finally {
+            setIsProcessing(false);
         }
     };
 
@@ -107,30 +125,31 @@ export default function CartPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
+        <div className="min-h-screen bg-gray-50 py-8 px-4 relative">
             <h1 className="text-3xl font-bold text-center mb-8">🛒 Giỏ hàng của bạn</h1>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
-                {/* Phần hiển thị item - Đã chỉnh sửa để giống UI trong hình */}
+
                 <div className="lg:col-span-3">
                     <div className="bg-white rounded-xl shadow-sm p-6">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-xl font-bold">Your Cart ({items.length} items)</h2>
+                            <h2 className="text-xl font-bold">Giỏ hàng ({items.length} vật phẩm)</h2>
                         </div>
 
                         <div className="border-b border-gray-200 pb-2 mb-4">
                             <div className="grid grid-cols-12 gap-4 font-medium text-gray-600">
-                                <div className="col-span-6">Item</div>
-                                <div className="col-span-2 text-center">Price</div>
-                                <div className="col-span-2 text-center">Quantity</div>
-                                <div className="col-span-2 text-right">Total</div>
+                                <div className="col-span-4">Vật phẩm</div>
+                                <div className="col-span-2">Seller</div>
+                                <div className="col-span-2 text-center">Giá</div>
+                                <div className="col-span-2 text-center">Số lượng</div>
+                                <div className="col-span-2 text-right">Tổng</div>
                             </div>
                         </div>
 
                         {items.map((item: CartItem) => (
                             <div key={item.id} className="border-b border-gray-200 py-4">
                                 <div className="grid grid-cols-12 gap-4 items-center">
-                                    <div className="col-span-6 flex items-center gap-4">
+                                    <div className="col-span-4 flex items-center gap-4">
                                         <div className="relative w-16 h-16 rounded-md overflow-hidden">
                                             <Image
                                                 src={item.imageUrl || "https://via.placeholder.com/150?text=No+Image"}
@@ -142,20 +161,10 @@ export default function CartPage() {
                                         </div>
                                         <div>
                                             <h3 className="font-medium">{item.name}</h3>
-                                            {item.estimatedShipDate && (
-                                                <p className="text-sm text-gray-500">(Estimated Ship Date: {item.estimatedShipDate})</p>
-                                            )}
-                                            {item.fuelSource && (
-                                                <p className="text-sm text-gray-500">Fuel Source: {item.fuelSource}</p>
-                                            )}
-                                            {item.isBundle && (
-                                                <button className="text-sm text-blue-600 hover:underline mt-1">
-                                                    Add accident protection for $29.99
-                                                </button>
-                                            )}
                                         </div>
                                     </div>
-                                    <div className="col-span-2 text-center">${item.price.toFixed(2)}</div>
+                                    <div className="col-span-2">{item.seller || <span className="text-red-500 font-semibold">Chưa có Seller</span>}</div>
+                                    <div className="col-span-2 text-center">{formatVND(item.price)}</div>
                                     <div className="col-span-2 flex justify-center">
                                         <div className="flex items-center border border-gray-200 rounded-md">
                                             <button
@@ -176,7 +185,7 @@ export default function CartPage() {
                                         </div>
                                     </div>
                                     <div className="col-span-2 flex justify-end items-center gap-2">
-                                        <span>${(item.price * item.quantity).toFixed(2)}</span>
+                                        <span>{formatVND(item.price * item.quantity)}</span>
                                         <button
                                             onClick={() => removeFromCart(item.id)}
                                             className="text-gray-400 hover:text-red-500 text-lg font-semibold transition"
@@ -191,7 +200,6 @@ export default function CartPage() {
                     </div>
                 </div>
 
-                {/* Phần thanh toán - Giữ nguyên như cũ */}
                 <div className="bg-white p-6 rounded-xl shadow-md h-fit">
                     <h2 className="text-xl font-bold mb-4">🧾 Thông tin đơn hàng</h2>
 
@@ -207,13 +215,13 @@ export default function CartPage() {
 
                     <div className="flex justify-between font-bold text-lg border-t pt-4 mt-4">
                         <span>Tổng thanh toán:</span>
-                        <span>${totalPrice.toFixed(2)}</span>
+                        <span>{formatVND(totalPrice)}</span>
                     </div>
 
                     {walletBalance !== null && (
                         <div className="flex justify-between text-gray-700 mt-2">
                             <span>Số dư ví:</span>
-                            <span>${walletBalance?.toLocaleString()}</span>
+                            <span>{formatVND(walletBalance)}</span>
                         </div>
                     )}
 
@@ -232,7 +240,9 @@ export default function CartPage() {
 
                     <button
                         onClick={handlePayment}
-                        className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+                        disabled={isProcessing}
+                        className={`mt-6 w-full py-2 px-4 rounded-lg text-white transition
+              ${isProcessing ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
                     >
                         Thanh toán
                     </button>
@@ -249,6 +259,41 @@ export default function CartPage() {
                     )}
                 </div>
             </div>
+
+            {isProcessing && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+                    <div className="bg-white rounded-lg px-6 py-4 flex items-center gap-4 shadow-lg min-w-[280px]">
+                        <Spinner />
+                        <span className="font-medium text-gray-700">Đang xử lý...</span>
+                    </div>
+                </div>
+            )}
         </div>
+    );
+}
+
+function Spinner() {
+    return (
+        <svg
+            className="animate-spin h-6 w-6 text-blue-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-label="Loading"
+        >
+            <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+            />
+            <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+            />
+        </svg>
     );
 }

@@ -5,12 +5,16 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SessionProvider } from "next-auth/react";
+import { getCurrentUser } from "./actions/authactions";
+import SignalRProvider from "./Providers/SignalRProvider";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
+const user = await getCurrentUser();
+const notifyUrl = process.env.NOTIFY_URL;
 
 
 const geistMono = Geist_Mono({
@@ -34,10 +38,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <SignalRProvider notifyUrl={notifyUrl!} user={user}>
+            <Navbar />
+            {children}
+            <Footer />
+            <Toaster position="top-right" />
+          </SignalRProvider>
         </SessionProvider>
+
       </body>
     </html>
   );

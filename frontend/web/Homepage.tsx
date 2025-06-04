@@ -39,7 +39,6 @@ export default function Homepage() {
     const setParams = useParamStore(state => state.setParams);
 
     const url = '?' + qs.stringify(params);
-    console.log("Current url fetch:", url);
 
 
     function setPageNumber(pageNumber: number) {
@@ -49,10 +48,8 @@ export default function Homepage() {
     useEffect(() => {
         setLoading(true);
         setError(null);
-        console.log("Request URL:", url);
 
         getData(url).then(data => {
-            console.log("Fetched data (raw):", data.results.map(d => ({ id: d.id, Price: d.Price })));
             setData(data);
             setLoading(false);
         }).catch(err => {

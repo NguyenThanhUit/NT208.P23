@@ -8,7 +8,7 @@ public class Buying : Entity
     [Required]
     public string OrderId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public string Buyer { get; set; } = string.Empty;                // fix warning
+    public string Buyer { get; set; } = string.Empty;
     public string PaymentMethod { get; set; } = "cash";
     public int TotalAmount { get; set; }
     public BuyingStatus BuyingStatus { get; set; } = BuyingStatus.Pending;

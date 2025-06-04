@@ -8,7 +8,7 @@ type Props = { id: string };
 
 export default function EditButton({ id }: Props) {
     return (
-        <Link href={`/Product/Update/${id}`} passHref>
+        <Link href={`/product/update/${id}`} passHref>
             <Button
                 className="px-6 py-3 bg-red-600 text-white text-lg rounded-lg hover:bg-red-700 transition-all w-full sm:w-fit"
             >

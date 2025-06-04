@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderService.Controllers;
 
 [ApiController]
-[Route("api/orders")] // Định nghĩa route API: tất cả endpoint sẽ có tiền tố /api/Orders
+[Route("api/orders")]
 public class OrderController : ControllerBase
 {
-    private readonly OrderDbContext _context;  // Đối tượng truy xuất dữ liệu
-    private readonly IMapper _mapper;  // Công cụ ánh xạ dữ liệu giữa DTO và Entity
-    private readonly IPublishEndpoint _publishEndpoint;  // MassTransit publish event khi có đơn hàng mới
+    private readonly OrderDbContext _context;
+    private readonly IMapper _mapper;
+    private readonly IPublishEndpoint _publishEndpoint;
 
     public OrderController(OrderDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
     {
@@ -26,49 +26,38 @@ public class OrderController : ControllerBase
         _publishEndpoint = publishEndpoint;
     }
 
-    /// <summary>
-    /// API lấy danh sách tất cả đơn hàng
-    /// </summary>
-    /// <returns>Danh sách đơn hàng dưới dạng OrderDto</returns>
+
     [HttpGet]
     public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
     {
         var query = _context.Orders
-            .Include(x => x.Product)  // Load thông tin sản phẩm kèm theo đơn hàng để tránh lỗi NullReferenceException
-            .OrderBy(x => x.Product != null ? x.Product.Name : "") // Sắp xếp theo tên sản phẩm (nếu có)
-            .AsQueryable();  // Chuyển đổi thành truy vấn Linq
+            .Include(x => x.Product)
+            .OrderBy(x => x.Product != null ? x.Product.Name : "")
+            .AsQueryable();
 
-        // Chuyển đổi kết quả từ Order -> OrderDto trước khi trả về
+
         var result = await query.ProjectTo<OrderDto>(_mapper.ConfigurationProvider).ToListAsync();
-        return Ok(result); // Trả về danh sách đơn hàng
+        return Ok(result);
     }
 
-    /// <summary>
-    /// API lấy thông tin đơn hàng theo ID
-    /// </summary>
-    /// <param name="id">ID của đơn hàng</param>
-    /// <returns>Chi tiết đơn hàng dưới dạng OrderDto</returns>
+
     [HttpGet("{id}")]
     public async Task<ActionResult<OrderDto>> GetOrderById(Guid id)
 
     {
-        // Tìm đơn hàng theo ID, bao gồm cả thông tin sản phẩm liên quan
-        var order = await _context.Orders.Include(x => x.Product).FirstOrDefaultAsync(x => x.Id == id);
-        if (order == null) return NotFound(); // Nếu không tìm thấy, trả về lỗi 404
 
-        return _mapper.Map<OrderDto>(order); // Chuyển đổi sang DTO và trả về kết quả
+        var order = await _context.Orders.Include(x => x.Product).FirstOrDefaultAsync(x => x.Id == id);
+        if (order == null) return NotFound();
+
+        return _mapper.Map<OrderDto>(order);
     }
 
-    /// <summary>
-    /// API tạo đơn hàng mới
-    /// </summary>
-    /// <param name="orderDto">Dữ liệu đơn hàng gửi lên</param>
-    /// <returns>Đơn hàng đã tạo</returns>
+
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<OrderDto>> CreateOrder(CreateOrderDto orderDto)
     {
-        // Chuyển đổi từ DTO sang Entity để lưu vào database
+
         var order = _mapper.Map<Order>(orderDto);
 
 
@@ -80,54 +69,45 @@ public class OrderController : ControllerBase
         order.Seller = username;
         // order.Seller = "Test";
 
-        // Thêm đơn hàng vào context
+
         _context.Orders.Add(order);
 
-        // Lưu thay đổi vào database
+
         var result = await _context.SaveChangesAsync() > 0;
 
-        // Chuyển đổi lại sang OrderDto để trả về client
+
         var newOrder = _mapper.Map<OrderDto>(order);
 
 
-        // Gửi sự kiện qua MassTransit để xử lý async (ví dụ: thông báo hoặc cập nhật tồn kho)
+
         await _publishEndpoint.Publish(_mapper.Map<OrderCreated>(newOrder));
 
-        // Nếu lưu thất bại, trả về lỗi 400
+
         if (!result) return BadRequest("Could not save to DB");
 
-        // Trả về HTTP 201 Created với đường dẫn API của đơn hàng vừa tạo
+
         return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, newOrder);
     }
-    /// <summary>
-    /// API cập nhật thông tin đơn hàng theo ID
-    /// </summary>
-    /// <param name="id">ID của đơn hàng cần cập nhật</param>
-    /// <param name="orderDto">Dữ liệu đơn hàng cập nhật gửi lên</param>
-    /// <returns>Thông tin đơn hàng đã cập nhật</returns>
-    [HttpPost("{id}/update")]
+    [Authorize]
+    [HttpPut("{id}")]
     public async Task<ActionResult<OrderDto>> UpdateOrder(Guid id, [FromBody] UpdateOrderDto orderDto)
     {
-        // Tìm đơn hàng theo ID
         var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
-        if (order == null) return NotFound(); // Nếu không tìm thấy, trả về lỗi 404
+        if (order == null) return NotFound();
 
-        // Cập nhật thông tin đơn hàng
-        _mapper.Map(orderDto, order); // Ánh xạ từ UpdateOrderDto sang Order entity
+        if (order.Seller != User.Identity?.Name) return Forbid();
 
-        // Lưu lại thay đổi vào database
+        _mapper.Map(orderDto, order);
+
         var result = await _context.SaveChangesAsync() > 0;
-
         if (!result) return BadRequest("Could not update the order.");
 
-        // Chuyển đổi Order entity sang DTO để trả về client
         var updatedOrder = _mapper.Map<OrderDto>(order);
-
-        // Gửi sự kiện qua MassTransit để xử lý async (ví dụ: thông báo hoặc cập nhật tồn kho)
         await _publishEndpoint.Publish(_mapper.Map<OrderUpdated>(updatedOrder));
 
-        return Ok(updatedOrder); // Trả về thông tin đơn hàng đã cập nhật
+        return Ok(updatedOrder);
     }
+
     [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteOrder(Guid id)
@@ -144,9 +124,10 @@ public class OrderController : ControllerBase
     public class UpdateOrderDto
     {
         public Guid ProductId { get; set; }
+        public string Description { get; set; }
+        public string Key { get; set; }
         public int Quantity { get; set; }
         public string Seller { get; set; }
-        // Thêm các thuộc tính khác nếu cần
     }
 
 }

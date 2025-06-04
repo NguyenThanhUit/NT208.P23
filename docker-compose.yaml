@@ -156,6 +156,21 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+  user-svc:
+    image: nguyenthanh/user-svc:latest
+    build:
+      context: .
+      dockerfile: src/UserService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__UserDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7008:80
+    depends_on:
+      mongodb:
+        condition: service_started
   identity-svc:
     image: nguyenthanh/identity-svc:latest
     build: 

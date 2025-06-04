@@ -3,14 +3,15 @@
 import { useBidStore } from "@/hooks/useBidStore";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useParams } from "next/navigation";
-import { ReactNode, useCallback, useEffect, useRef } from "react"
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useAuctionStore } from "@/hooks/UseAuctionStore";
 import { getDetailedViewData } from "../actions/auctionaction";
 import { Auction, AuctionFinished, Bid } from "@/index";
 import AuctionFinishedToast from "@/components/AuctionFinshiedToast";
-import AuctionCreatedToast from "@/components/AuctionCreadToast";
+import AuctionCreatedToast from "@/components/AuctionCreatedToast";
+
 
 type Props = {
     children: ReactNode,
@@ -34,20 +35,23 @@ export default function SignalRProvider({ children }: Props) {
                 finishedAuction={finishedAuction}
                 auction={auction} />,
             error: () => 'Auction finished'
-        }, { success: { duration: 10000, icon: null } });
+        }, { success: { duration: 100000, icon: null } });
     }, []);
 
     const handleAuctionCreated = useCallback((auction: Auction) => {
         console.log('[SignalR] AuctionCreated event received:', auction);
+
         if (user?.username !== auction.seller) {
+            console.log('[SignalR] Showing AuctionCreated toast');
             return toast(<AuctionCreatedToast auction={auction} />, {
                 duration: 10000,
             });
+        } else {
+            console.log('[SignalR] AuctionCreated event ignored because user is the seller');
         }
     }, [user]);
 
     const handleBidPlaced = useCallback((bid: Bid) => {
-        console.log('[SignalR] BidPlaced event received:', bid);
         if (bid.bidStatus.includes('Accepted')) {
             setCurrentPrice(bid.auctionId, bid.amount);
         }
@@ -59,7 +63,6 @@ export default function SignalRProvider({ children }: Props) {
 
     useEffect(() => {
         if (!connection.current) {
-            console.log('[SignalR] Creating new connection with URL:', process.env.NEXT_PUBLIC_NOTIFY_URL);
             connection.current = new HubConnectionBuilder()
                 .withUrl(process.env.NEXT_PUBLIC_NOTIFY_URL!)
                 .withAutomaticReconnect()
@@ -71,22 +74,21 @@ export default function SignalRProvider({ children }: Props) {
         }
 
         connection.current.on('BidPlaced', (bid: Bid) => {
-            console.log('[SignalR] Received BidPlaced event from server:', bid);
+            console.log('[SignalR] BidPlaced event received:', bid);
             handleBidPlaced(bid);
         });
 
         connection.current.on('AuctionCreated', (auction: Auction) => {
-            console.log('[SignalR] Received AuctionCreated event from server:', auction);
+            console.log('[SignalR] Received AuctionCreated event');
             handleAuctionCreated(auction);
         });
 
         connection.current.on('AuctionFinished', (finishedAuction: AuctionFinished) => {
-            console.log('[SignalR] Received AuctionFinished event from server:', finishedAuction);
+            console.log('[SignalR] Received AuctionFinished event');
             handleAuctionFinished(finishedAuction);
         });
 
         return () => {
-            console.log('[SignalR] Cleaning up event listeners');
             connection.current?.off('BidPlaced', handleBidPlaced);
             connection.current?.off('AuctionCreated', handleAuctionCreated);
             connection.current?.off('AuctionFinished', handleAuctionFinished);
@@ -95,6 +97,8 @@ export default function SignalRProvider({ children }: Props) {
     }, [handleBidPlaced, handleAuctionCreated, handleAuctionFinished]);
 
     return (
-        <>{children}</>
+        <>
+            {children}
+        </>
     );
 }

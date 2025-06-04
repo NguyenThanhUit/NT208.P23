@@ -8,7 +8,7 @@ namespace BuyingService.Models
         public DateTime CreatedAt { get; set; }
         public string PaymentMethod { get; set; } = string.Empty;
         public BuyingStatus BuyingStatus { get; set; }
-
+        public string SellerId { get; set; }
         public List<OrderDto> Items { get; set; } = new();
     }
 }

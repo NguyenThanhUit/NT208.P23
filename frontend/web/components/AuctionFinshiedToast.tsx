@@ -9,7 +9,7 @@ type Props = {
 
 export default function AuctionFinishedToast({ finishedAuction, auction }: Props) {
     return (
-        <Link href={`/auction/details/${auction.id}`} className='flex flex-col items-center'>
+        <Link href={`/auctions/details/${auction.id}`} className='flex flex-col items-center'>
             <div className='flex flex-row items-center gap-2'>
                 <Image src={auction.imageUrl} alt='Image of car' height={80} width={80} className='rounded-lg w-auto h-auto' />
                 <span>New auction: {auction.name} has finished</span>

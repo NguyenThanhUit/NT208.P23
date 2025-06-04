@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderService.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class NEW : Migration
+    public partial class newdata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
