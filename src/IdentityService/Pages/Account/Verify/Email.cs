@@ -25,11 +25,11 @@ public class EmailSender : IEmailSender
     public EmailConfig _emailconfig = new EmailConfig
     {
         Name = "E-Shop",
-        Email = "nghoangphuc1201@gmail.com",               // Nhập trực tiếp email người gửi
+        Email = "null",               // Nhập trực tiếp email người gửi
         Host = "smtp.gmail.com",
         Port = 587,
-        Username = "nghoangphuc1201@gmail.com",            // Nhập trực tiếp username
-        Password = "oxkmuqmvkpmknzsx",                     // Nhập trực tiếp App Password
+        Username = "null",            // Nhập trực tiếp username
+        Password = "null",                     // Nhập trực tiếp App Password
         EnableSsl = true
     };
 
