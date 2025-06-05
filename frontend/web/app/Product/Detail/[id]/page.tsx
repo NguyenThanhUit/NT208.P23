@@ -37,7 +37,6 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                 ]);
 
                 console.log("Dữ liệu sản phẩm nhận được từ server:", productData);
-                console.log("Thông tin user hiện tại:", currentUser);
 
                 setProduct(productData);
                 setUser(currentUser);
@@ -83,6 +82,9 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                 price: order.Price ?? 0,
                 quantity,
                 imageUrl: order.ImageUrl,
+                key: order.Key,
+                productStatus: order.ProductStatus,
+                seller: order.Seller,
             };
 
             console.log("Dữ liệu thêm vào giỏ hàng:", cartItem);

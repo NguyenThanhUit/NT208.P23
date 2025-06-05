@@ -3,13 +3,23 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCurrentUser } from '@/app/actions/authactions';
-import { getOrderUserHistory } from '@/app/actions/orderactions';
-import { FaBoxOpen, FaCheckCircle, FaTimesCircle, FaClock } from 'react-icons/fa';
+import {
+    addSellerWaller,
+    confirmOrder,
+    getOrderUserHistory,
+} from '@/app/actions/orderactions';
+import {
+    FaBoxOpen,
+    FaCheckCircle,
+    FaTimesCircle,
+    FaClock,
+} from 'react-icons/fa';
 
 export default function OrderHistoryPage() {
     const router = useRouter();
     const [groupedOrders, setGroupedOrders] = useState<Record<string, any[]>>({});
     const [loading, setLoading] = useState(true);
+    const [confirming, setConfirming] = useState<string | null>(null);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -22,16 +32,19 @@ export default function OrderHistoryPage() {
                     setLoading(false);
                     return;
                 }
+
                 const orders = await getOrderUserHistory();
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
 
-                const hasProcessingOrder = orders.some((order: { buyingStatus: number; }) => order.buyingStatus === 0);
+                const hasProcessingOrder = orders.some(
+                    (order: { buyingStatus: number }) => order.buyingStatus === 0
+                );
                 if (hasProcessingOrder) {
                     timer = setTimeout(fetchData, 10000);
                 }
             } catch (error) {
-                console.error('Lỗi khi lấy lịch sử đơn hàng:', error);
+                console.error('❌ Lỗi khi lấy lịch sử đơn hàng:', error);
             } finally {
                 setLoading(false);
             }
@@ -57,74 +70,188 @@ export default function OrderHistoryPage() {
     function getStatusBadge(status: number) {
         switch (status) {
             case 0:
-                return <span className="text-yellow-600 font-medium flex items-center gap-1"><FaClock /> Đang xử lý</span>;
+                return (
+                    <span className="text-yellow-600 font-medium flex items-center gap-1">
+                        <FaClock /> Chờ xác nhận
+                    </span>
+                );
             case 1:
-                return <span className="text-red-600 font-medium flex items-center gap-1"><FaTimesCircle /> Đã huỷ</span>;
-            case 2:
-                return <span className="text-green-600 font-medium flex items-center gap-1"><FaCheckCircle /> Hoàn tất</span>;
+                return (
+                    <span className="text-red-600 font-medium flex items-center gap-1">
+                        <FaTimesCircle /> Đã huỷ
+                    </span>
+                );
+            case 3:
+                return (
+                    <span className="text-green-600 font-medium flex items-center gap-1">
+                        <FaCheckCircle /> Hoàn tất
+                    </span>
+                );
             default:
                 return <span className="text-gray-500">Không xác định</span>;
         }
     }
 
+    async function handleConfirmItem(orderId: string, productId: string) {
+        try {
+            setConfirming(productId);
+            await confirmOrder(orderId, { itemID: productId });
+            alert(`✅ Đã xác nhận sản phẩm ${productId}`);
+
+            const orders = await getOrderUserHistory();
+            setGroupedOrders(groupOrdersByDate(orders));
+
+
+            const order = orders.find((o: any) => o.orderId === orderId);
+            if (!order) return;
+
+
+            if (order.buyingStatus === 3 && !order.walletDeposited) {
+                const item = order.items.find((i: any) => i.productId === productId);
+                if (!item) return;
+
+                const sellerId = item.seller;
+                const price = Number(item.price) || 0;
+                const quantity = item.quantity ?? 1;
+                const amount = quantity * price;
+
+                console.log('[handleConfirmItem] Dữ liệu item:', item);
+                console.log('[handleConfirmItem] Tính toán amount:', amount);
+
+
+                await addSellerWaller(sellerId, { Amount: amount });
+
+                alert(`✅ Đã cộng ${amount.toLocaleString()} VNĐ vào ví người bán ${sellerId}`);
+
+
+            }
+        } catch (error) {
+            console.error('❌ Lỗi xác nhận đơn hàng:', error);
+            alert('Xác nhận thất bại. Vui lòng thử lại.');
+        } finally {
+            setConfirming(null);
+        }
+    }
+
     if (loading) {
-        return <div className="p-6 text-center text-gray-600">Đang tải dữ liệu...</div>;
+        return <div className="min-h-screen p-6 text-center text-gray-600">Đang tải dữ liệu...</div>;
     }
 
     return (
         <div className="p-6 max-w-5xl mx-auto h-[80vh] overflow-y-auto">
-            <h1 className="text-3xl font-bold mb-6 text-center text-black">🧾 Lịch sử đơn hàng của bạn</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-black">
+                🧾 Lịch sử đơn hàng của bạn
+            </h1>
 
             {Object.keys(groupedOrders).length === 0 ? (
-                <p className="text-center text-gray-600">Không có đơn hàng nào được tìm thấy.</p>
+                <p className="text-center text-gray-600">
+                    Không có đơn hàng nào được tìm thấy.
+                </p>
             ) : (
                 Object.entries(groupedOrders).map(([date, orders]) => (
                     <div key={date} className="mb-8">
-                        <h2 className="text-xl font-semibold text-blue-700 mb-3 border-b pb-1">{date}</h2>
-
+                        <h2 className="text-xl font-semibold text-blue-700 mb-3 border-b pb-1">
+                            {date}
+                        </h2>
                         <div className="grid gap-4">
                             {orders.map((order: any) => {
+                                const itemsBySeller: Record<string, any[]> = {};
+                                order.items.forEach((item: any) => {
+                                    if (!itemsBySeller[item.seller]) {
+                                        itemsBySeller[item.seller] = [];
+                                    }
+                                    itemsBySeller[item.seller].push(item);
+                                });
+
                                 const totalQuantity = order.items.reduce(
                                     (sum: number, item: any) => sum + (item.quantity || 1),
                                     0
                                 );
 
                                 return (
-                                    <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 transition hover:shadow-md">
+                                    <div
+                                        key={order.orderId}
+                                        className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 transition hover:shadow-md"
+                                    >
                                         <div className="flex justify-between items-center mb-2">
                                             <h3 className="font-semibold text-black flex items-center gap-2">
                                                 <FaBoxOpen className="text-blue-600" />
-                                                Đơn hàng #{order.id}
+                                                Đơn hàng #{order.orderId}
                                             </h3>
                                             <div>{getStatusBadge(order.buyingStatus)}</div>
                                         </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-gray-700">
-                                            <p><strong>🏪 Người bán:</strong> {order.sellerId}</p>
-
-                                            <p><strong>💰 Tổng tiền:</strong> {Number(order.totalAmount).toLocaleString()} VNĐ</p>
-                                            <p>
-                                                <strong>📦 Tên sản phẩm:</strong>{" "}
-                                                {order.items.map((item: any, index: number) => (
-                                                    <span key={index}>
-                                                        {item.productName}
-                                                        {index < order.items.length - 1 ? ", " : ""}
-                                                    </span>
-                                                ))}
-                                            </p>
-                                            <p><strong>🧾 Số lượng sản phẩm:</strong> {totalQuantity} món</p>
-                                            <p><strong>💳 Phương thức thanh toán:</strong> {order.paymentMethod}</p>
-                                            <p><strong>🕒 Thời gian mua:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+                                        <div className="text-sm text-gray-700 mb-3">
+                                            <strong>💰 Tổng tiền:</strong>{' '}
+                                            {Number(order.totalAmount).toLocaleString()} VNĐ
                                         </div>
 
-                                        {order.buyingStatus === 2 && (
-                                            <button
-                                                onClick={() => router.push(`/review/${order.sellerId}`)}
-                                                className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                                            >
-                                                Đánh giá người bán
-                                            </button>
-                                        )}
+                                        <div className="mb-3">
+                                            {Object.entries(itemsBySeller).map(([seller, items]) => (
+                                                <div
+                                                    key={seller}
+                                                    className="mb-4 border p-3 rounded-md bg-gray-50"
+                                                >
+                                                    <p className="font-semibold text-blue-700 mb-2">
+                                                        🏪 Người bán: {seller}
+                                                    </p>
+                                                    <ul className="list-disc list-inside ml-4 text-gray-700 mb-2">
+                                                        {items.map((item: any, index: number) => (
+                                                            <li key={index}>
+                                                                {item.productName}{' '}
+                                                                {item.productId && (
+                                                                    <span className="text-gray-500 ml-2">
+                                                                        ({item.productId})
+                                                                    </span>
+                                                                )} – Số lượng: {item.quantity || 1}
+                                                                {order.buyingStatus === 0 && (
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            handleConfirmItem(
+                                                                                order.orderId,
+                                                                                item.productId
+                                                                            )
+                                                                        }
+                                                                        className="ml-2 text-sm text-white bg-green-600 px-2 py-1 rounded hover:bg-green-700 transition"
+                                                                        disabled={
+                                                                            confirming === item.productId
+                                                                        }
+                                                                    >
+                                                                        {confirming === item.productId
+                                                                            ? 'Đang xác nhận...'
+                                                                            : 'Xác nhận'}
+                                                                    </button>
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+
+                                                    {order.buyingStatus === 3 && (
+                                                        <button
+                                                            onClick={() =>
+                                                                router.push(`/review/${seller}`)
+                                                            }
+                                                            className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                                        >
+                                                            Đánh giá người bán
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <p>
+                                            <strong>🧾 Số lượng sản phẩm tổng:</strong>{' '}
+                                            {totalQuantity} món
+                                        </p>
+                                        <p>
+                                            <strong>💳 Phương thức thanh toán:</strong>{' '}
+                                            {order.paymentMethod}
+                                        </p>
+                                        <p>
+                                            <strong>🕒 Thời gian mua:</strong>{' '}
+                                            {new Date(order.createdAt).toLocaleString()}
+                                        </p>
                                     </div>
                                 );
                             })}

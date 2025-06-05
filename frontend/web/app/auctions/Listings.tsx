@@ -20,7 +20,6 @@ export default function Listings() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Lấy dữ liệu từ Zustand store một cách ổn định
     const { auctions, totalCount, pageCount } = useAuctionStore(
         useShallow(state => ({
             auctions: state.auctions,
@@ -31,7 +30,6 @@ export default function Listings() {
 
     const setData = useAuctionStore(state => state.setData);
 
-    // Lấy tham số từ Zustand store
     const params = useParamStore(
         useShallow(state => ({
             pageNumber: state.pageNumber,
@@ -47,15 +45,15 @@ export default function Listings() {
 
     const setParams = useParamStore(state => state.setParams);
 
-    // Tạo URL từ tham số
+
     const url = qs.stringifyUrl({ url: '', query: params });
 
-    // Cập nhật số trang
+
     function setPageNumber(pageNumber: number) {
         setParams({ pageNumber });
     }
 
-    // Fetch dữ liệu mỗi khi URL thay đổi
+
     useEffect(() => {
         setLoading(true);
         setError(null);
@@ -71,9 +69,10 @@ export default function Listings() {
             });
     }, [url, setData]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p className='min-h-screen'>Loading...</p>;
 
-    if (error) return <p>{error}</p>;
+    if (error) return <p className="min-h-screen text-center text-red-500">{error}</p>;
+
 
     if (!auctions || totalCount === 0) return <EmptyFilter showReset />;
 

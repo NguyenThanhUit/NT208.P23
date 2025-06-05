@@ -12,15 +12,14 @@ interface User {
 
 interface CartItem {
     id: string;
+    productId: string;
     name: string;
     price: number;
     quantity: number;
     imageUrl?: string;
-    seller?: string; // Seller bắt buộc phải có
-    estimatedShipDate?: string;
-    fuelSource?: string;
-    isBundle?: boolean;
-    protectionAvailable?: boolean;
+    seller?: string;
+    key: string;
+    productStatus: string;
 }
 
 export default function CartPage() {
@@ -40,20 +39,21 @@ export default function CartPage() {
     const totalQuantity = items.reduce((acc: number, item: CartItem) => acc + item.quantity, 0);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const currentUser = await getCurrentUser();
-            setUser({
-                ...currentUser,
-                name: currentUser?.username || "",
-            });
 
-            if (currentUser?.username) {
-                try {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser({
+                    ...currentUser,
+                    name: currentUser?.username || "",
+                });
+
+                if (currentUser?.username) {
                     const wallet = await getTotalMoney(currentUser.username);
                     setWalletBalance(wallet.balance);
-                } catch (error) {
-                    console.error("Không thể lấy ví:", error);
                 }
+            } catch (error) {
+                console.error("Không thể lấy thông tin người dùng hoặc ví:", error);
             }
         };
 
@@ -66,15 +66,19 @@ export default function CartPage() {
             return;
         }
 
-        // Kiểm tra Seller bắt buộc có
-        const missingSellerItems = items.filter(item => !item.seller || item.seller.trim() === "");
-        if (missingSellerItems.length > 0) {
-            setPaymentResult("❌ Có sản phẩm chưa có Seller. Vui lòng kiểm tra lại giỏ hàng.");
+        if (walletBalance === null) {
+            setPaymentResult("❌ Không thể lấy số dư ví, vui lòng thử lại sau.");
             return;
         }
 
-        if (paymentMethod !== "cod" && walletBalance !== null && totalPrice > walletBalance) {
-            setPaymentResult("❌ Số dư ví không đủ để thanh toán đơn hàng này.");
+        if (walletBalance < totalPrice) {
+            setPaymentResult("❌ Số dư ví không đủ, vui lòng nạp thêm tiền.");
+            return;
+        }
+
+        const missingSellerItems = items.filter(item => !item.seller || item.seller.trim() === "");
+        if (missingSellerItems.length > 0) {
+            setPaymentResult("❌ Có sản phẩm chưa có Seller. Vui lòng kiểm tra lại giỏ hàng.");
             return;
         }
 
@@ -86,12 +90,16 @@ export default function CartPage() {
             const buyer = user?.name || "Unknown";
 
             const itemsForOrder = items.map((item: CartItem) => ({
+                id: item.id,
+                productId: item.productId,
                 seller: item.seller!,
                 productName: item.name,
                 quantity: item.quantity,
                 price: item.price,
+                key: item.key,
+                productStatus: item.productStatus,
+
             }));
-            console.log("Du lieu tu order", itemsForOrder);
 
             await placeBuying(orderID, paymentMethod, buyer, itemsForOrder);
 
@@ -101,6 +109,9 @@ export default function CartPage() {
                     break;
                 case "momo":
                     setPaymentResult("✅ Thanh toán thành công qua ví MoMo.");
+                    break;
+                default:
+                    setPaymentResult("✅ Thanh toán thành công.");
                     break;
             }
 
@@ -112,6 +123,7 @@ export default function CartPage() {
             setIsProcessing(false);
         }
     };
+
 
     if (items.length === 0) {
         return (
@@ -129,6 +141,7 @@ export default function CartPage() {
             <h1 className="text-3xl font-bold text-center mb-8">🛒 Giỏ hàng của bạn</h1>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+
 
                 <div className="lg:col-span-3">
                     <div className="bg-white rounded-xl shadow-sm p-6">
@@ -242,7 +255,7 @@ export default function CartPage() {
                         onClick={handlePayment}
                         disabled={isProcessing}
                         className={`mt-6 w-full py-2 px-4 rounded-lg text-white transition
-              ${isProcessing ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+                ${isProcessing ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
                     >
                         Thanh toán
                     </button>
@@ -288,12 +301,12 @@ function Spinner() {
                 r="10"
                 stroke="currentColor"
                 strokeWidth="4"
-            />
+            ></circle>
             <path
                 className="opacity-75"
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-            />
+            ></path>
         </svg>
     );
 }

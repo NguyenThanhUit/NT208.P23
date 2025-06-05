@@ -2,12 +2,15 @@
 import { create } from 'zustand';
 
 interface CartItem {
+    productId: string;
     id: string;
     name: string;
     price: number;
     quantity: number;
     imageUrl?: string;
     seller?: string;
+    key: string;
+    productStatus: string;
 }
 
 interface CartState {

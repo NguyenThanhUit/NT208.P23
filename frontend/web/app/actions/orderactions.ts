@@ -4,6 +4,7 @@ import { fetchWrapper } from "../lib/fetchWrapper";
 import { FieldValues } from "react-hook-form";
 import { revalidatePath } from "next/cache";
 
+
 export async function getData(query: string): Promise<PageResult<Order>> {
     try {
         const data = await fetchWrapper.get(`search/products${query}`);
@@ -22,6 +23,10 @@ export async function getData(query: string): Promise<PageResult<Order>> {
                 Category: item.category,
                 ImageUrl: item.imageUrl,
                 StockQuantity: String(item.stockQuantity || 0),
+                ProductStatus: item.productStatus,
+                Key: item.key,
+                SearchCount: String(item.searchCount || 0),
+
             })) || [],
             pageCount: data.pageCount || 1,
             totalCount: data.totalCount || 1
@@ -35,7 +40,6 @@ export async function getData(query: string): Promise<PageResult<Order>> {
         };
     }
 }
-
 
 export async function getDetailedProduct(id: string): Promise<Order> {
     const data = await fetchWrapper.get(`orders/${id}`);
@@ -53,6 +57,9 @@ export async function getDetailedProduct(id: string): Promise<Order> {
         Category: data.category,
         ImageUrl: data.imageUrl,
         StockQuantity: Number(data.stockQuantity || 0),
+        Key: data.key,
+        ProductStatus: data.productStatus,
+        SearchCount: data.searchCount,
     };
 }
 
@@ -86,6 +93,12 @@ export async function depositMoney(data: { amount: number }) {
     const result = await fetchWrapper.post('wallets/deposit', data);
     return result;
 }
+export async function initUserMoneyWallet(userId: string, data: FieldValues) {
+    const result = await fetchWrapper.post(`wallets/init/${userId}`, data);
+    return result;
+}
+
+
 export async function getTotalMoney(userId: string): Promise<{ balance: number }> {
     return await fetchWrapper.get(`wallets/${userId}`);
 }
@@ -93,9 +106,18 @@ export async function placeBuying(
     orderID: string,
     paymentMethod: string,
     buyer: string,
-    items: { seller: string; productName: string; quantity: number; price: number }[]
+    items: {
+        productId: string,
+        seller: string,
+        productName: string,
+        quantity: number,
+        price: number,
+        key: string,
+        productStatus: string
+    }[]
 ) {
     const data = {
+        orderID: orderID,
         Buyer: buyer,
         PaymentMethod: paymentMethod,
         Items: items,
@@ -103,9 +125,21 @@ export async function placeBuying(
 
     return await fetchWrapper.post("buyings/create", data);
 }
+
 export async function getOrderHistory() {
     return await fetchWrapper.get(`buyings`);
 }
 export async function getOrderUserHistory() {
     return await fetchWrapper.get(`buyings/my-buyings`);
 }
+export async function confirmOrder(orderId: string, data: FieldValues) {
+    const result = await fetchWrapper.post(`buyings/confirm-item/${orderId}`, data);
+    return result;
+}
+export async function addSellerWaller(sellerId: string, data: FieldValues) {
+    const result = await fetchWrapper.post(`wallets/seller/deposit/${sellerId}`, data);
+    return result;
+}
+
+
+

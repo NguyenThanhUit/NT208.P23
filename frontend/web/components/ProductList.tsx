@@ -31,23 +31,17 @@ export default function ProductList({ orders }: { orders: Order[] }) {
         fetchUser();
     }, []);
 
-    if (loading) {
-        return <div className="text-center text-lg font-semibold mt-10">Loading...</div>;
-    }
 
     if (error) {
         return <div className="text-red-500 text-center mt-10">{error}</div>;
     }
 
     if (!orders.length) {
-        return <p className="text-center text-gray-500 mt-10">No products available.</p>;
+        return <p className="text-center text-gray-500 mt-10">Không có sản phẩm nào cả.</p>;
     }
 
     const handleAddToCart = (order: Order) => {
         const isOutOfStock = !order.StockQuantity || order.StockQuantity <= 0;
-
-        // console.log("🛒 Adding to cart - Product:", order);
-        // console.log("👤 User:", user);
 
         if (isOutOfStock) {
             toast.error("Sản phẩm đã hết hàng!", {
@@ -87,11 +81,14 @@ export default function ProductList({ orders }: { orders: Order[] }) {
         try {
             addToCart({
                 id: order.id,
+                productId: order.id,
                 name: order.Name,
                 price: order.Price ?? 0,
                 seller: order.Seller,
                 quantity: 1,
                 imageUrl: order.ImageUrl,
+                key: order.Key,
+                productStatus: order.ProductStatus
             });
             toast.success("Đã thêm sản phẩm vào giỏ hàng!", {
                 position: "top-center",
@@ -111,6 +108,7 @@ export default function ProductList({ orders }: { orders: Order[] }) {
             <ToastContainer />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
                 {orders.map((order) => {
+                    console.log("Order item:", order);
                     const isOutOfStock = !order.StockQuantity || order.StockQuantity <= 0;
                     const isSeller = user?.username === order.Seller;
                     return (

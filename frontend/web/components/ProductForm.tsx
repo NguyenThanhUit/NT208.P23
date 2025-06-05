@@ -5,12 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
-    FiTag,
-    FiDollarSign,
-    FiPackage,
-    FiImage,
-    FiList,
-    FiAlignLeft,
+    FiTag, FiDollarSign, FiPackage, FiImage,
+    FiList, FiAlignLeft, FiKey
 } from 'react-icons/fi';
 
 import { getCurrentUser } from '@/app/actions/authactions';
@@ -59,22 +55,26 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
         }
     }, [defaultValues, reset]);
 
-    const onSubmit = async (data: Order) => {
-        try {
-            const payload = { ...data, Seller: user?.username ?? 'unknown' };
+    const onSubmit = async (data: any) => {
+        const payload: Order = {
+            ...data,
+            Price: Number(data.Price),
+            StockQuantity: 1,
+            SearchCount: 0,
+            Seller: user?.username ?? 'unknown',
+            ProductStatus: 'active',
+        };
 
-            const result = defaultValues?.id
-                ? await updateProduct(payload, defaultValues.id)
-                : await createProduct(payload);
+        console.log("Dữ liệu gửi đi:", payload);
 
-            if (result?.id) {
-                router.push(`/product/detail/${result.id}`);
-            } else {
-                throw new Error('Không nhận được ID sản phẩm sau khi xử lý');
-            }
-        } catch (err) {
-            console.error(err);
-            setErrorMessage('Đã xảy ra lỗi khi lưu sản phẩm.');
+        const result = defaultValues?.id
+            ? await updateProduct(payload, defaultValues.id)
+            : await createProduct(payload);
+
+        if (result?.id) {
+            router.push(`/product/detail/${result.id}`);
+        } else {
+            setErrorMessage("Đã xảy ra lỗi khi tạo/sửa sản phẩm.");
         }
     };
 
@@ -141,15 +141,11 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
                 />
 
                 <FormInput
-                    label="Số lượng tồn kho"
-                    icon={<FiPackage />}
-                    type="number"
-                    placeholder="50"
-                    register={register('StockQuantity', {
-                        required: 'Bắt buộc',
-                        min: { value: 0, message: 'Phải >= 0' },
-                    })}
-                    error={errors.StockQuantity?.message}
+                    label="Key sản phẩm"
+                    icon={<FiKey />}
+                    placeholder="Nhập key..."
+                    register={register('Key', { required: 'Bắt buộc' })}
+                    error={errors.Key?.message}
                 />
 
                 <div className="text-center">
@@ -169,6 +165,7 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
         </div>
     );
 }
+
 
 function FormInput({ label, icon, type = 'text', placeholder, register, error }: any) {
     return (

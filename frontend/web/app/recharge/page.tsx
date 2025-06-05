@@ -104,7 +104,7 @@ export default function RechargePage() {
                     </div>
                 )}
 
-                {/* Số dư ví */}
+
                 {walletBalance !== null && (
                     <div className="bg-green-100 text-green-800 text-center rounded-lg py-3 px-4 mb-6 font-semibold shadow">
                         💰 Số dư ví hiện tại: {walletBalance?.toLocaleString()} VND

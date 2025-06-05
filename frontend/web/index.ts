@@ -18,6 +18,9 @@ export interface Order {
     Category: string;
     ImageUrl: string;
     StockQuantity: number;
+    Key: string;
+    ProductStatus: string;
+    SearchCount: number;
 }
 
 export interface PageResult<T> {
