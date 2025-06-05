@@ -25,11 +25,11 @@ public class EmailSender : IEmailSender
     public EmailConfig _emailconfig = new EmailConfig
     {
         Name = "E-Shop",
-        Email = "nghoangphuc1201@gmail.com",               // Nhập trực tiếp email người gửi
-        Host = "smtp.gmail.com",
-        Port = 587,
-        Username = "nghoangphuc1201@gmail.com",            // Nhập trực tiếp username
-        Password = "oxkmuqmvkpmknzsx",                     // Nhập trực tiếp App Password
+        Email = Environment.GetEnvironmentVariable("GMAIL"),            // Email người gửi
+        Host = "smtp.gmail.com",                                        // host SMTP (ví dụ: smtp.gmail.com)
+        Port = 587,                                                     // cổng SMTP (ví dụ: 587 cho TLS)
+        Username = Environment.GetEnvironmentVariable("GMAIL"),         // username (hay email)
+        Password = Environment.GetEnvironmentVariable("APPPASSWORD"),   // App Password (dùng Gmail với 2FA)
         EnableSsl = true
     };
 

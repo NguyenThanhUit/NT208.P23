@@ -71,10 +71,19 @@ namespace OrderService.Data.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
+                    b.Property<string>("Key")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProductStatus")
+                        .HasColumnType("text");
+
+                    b.Property<int>("SearchCount")
                         .HasColumnType("integer");
 
                     b.Property<int>("StockQuantity")

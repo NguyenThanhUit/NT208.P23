@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IdentityService.Pages.Register;
 
+// Lưu trữ dữ liệu từ form đăng ký mà người dùng nhập vào
 public class RegisterViewModel
 {
     public Guid ID { get; set; }
@@ -27,5 +28,4 @@ public class RegisterViewModel
 
     // Thêm trường nhập mã OTP
     public string? OTPCode { get; set; }
-
 }

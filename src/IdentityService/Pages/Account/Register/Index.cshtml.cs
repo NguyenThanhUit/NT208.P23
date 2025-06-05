@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;        // Quản lý người dùng (tạo 
 using System.Security.Claims;               // Lưu thông tin bổ sung của người dùng (như tên đầy đủ).
 using IdentityModel;
 using IdentityService.Models;
-
+using System.Text;
 
 namespace IdentityService.Pages.Register
 {
@@ -106,8 +106,6 @@ namespace IdentityService.Pages.Register
                     // Gửi email
                     if (Input.VerificationMethod == "Email")
                     {
-                        user.EmailConfirmed = true;
-
                         await _emailSender.SendEmail(
                             user.Email,
                             "Xác thực tài khoản E-Shop",
@@ -117,13 +115,8 @@ namespace IdentityService.Pages.Register
                     // Gửi SMS
                     else if (Input.VerificationMethod == "SMS")
                     {
-                        user.PhoneNumberConfirmed = true;
-
-                        string phoneNumber = "+84" + user.PhoneNumber.Substring(1);
-
-                        Console.WriteLine(phoneNumber);
                         await _smsSender.SendSMS(
-                            phoneNumber,
+                            user.PhoneNumber,
                             $"Xác thực tài khoản E-Shop. Mã OTP của bạn là: {OTP}. Mã sẽ hết hạn sau 5 phút."
                         );
                     }
@@ -136,8 +129,7 @@ namespace IdentityService.Pages.Register
                     {
                         returnUrl = Input.ReturnUrl,
                         username = Input.UserName,
-                        rememberLogin = false,
-                        isRegister = RegisterSuccess
+                        verificationMethod = Input.VerificationMethod
                     });
                 }
 

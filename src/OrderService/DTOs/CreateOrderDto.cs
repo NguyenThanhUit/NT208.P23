@@ -16,4 +16,10 @@ public class CreateOrderDto
     public string ImageUrl { get; set; }
     [Required]
     public int StockQuantity { get; set; }
+    [Required]
+    public int SearchCount { get; set; }
+    [Required]
+    public string Key { get; set; }
+    [Required]
+    public string ProductStatus { get; set; }
 }

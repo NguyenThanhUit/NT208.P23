@@ -7,6 +7,6 @@ public class VerifyInputModel
     public string? ReturnUrl { get; set; }
     public bool RememberLogin { get; set; }
 
-    // Biến kiểm tra đây là phần đăng nhập hay đăng ký
-    public bool IsRegister { get; set; }
+    // Xác định phương thức xác thực
+    public string VerificationMethod { get; set; }
 }

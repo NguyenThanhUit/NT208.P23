@@ -15,7 +15,6 @@ public class Item
     public string Key { get; set; }
     public string Category { get; set; }
 
-    //nav properties
     public Auction Auction { get; set; }
     public Guid AuctionId { get; set; }
 

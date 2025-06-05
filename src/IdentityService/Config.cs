@@ -42,24 +42,12 @@ public static class Config
             {
                 ClientId = "nextApp",
                 ClientName = "nextApp",
-
-
                 ClientSecrets = { new Secret("secret".Sha256()) },
-
-
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-
-
                 RequirePkce = false,
-
                 RedirectUris = { "http://localhost:3000/api/auth/callback/id-server" },
-
-
                 AllowOfflineAccess = true,
-
-
                 AllowedScopes = { "openid", "profile","email", "address", "orderApp", "custom.claims" },
-                
                 // Thời gian sống của access token (30 ngày = 3600s * 24h * 30d)
                 AccessTokenLifetime = 3600 * 24 * 30,
                 AlwaysIncludeUserClaimsInIdToken = true, //Lay ID token

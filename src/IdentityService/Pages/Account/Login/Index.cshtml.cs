@@ -127,8 +127,6 @@ public class Index : PageModel
                     // Gửi email
                     if (Input.VerificationMethod == "Email")
                     {
-                        user.EmailConfirmed = true;
-
                         await _emailSender.SendEmail(
                             user.Email,
                             "Xác thực tài khoản E-Shop",
@@ -138,13 +136,8 @@ public class Index : PageModel
                     // Gửi SMS
                     else if (Input.VerificationMethod == "SMS")
                     {
-                        user.PhoneNumberConfirmed = true;
-
-                        string phoneNumber = "+84" + user.PhoneNumber.Substring(1);
-
-                        Console.WriteLine(phoneNumber);
                         await _smsSender.SendSMS(
-                            phoneNumber,
+                            user.PhoneNumber,
                             $"Xác thực tài khoản E-Shop. Mã OTP của bạn là: {OTP}. Mã sẽ hết hạn sau 5 phút."
                         );
                     }
@@ -153,7 +146,8 @@ public class Index : PageModel
                     {
                         returnUrl = Input.ReturnUrl,
                         username = Input.Username,
-                        rememberLogin = Input.RememberLogin
+                        rememberLogin = Input.RememberLogin,
+                        verificationMethod = Input.VerificationMethod
                     });
                 }
             }

@@ -1,12 +1,12 @@
-using Infobip.Api.SDK;
-using Infobip.Api.SDK.SMS.Models;
-
-using Microsoft.Extensions.Configuration;
+using System;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using System.Threading.Tasks;
 
 public class SMSConfig
 {
-    public string ApiKey { get; set; }
-    public string BaseUrl { get; set; }
+    public string AccountSid { get; set; }
+    public string AuthToken { get; set; }
     public string Sender { get; set; }
 }
 
@@ -17,37 +17,31 @@ public interface ISMSSender
 
 public class SMSSender : ISMSSender
 {
-    public InfobipApiClient _sender = null;
-    public SMSConfig _smsconfig = new SMSConfig
+    private readonly SMSConfig _smsConfig;
+
+    public SMSSender()
     {
-        // Sử dụng Infobip để gửi SMS
-        ApiKey = Environment.GetEnvironmentVariable("INFOBIP_API_KEY"),
-        BaseUrl = Environment.GetEnvironmentVariable("INFOBIP_BASE_URL"),
-        Sender = "E-Shop"
-    };
-
-    public async Task SendSMS(string phoneNumber = "", string message = "")
-    {
-        // Tạo instance của InfobipSmsClient để gửi SMS
-        ApiClientConfiguration credentials = new ApiClientConfiguration(_smsconfig.BaseUrl, _smsconfig.ApiKey);
-
-        _sender = new InfobipApiClient(credentials);
-
-        // Thiết lập SMS
-        SendSmsMessageRequest request = new SendSmsMessageRequest
+        _smsConfig = new SMSConfig
         {
-            Messages = new List<SmsMessage>
-            {
-                new SmsMessage
-                {
-                    From = _smsconfig.Sender,
-                    Destinations = new List<SmsDestination> { new SmsDestination(to: phoneNumber) },
-                    Text = message
-                }
-            }
+            AccountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"),
+            AuthToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"),
+            Sender = "E-Shop"
         };
 
-        // Gửi SMS
-        await _sender.Sms.SendSmsMessage(request);
+        // Khởi tạo Twilio client
+        TwilioClient.Init(_smsConfig.AccountSid, _smsConfig.AuthToken);
+    }
+
+    public async Task SendSMS(string phoneReceiver = "", string message = "")
+    {
+        string phoneSender = Environment.GetEnvironmentVariable("SENDER");
+        if (!phoneReceiver.StartsWith("+"))
+            phoneReceiver = "+84" + phoneReceiver.Substring(1);
+
+        var SMS = await MessageResource.CreateAsync(
+            from: new Twilio.Types.PhoneNumber(phoneSender),
+            to: new Twilio.Types.PhoneNumber(phoneReceiver),
+            body: message
+        );
     }
 }

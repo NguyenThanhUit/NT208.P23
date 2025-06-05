@@ -16,4 +16,7 @@ public class OrderDto
     public string Category { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public int StockQuantity { get; set; }
+    public string Key { get; set; }
+    public string ProductStatus { get; set; }
+    public string SearchCount { get; set; }
 }

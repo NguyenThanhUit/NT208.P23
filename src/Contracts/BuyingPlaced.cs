@@ -11,5 +11,9 @@ namespace Contracts
         public string ProductName { get; set; }
         public string BuyingStatus { get; set; }
         public int Quantity { get; set; }
+        public string Key { get; set; }
+        public string ProductStatus { get; set; }
+        public string ProductId { get; set; }
+        public string Price { get; set; }
     }
 }
