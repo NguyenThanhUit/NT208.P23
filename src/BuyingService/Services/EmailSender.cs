@@ -11,8 +11,8 @@ public class EmailSender : IEmailSender
 {
     private readonly string _smtpHost = "smtp.gmail.com";
     private readonly int _smtpPort = 587;
-    private readonly string _smtpUser = "nghoangphuc1201@gmail.com";
-    private readonly string _smtpPass = "oxkmuqmvkpmknzsx";
+    private readonly string _smtpUser = "null";
+    private readonly string _smtpPass = "null";
 
     public async Task SendEmailAsync(string toEmail, string subject, string body)
     {
