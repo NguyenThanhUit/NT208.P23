@@ -20,11 +20,6 @@ try
         .ReadFrom.Configuration(ctx.Configuration));
     builder.Services.AddScoped<IEmailSender, EmailSender>();
 
-    var clientId = Environment.GetEnvironmentVariable("CLIENTID");
-    var clientSecret = Environment.GetEnvironmentVariable("CLIENTSECRET");
-
-    Console.WriteLine($"CLIENTID: {clientId}");
-    Console.WriteLine($"CLIENTSECRET: {clientSecret}");
 
     builder.Services.AddScoped<ISMSSender, SMSSender>();
     builder.Services.AddAuthentication()
