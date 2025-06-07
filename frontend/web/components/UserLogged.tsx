@@ -7,7 +7,7 @@ import { AiOutlineProduct, AiFillTrophy, AiOutlineLogout } from 'react-icons/ai'
 import { HiCog } from 'react-icons/hi';
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { User } from "next-auth";
-import { getUserInformation, sendUserInformation } from "@/app/actions/useraction";
+import { getUserInformation } from "@/app/actions/useraction";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -16,10 +16,9 @@ type Props = {
 };
 
 export default function UserLogged({ user }: Props) {
-    const [hasSent, setHasSent] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [role, setRole] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true); // Thêm trạng thái loading
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
@@ -36,19 +35,6 @@ export default function UserLogged({ user }: Props) {
         fetchUserRole();
     }, []);
 
-    async function handleSendUserInfo() {
-        if (hasSent) return;
-        try {
-            await sendUserInformation({
-                email: user.email,
-                name: user.name,
-            });
-            setHasSent(true);
-            console.log("Đã gửi thông tin user khi mở dropdown");
-        } catch (err) {
-            console.error("Lỗi khi gửi thông tin user:", err);
-        }
-    }
 
     async function handleCreateProductClick() {
         try {
@@ -85,7 +71,7 @@ export default function UserLogged({ user }: Props) {
         router.push("/seller");
     }
 
-    if (loading) return null; // hoặc hiển thị skeleton loader
+    if (loading) return null;
 
     return (
         <>
@@ -94,9 +80,8 @@ export default function UserLogged({ user }: Props) {
                 label={
                     <span
                         className="text-black font-semibold cursor-pointer"
-                        onClick={handleSendUserInfo}
                     >
-                        Welcome, {user.name}
+                        Xin chào, {user.name}
                     </span>
                 }
                 className="w-56"

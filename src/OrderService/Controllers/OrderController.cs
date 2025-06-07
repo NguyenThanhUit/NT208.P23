@@ -18,12 +18,14 @@ public class OrderController : ControllerBase
     private readonly OrderDbContext _context;
     private readonly IMapper _mapper;
     private readonly IPublishEndpoint _publishEndpoint;
+    private readonly ILogger<OrderController> _logger;
 
-    public OrderController(OrderDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
+    public OrderController(OrderDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderController> logger)
     {
         _context = context;
         _mapper = mapper;
         _publishEndpoint = publishEndpoint;
+        _logger = logger;
     }
 
 
@@ -92,21 +94,43 @@ public class OrderController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<OrderDto>> UpdateOrder(Guid id, [FromBody] UpdateOrderDto orderDto)
     {
-        var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
-        if (order == null) return NotFound();
+        var order = await _context.Orders
+            .Include(o => o.Product)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (order.Seller != User.Identity?.Name) return Forbid();
+        if (order == null)
+        {
+            return NotFound();
+        }
 
-        _mapper.Map(orderDto, order);
+        if (order.Seller != User.Identity?.Name)
+        {
+            return Forbid();
+        }
 
+
+        if (order.Product.Id != order.ProductId)
+        {
+            return Problem(
+                statusCode: 400
+            );
+        }
+        var product = order.Product;
+        product.Name = orderDto.Name;
+        product.ImageUrl = orderDto.ImageUrl;
+        product.Price = orderDto.Price;
+        product.Description = orderDto.Description;
+        product.Category = orderDto.Category;
+        product.Key = orderDto.Key;
         var result = await _context.SaveChangesAsync() > 0;
-        if (!result) return BadRequest("Could not update the order.");
-
         var updatedOrder = _mapper.Map<OrderDto>(order);
         await _publishEndpoint.Publish(_mapper.Map<OrderUpdated>(updatedOrder));
-
         return Ok(updatedOrder);
     }
+
+
+
+
 
     [Authorize]
     [HttpDelete("{id}")]
@@ -123,11 +147,12 @@ public class OrderController : ControllerBase
     }
     public class UpdateOrderDto
     {
-        public Guid ProductId { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public int Price { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
         public string Key { get; set; }
-        public int Quantity { get; set; }
-        public string Seller { get; set; }
     }
 
 }

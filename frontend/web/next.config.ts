@@ -9,8 +9,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'via.placeholder.com' },
       { protocol: 'https', hostname: 'i.pinimg.com' },
       { protocol: 'https', hostname: 'cdn.cloudflare.steamstatic.com' },
+      { protocol: 'https', hostname: 'assets-prd.ignimgs.com' },
     ],
   },
+  output: 'standalone'
 };
 
 export default nextConfig;

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { getCurrentUser } from "@/app/actions/authactions";
 import UserLogged from "./UserLogged";
@@ -7,11 +7,18 @@ import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/app/function/cartStore";
-import { Order } from "..";
 import { usePathname, useRouter } from "next/navigation";
 
-export default function Navbar({ orders }: { orders: Order[] }) {
-    const [user, setUser] = useState<any>(null);
+interface User {
+    id?: string;
+    username: string;
+    email?: string | null;
+
+}
+
+
+export default function Navbar() {
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const totalQuantity = useCartStore((state) => state.getTotalQuantity());
 
@@ -22,7 +29,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
         const fetchUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
-                setUser(currentUser);
+                setUser(currentUser ?? null);
             } catch (err) {
                 console.error("Lỗi khi lấy thông tin người dùng:", err);
             } finally {
@@ -39,7 +46,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
     return (
         <header className="sticky top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
             <div
-                className='cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500'
+                className="cursor-pointer flex items-center gap-2 text-3xl font-semibold text-red-500"
                 onClick={handleLogoClick}
             >
                 <div>E-Shop</div>
@@ -88,11 +95,7 @@ export default function Navbar({ orders }: { orders: Order[] }) {
                 </Link>
             </div>
 
-
-
-
             <div className="flex items-center gap-4">
-
                 {user && !loading && (
                     <Link href={`/order/cart/`}>
                         <div className="relative cursor-pointer">

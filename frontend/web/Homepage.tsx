@@ -10,9 +10,11 @@ import { getData, initUserMoneyWallet } from "./app/actions/orderactions";
 import { useOrderStore } from "./hooks/useOrderStore";
 import AppPagination from "./components/AppPagination";
 import { getCurrentUser } from "./app/actions/authactions";
+import { sendUserInformation } from "./app/actions/useraction";
 
 export default function Homepage() {
     const [loading, setLoading] = useState(true);
+    const [hasSent, setHasSent] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [walletBalance, setWalletBalance] = useState(0);
     const [user, setUser] = useState<{ username: string, name: string } | null>(null);
@@ -50,11 +52,19 @@ export default function Homepage() {
                         ...currentUser,
                         name: currentUser?.username || "",
                     });
+
+                    if (!hasSent) {
+                        await sendUserInformation({
+                            email: currentUser.email,
+                            name: currentUser.username,
+                        });
+                        setHasSent(true);
+                        console.log("Đã gửi thông tin user từ Homepage");
+                    }
+
                     const initialBalance = 0;
                     const wallet = await initUserMoneyWallet(currentUser?.username, { balance: initialBalance });
                     setWalletBalance(wallet.balance);
-
-                    console.log("Số tiền của user sau khởi tạo ví:", wallet.balance);
                 }
             } catch (error) {
                 console.error("Không thể lấy thông tin người dùng hoặc ví:", error);
@@ -62,7 +72,8 @@ export default function Homepage() {
         };
 
         fetchUserAndInitWallet();
-    }, []);
+    }, [hasSent]);
+
 
     useEffect(() => {
         setLoading(true);

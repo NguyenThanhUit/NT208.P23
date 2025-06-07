@@ -1,5 +1,5 @@
 'use client';
-
+import Image from "next/image";
 import { getUserInformation, getSellerDetail, approveUser, rejectUser } from "@/app/actions/useraction";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -117,11 +117,13 @@ export default function SellerDetailPage() {
                 <div className="flex-1">
                     <p className="font-semibold mb-2">Ảnh CMND / CCCD:</p>
                     <div className="border rounded overflow-hidden shadow-sm">
-                        <img
+                        <Image
                             src={seller.idCardImageUrl}
                             alt="Ảnh CMND"
+                            width={500}
+                            height={300}
                             className="w-full h-auto object-contain max-h-64"
-                            loading="lazy"
+                            priority={false}
                         />
                     </div>
                 </div>

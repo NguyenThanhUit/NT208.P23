@@ -3,23 +3,23 @@ import { Order, PageResult } from ".."
 
 type State = {
     orders: Order[];
-    totalCount: number; // Tổng số đơn hàng
-    pageCount: number; // Tổng số trang
+    totalCount: number;
+    pageCount: number;
 };
 
 type Actions = {
-    setData: (data: PageResult<Order>) => void; // Cập nhật dữ liệu phân trang
-    setCurrentPrice: (orderId: string, amount: number) => void; // Cập nhật giá đơn hàng
+    setData: (data: PageResult<Order>) => void;
+    setCurrentPrice: (orderId: string, amount: number) => void;
 };
 
-// Khởi tạo trạng thái ban đầu
+
 const initialState: State = {
     orders: [],
     pageCount: 0,
     totalCount: 0,
 };
 
-// Tạo store Zustand
+
 export const useOrderStore = create<State & Actions>((set) => ({
     ...initialState,
     setData: (data: PageResult<Order>) => {

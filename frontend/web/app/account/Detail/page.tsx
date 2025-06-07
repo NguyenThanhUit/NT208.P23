@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 
 import { getCurrentUser } from "@/app/actions/authactions";
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ export default function AccountDetailPage() {
     const [loading, setLoading] = useState(true);
 
 
-    const normalizeUser = (rawUser: any): CustomUser => ({
+    const normalizeUser = (rawUser: Partial<CustomUser>): CustomUser => ({
         id: rawUser.id ?? "unknown",
         name: rawUser.name ?? null,
         email: rawUser.email ?? null,
@@ -71,11 +72,14 @@ export default function AccountDetailPage() {
 
                     <div className="flex flex-col items-center">
                         {user.image ? (
-                            <img
+                            <Image
                                 src={user.image}
                                 alt="Avatar"
-                                className="w-36 h-36 rounded-full border-4 border-white shadow-md mb-4"
+                                width={144}
+                                height={144}
+                                className="rounded-full border-4 border-white shadow-md mb-4 object-cover"
                             />
+
                         ) : (
                             <div className="w-36 h-36 rounded-full bg-gray-300 flex items-center justify-center text-3xl text-white mb-4">
                                 ?

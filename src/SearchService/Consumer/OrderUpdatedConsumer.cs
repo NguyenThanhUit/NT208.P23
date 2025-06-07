@@ -14,15 +14,20 @@ namespace SearchService.Consumers
 
 
             var product = await DB.Find<Product>()
-                                   .Match(p => p.Name == message.ProductId.ToString())
+                                   .Match(p => p.ProductId == message.ProductId)
                                    .ExecuteFirstAsync();
 
             if (product != null)
             {
-                product.StockQuantity = message.Quantity;
+                product.Name = message.Name;
+                product.Description = message.Description;
+                product.Price = message.Price;
+                product.ImageUrl = message.ImageUrl;
+                product.Category = message.Category;
+                product.Key = message.Key;
 
                 await product.SaveAsync();
-                Console.WriteLine($"[SearchService] Product updated: {product.Name} with new stock: {product.StockQuantity}");
+                Console.WriteLine($"[SearchService] Product updated:  with new stock:");
             }
             else
             {

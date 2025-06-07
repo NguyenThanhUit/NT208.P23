@@ -15,9 +15,27 @@ import {
     FaClock,
 } from 'react-icons/fa';
 
+interface Item {
+    productId: string;
+    productName: string;
+    quantity?: number;
+    price?: number | string;
+    seller: string;
+}
+
+interface Order {
+    orderId: string;
+    buyingStatus: number;
+    walletDeposited?: boolean;
+    items: Item[];
+    totalAmount: number | string;
+    paymentMethod: string;
+    createdAt: string;
+}
+
 export default function OrderHistoryPage() {
     const router = useRouter();
-    const [groupedOrders, setGroupedOrders] = useState<Record<string, any[]>>({});
+    const [groupedOrders, setGroupedOrders] = useState<Record<string, Order[]>>({});
     const [loading, setLoading] = useState(true);
     const [confirming, setConfirming] = useState<string | null>(null);
 
@@ -37,9 +55,7 @@ export default function OrderHistoryPage() {
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
 
-                const hasProcessingOrder = orders.some(
-                    (order: { buyingStatus: number }) => order.buyingStatus === 0
-                );
+                const hasProcessingOrder = orders.some((o: Order) => o.buyingStatus === 0);
                 if (hasProcessingOrder) {
                     timer = setTimeout(fetchData, 10000);
                 }
@@ -57,9 +73,9 @@ export default function OrderHistoryPage() {
         };
     }, []);
 
-    function groupOrdersByDate(orders: any[]) {
-        const grouped: Record<string, any[]> = {};
-        orders.forEach((order) => {
+    function groupOrdersByDate(orders: Order[]) {
+        const grouped: Record<string, Order[]> = {};
+        orders.forEach((order: Order) => {
             const date = new Date(order.createdAt).toLocaleDateString();
             if (!grouped[date]) grouped[date] = [];
             grouped[date].push(order);
@@ -101,13 +117,11 @@ export default function OrderHistoryPage() {
             const orders = await getOrderUserHistory();
             setGroupedOrders(groupOrdersByDate(orders));
 
-
-            const order = orders.find((o: any) => o.orderId === orderId);
+            const order = orders.find((o: Order) => o.orderId === orderId);
             if (!order) return;
 
-
             if (order.buyingStatus === 3 && !order.walletDeposited) {
-                const item = order.items.find((i: any) => i.productId === productId);
+                const item = order.items.find((i: Item) => i.productId === productId);
                 if (!item) return;
 
                 const sellerId = item.seller;
@@ -118,12 +132,9 @@ export default function OrderHistoryPage() {
                 console.log('[handleConfirmItem] Dữ liệu item:', item);
                 console.log('[handleConfirmItem] Tính toán amount:', amount);
 
-
                 await addSellerWaller(sellerId, { Amount: amount });
 
                 alert(`✅ Đã cộng ${amount.toLocaleString()} VNĐ vào ví người bán ${sellerId}`);
-
-
             }
         } catch (error) {
             console.error('❌ Lỗi xác nhận đơn hàng:', error);
@@ -134,7 +145,11 @@ export default function OrderHistoryPage() {
     }
 
     if (loading) {
-        return <div className="min-h-screen p-6 text-center text-gray-600">Đang tải dữ liệu...</div>;
+        return (
+            <div className="min-h-screen p-6 text-center text-gray-600">
+                Đang tải dữ liệu...
+            </div>
+        );
     }
 
     return (
@@ -144,19 +159,15 @@ export default function OrderHistoryPage() {
             </h1>
 
             {Object.keys(groupedOrders).length === 0 ? (
-                <p className="text-center text-gray-600">
-                    Không có đơn hàng nào được tìm thấy.
-                </p>
+                <p className="text-center text-gray-600">Không có đơn hàng nào được tìm thấy.</p>
             ) : (
                 Object.entries(groupedOrders).map(([date, orders]) => (
                     <div key={date} className="mb-8">
-                        <h2 className="text-xl font-semibold text-blue-700 mb-3 border-b pb-1">
-                            {date}
-                        </h2>
+                        <h2 className="text-xl font-semibold text-blue-700 mb-3 border-b pb-1">{date}</h2>
                         <div className="grid gap-4">
-                            {orders.map((order: any) => {
-                                const itemsBySeller: Record<string, any[]> = {};
-                                order.items.forEach((item: any) => {
+                            {orders.map((order: Order) => {
+                                const itemsBySeller: Record<string, Item[]> = {};
+                                order.items.forEach((item: Item) => {
                                     if (!itemsBySeller[item.seller]) {
                                         itemsBySeller[item.seller] = [];
                                     }
@@ -164,7 +175,7 @@ export default function OrderHistoryPage() {
                                 });
 
                                 const totalQuantity = order.items.reduce(
-                                    (sum: number, item: any) => sum + (item.quantity || 1),
+                                    (sum: number, item: Item) => sum + (item.quantity ?? 1),
                                     0
                                 );
 
@@ -196,26 +207,22 @@ export default function OrderHistoryPage() {
                                                         🏪 Người bán: {seller}
                                                     </p>
                                                     <ul className="list-disc list-inside ml-4 text-gray-700 mb-2">
-                                                        {items.map((item: any, index: number) => (
+                                                        {items.map((item: Item, index: number) => (
                                                             <li key={index}>
                                                                 {item.productName}{' '}
                                                                 {item.productId && (
                                                                     <span className="text-gray-500 ml-2">
                                                                         ({item.productId})
                                                                     </span>
-                                                                )} – Số lượng: {item.quantity || 1}
+                                                                )}{' '}
+                                                                – Số lượng: {item.quantity ?? 1}
                                                                 {order.buyingStatus === 0 && (
                                                                     <button
                                                                         onClick={() =>
-                                                                            handleConfirmItem(
-                                                                                order.orderId,
-                                                                                item.productId
-                                                                            )
+                                                                            handleConfirmItem(order.orderId, item.productId)
                                                                         }
                                                                         className="ml-2 text-sm text-white bg-green-600 px-2 py-1 rounded hover:bg-green-700 transition"
-                                                                        disabled={
-                                                                            confirming === item.productId
-                                                                        }
+                                                                        disabled={confirming === item.productId}
                                                                     >
                                                                         {confirming === item.productId
                                                                             ? 'Đang xác nhận...'
@@ -228,9 +235,7 @@ export default function OrderHistoryPage() {
 
                                                     {order.buyingStatus === 3 && (
                                                         <button
-                                                            onClick={() =>
-                                                                router.push(`/review/${seller}`)
-                                                            }
+                                                            onClick={() => router.push(`/review/${seller}`)}
                                                             className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                                                         >
                                                             Đánh giá người bán
@@ -241,12 +246,10 @@ export default function OrderHistoryPage() {
                                         </div>
 
                                         <p>
-                                            <strong>🧾 Số lượng sản phẩm tổng:</strong>{' '}
-                                            {totalQuantity} món
+                                            <strong>🧾 Số lượng sản phẩm tổng:</strong> {totalQuantity} món
                                         </p>
                                         <p>
-                                            <strong>💳 Phương thức thanh toán:</strong>{' '}
-                                            {order.paymentMethod}
+                                            <strong>💳 Phương thức thanh toán:</strong> {order.paymentMethod}
                                         </p>
                                         <p>
                                             <strong>🕒 Thời gian mua:</strong>{' '}

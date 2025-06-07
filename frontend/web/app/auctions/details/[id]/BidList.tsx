@@ -18,20 +18,19 @@ type Props = {
     user: User | null;
     auction: Auction;
 };
-
-// Hàm xử lý lỗi chi tiết hơn
 function getErrorMessage(err: unknown): string {
     if (typeof err === 'string') return err;
     if (err instanceof Error) return err.message || 'Something went wrong';
 
     if (typeof err === 'object' && err !== null) {
-        const e = err as Record<string, any>;
+        const e = err as Record<string, unknown>;
+
 
         if (e.message && typeof e.message === 'string' && e.message.trim() !== '') {
             return e.message;
         }
 
-        if (e.status === 404) return 'Bids not found (404)';
+        if (e.status === 404) return 'Không tìm thấy đấu giá nào (404)';
         if (e.status === 500) return 'Internal server error (500)';
 
         return 'Unexpected error: ' + JSON.stringify(e);
@@ -62,20 +61,20 @@ export default function BidList({ user, auction }: Props) {
         setLoading(true);
 
         getBidsForAuction(auction.id)
-            .then((res: any) => {
-                if (res.error) {
-                    throw res.error;
+            .then((res: Bid[] | { error: string }) => {
+                if ('error' in res) {
+                    throw new Error(res.error);
                 }
-
-                setBids(res as Bid[]);
+                setBids(res);
             })
-            .catch((err) => {
+            .catch((err: unknown) => {
                 const message = getErrorMessage(err);
                 console.error('Error fetching bids:', err);
                 toast.error(message);
             })
             .finally(() => setLoading(false));
     }, [auction.id, setLoading, setBids]);
+
 
     useEffect(() => {
         setOpen(openForBids);

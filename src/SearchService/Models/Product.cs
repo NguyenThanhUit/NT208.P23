@@ -9,7 +9,7 @@ public class Product : Entity
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string Status { get; set; }
     public int SoldAmount { get; set; }
-
+    public string ProductId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public int Price { get; set; }

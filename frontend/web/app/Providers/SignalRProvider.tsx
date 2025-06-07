@@ -27,7 +27,6 @@ export default function SignalRProvider({ children }: Props) {
     const params = useParams<{ id: string }>();
 
     const handleAuctionFinished = useCallback((finishedAuction: AuctionFinished) => {
-        console.log('[SignalR] AuctionFinished event received:', finishedAuction);
         const auction = getDetailedViewData(finishedAuction.auctionId);
         return toast.promise(auction, {
             loading: 'Loading',
@@ -39,10 +38,9 @@ export default function SignalRProvider({ children }: Props) {
     }, []);
 
     const handleAuctionCreated = useCallback((auction: Auction) => {
-        console.log('[SignalR] AuctionCreated event received:', auction);
+
 
         if (user?.username !== auction.seller) {
-            console.log('[SignalR] Showing AuctionCreated toast');
             return toast(<AuctionCreatedToast auction={auction} />, {
                 duration: 10000,
             });
@@ -74,17 +72,14 @@ export default function SignalRProvider({ children }: Props) {
         }
 
         connection.current.on('BidPlaced', (bid: Bid) => {
-            console.log('[SignalR] BidPlaced event received:', bid);
             handleBidPlaced(bid);
         });
 
         connection.current.on('AuctionCreated', (auction: Auction) => {
-            console.log('[SignalR] Received AuctionCreated event');
             handleAuctionCreated(auction);
         });
 
         connection.current.on('AuctionFinished', (finishedAuction: AuctionFinished) => {
-            console.log('[SignalR] Received AuctionFinished event');
             handleAuctionFinished(finishedAuction);
         });
 

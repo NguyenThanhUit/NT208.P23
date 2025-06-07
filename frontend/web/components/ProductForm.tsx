@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
-    FiTag, FiDollarSign, FiPackage, FiImage,
-    FiList, FiAlignLeft, FiKey
+    FiTag,
+    FiDollarSign,
+    FiImage,
+    FiList,
+    FiAlignLeft,
+    FiKey,
 } from 'react-icons/fi';
 
 import { getCurrentUser } from '@/app/actions/authactions';
@@ -20,8 +24,16 @@ type ProductFormProps = {
 };
 
 const gameGenres = [
-    'Action', 'Adventure', 'RPG', 'Simulation', 'Strategy',
-    'Sports', 'Puzzle', 'Racing', 'Horror', 'Shooter',
+    'Action',
+    'Adventure',
+    'RPG',
+    'Simulation',
+    'Strategy',
+    'Sports',
+    'Puzzle',
+    'Racing',
+    'Horror',
+    'Shooter',
 ];
 
 export default function ProductForm({ defaultValues }: ProductFormProps) {
@@ -54,18 +66,19 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
             reset(defaultValues);
         }
     }, [defaultValues, reset]);
+    type ExtendedUser = User & { username?: string };
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: Order) => {
         const payload: Order = {
             ...data,
             Price: Number(data.Price),
             StockQuantity: 1,
             SearchCount: 0,
-            Seller: user?.username ?? 'unknown',
+            Seller: (user as ExtendedUser)?.username ?? 'unknown',
             ProductStatus: 'active',
         };
 
-        console.log("Dữ liệu gửi đi:", payload);
+        console.log('Dữ liệu gửi đi:', payload);
 
         const result = defaultValues?.id
             ? await updateProduct(payload, defaultValues.id)
@@ -74,7 +87,7 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
         if (result?.id) {
             router.push(`/product/detail/${result.id}`);
         } else {
-            setErrorMessage("Đã xảy ra lỗi khi tạo/sửa sản phẩm.");
+            setErrorMessage('Đã xảy ra lỗi khi tạo/sửa sản phẩm.');
         }
     };
 
@@ -167,7 +180,23 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
 }
 
 
-function FormInput({ label, icon, type = 'text', placeholder, register, error }: any) {
+interface FormInputProps {
+    label: string;
+    icon?: React.ReactNode;
+    type?: string;
+    placeholder?: string;
+    register: UseFormRegisterReturn;
+    error?: string;
+}
+
+function FormInput({
+    label,
+    icon,
+    type = 'text',
+    placeholder,
+    register,
+    error,
+}: FormInputProps) {
     return (
         <div>
             <label className="text-sm font-medium text-gray-700">{label}</label>
@@ -185,7 +214,21 @@ function FormInput({ label, icon, type = 'text', placeholder, register, error }:
     );
 }
 
-function FormTextArea({ label, icon, placeholder, register, error }: any) {
+interface FormTextAreaProps {
+    label: string;
+    icon?: React.ReactNode;
+    placeholder?: string;
+    register: UseFormRegisterReturn;
+    error?: string;
+}
+
+function FormTextArea({
+    label,
+    icon,
+    placeholder,
+    register,
+    error,
+}: FormTextAreaProps) {
     return (
         <div>
             <label className="text-sm font-medium text-gray-700">{label}</label>
@@ -203,7 +246,21 @@ function FormTextArea({ label, icon, placeholder, register, error }: any) {
     );
 }
 
-function FormDropdown({ label, icon, options, register, error }: any) {
+interface FormDropdownProps {
+    label: string;
+    icon?: React.ReactNode;
+    options: string[];
+    register: UseFormRegisterReturn;
+    error?: string;
+}
+
+function FormDropdown({
+    label,
+    icon,
+    options,
+    register,
+    error,
+}: FormDropdownProps) {
     return (
         <div>
             <label className="text-sm font-medium text-gray-700">{label}</label>
@@ -214,7 +271,7 @@ function FormDropdown({ label, icon, options, register, error }: any) {
                     className="w-full pl-10 p-3 mt-1 border rounded-md focus:ring-blue-500 focus:outline-none"
                 >
                     <option value="">-- Chọn thể loại --</option>
-                    {options.map((opt: string) => (
+                    {options.map((opt) => (
                         <option key={opt} value={opt}>
                             {opt}
                         </option>

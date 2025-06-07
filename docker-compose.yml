@@ -1,0 +1,204 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+    
+  mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mongopw
+    ports:
+      - 27017:27017
+    volumes:
+      - /data/db
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  order-svc:
+    image: nguyenthanh/order-svc:latest
+    build: 
+      context: .
+      dockerfile: src/OrderService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=orders
+    ports:
+      - 7001:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+  search-svc:
+    image: nguyenthanh/search-svc:latest
+    build:
+      context: .
+      dockerfile: src/SearchService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
+      - OrderServiceUrl=http://order-svc
+      - AuctionServiceUrl=http://auctions-svc
+    ports:
+      - 7002:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+  buyings-svc:
+    image: nguyenthanh/buyings-svc:latest
+    build:
+      context: .
+      dockerfile: src/BuyingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__BuyingDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7003:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+  deposits-svc:
+    image: nguyenthanh/deposits-svc:latest
+    build:
+      context: .
+      dockerfile: src/WalletService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__DepositDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7004:80
+    depends_on:
+      mongodb:
+        condition: service_started
+  auctions-svc:
+    image: nguyenthanh/auctions-svc:latest
+    build: 
+      context: .
+      dockerfile: src/AuctionService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://+:7777
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=auctions
+      - IdentityServiceUrl=http://identity-svc
+      - Kestrel__Endpoints__Grpc__Protocols=Http2
+      - Kestrel__Endpoints__Grpc__Url=http://+:7777
+      - Kestrel__Endpoints__WebApi__Protocols=http1
+      - Kestrel__Endpoints__WebApi__Url=http://+:80
+    ports:
+      - 7005:80
+      - 7777:7777
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+  bid-svc:
+    image: nguyenthanh/bid-svc:latest
+    build:
+      context: .
+      dockerfile: src/BiddingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
+      - IdentityServiceUrl=http://identity-svc
+      - GrpcAuction=http://auctions-svc:7777
+    ports:
+      - 7006:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+  notify-svc:
+    image: nguyenthanh/notify-svc:latest
+    build:
+      context: .
+      dockerfile: src/NotificationService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+    ports:
+      - 7007:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  user-svc:
+    image: nguyenthanh/user-svc:latest
+    build:
+      context: .
+      dockerfile: src/UserService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - IdentityServiceUrl=http://identity-svc
+      - ConnectionStrings__UserDbConnection=mongodb://root:mongopw@mongodb
+    ports:
+      - 7008:80
+    depends_on:
+      mongodb:
+        condition: service_started
+  identity-svc:
+    image: nguyenthanh/identity-svc:latest
+    build: 
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=identity
+      - CLIENTID=${CLIENTID}
+      - CLIENTSECRET=${CLIENTSECRET}
+      - GMAIL=${GMAIL}
+      - APPPASSWORD=${APPPASSWORD}
+      - SENDER=${SENDER}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+    ports:
+      - 5001:80
+    depends_on:
+      postgres:
+        condition: service_started
+  gateway-svc:
+    image: nguyenthanh/gateway-svc:latest
+    build: 
+      context: .
+      dockerfile: src/GatewayService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - 6001:80

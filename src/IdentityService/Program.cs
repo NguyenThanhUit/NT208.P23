@@ -19,6 +19,15 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
     builder.Services.AddScoped<IEmailSender, EmailSender>();
+    builder.Services
+        .AddAuthentication("Cookies")
+        .AddCookie("Cookies", options =>
+        {
+            options.Cookie.Name = ".AspNetCore.Cookies";
+            options.Cookie.SameSite = SameSiteMode.Lax;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            options.Cookie.HttpOnly = true;
+        });
 
 
     builder.Services.AddScoped<ISMSSender, SMSSender>();

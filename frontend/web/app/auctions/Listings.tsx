@@ -64,6 +64,7 @@ export default function Listings() {
                 setLoading(false);
             })
             .catch(err => {
+                console.error(err);
                 setError('Lỗi khi tải dữ liệu.');
                 setLoading(false);
             });

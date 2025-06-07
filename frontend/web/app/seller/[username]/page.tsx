@@ -8,6 +8,11 @@ interface Rating {
     comment: string;
     ratedAt: string;
 }
+interface RawRating {
+    stars: number;
+    comment: string;
+    ratedAt: string;
+}
 
 interface SellerInfo {
     fullName: string;
@@ -17,8 +22,7 @@ interface SellerInfo {
     ratings: Rating[];
 }
 
-export default function SellerPage({ params }: { params: { username: string } }) {
-    const { username } = params;
+export default function SellerPage({ params }: { params: Promise<{ username: string }> }) {
     const [seller, setSeller] = useState<SellerInfo | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -26,6 +30,7 @@ export default function SellerPage({ params }: { params: { username: string } })
     useEffect(() => {
         const fetchSeller = async () => {
             try {
+                const { username } = await params;
                 const res = await getRateSeller(username);
                 if (!res || !res.fullName) {
                     throw new Error("Không tìm thấy người bán hoặc dữ liệu không hợp lệ");
@@ -36,7 +41,7 @@ export default function SellerPage({ params }: { params: { username: string } })
                     address: res.address,
                     createdAt: res.createdAt,
                     averageRating: res.averageRating ?? null,
-                    ratings: (res.ratings ?? []).map((r: any) => ({
+                    ratings: (res.ratings ?? []).map((r: RawRating) => ({
                         stars: r.stars,
                         comment: r.comment,
                         ratedAt: r.ratedAt,
@@ -44,15 +49,19 @@ export default function SellerPage({ params }: { params: { username: string } })
                 };
 
                 setSeller(sellerData);
-            } catch (err: any) {
-                setError(err.message || "Đã xảy ra lỗi");
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Đã xảy ra lỗi");
+                }
             } finally {
                 setLoading(false);
             }
         };
 
         fetchSeller();
-    }, [username]);
+    }, [params]);
 
     if (loading)
         return (

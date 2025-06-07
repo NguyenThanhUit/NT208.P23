@@ -22,15 +22,16 @@ internal static class HostingExtensions
             .AddDefaultTokenProviders();
 
         builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowLocalhost3000", policy =>
-            {
-                policy.WithOrigins("http://localhost:3000")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
-            });
-        });
+{
+    options.AddPolicy("MyPolicy", policy =>
+    {
+        policy.WithOrigins("http://app.nhom6.local")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 
         builder.Services
             .AddIdentityServer(options =>
@@ -39,7 +40,9 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+                //Dung khi dong goi frontend
                 // options.IssuerUri = builder.Configuration["IssuerUri"];
+
                 if (builder.Environment.IsEnvironment("Docker"))
                 {
                     options.IssuerUri = "http://localhost:5001";
@@ -47,14 +50,15 @@ internal static class HostingExtensions
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
+            .AddInMemoryClients(Config.Clients(builder.Configuration))
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<CustomProfileService>();
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.Cookie.SameSite = SameSiteMode.None;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.Lax;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+
         });
 
         builder.Services.AddAuthentication();
@@ -71,7 +75,7 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseCors("AllowLocalhost3000");
+        app.UseCors("MyPolicy");
 
         app.UseStaticFiles();
         app.UseRouting();

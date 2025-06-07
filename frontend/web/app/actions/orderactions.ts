@@ -4,12 +4,30 @@ import { fetchWrapper } from "../lib/fetchWrapper";
 import { FieldValues } from "react-hook-form";
 import { revalidatePath } from "next/cache";
 
+interface ProductItem {
+    id: string;
+    totalPrice: number;
+    seller: string;
+    buyer: string;
+    createdAt: string;
+    status: string;
+    soldAmount?: number;
+    name: string;
+    description: string;
+    price: number;
+    category: string;
+    imageUrl: string;
+    stockQuantity?: number;
+    productStatus: string;
+    key: string;
+    searchCount?: number;
+}
 
 export async function getData(query: string): Promise<PageResult<Order>> {
     try {
         const data = await fetchWrapper.get(`search/products${query}`);
         return {
-            results: data.data?.map((item: any) => ({
+            results: data.data?.map((item: ProductItem) => ({
                 id: item.id,
                 TotalPrice: item.totalPrice,
                 Seller: item.seller,
@@ -26,7 +44,6 @@ export async function getData(query: string): Promise<PageResult<Order>> {
                 ProductStatus: item.productStatus,
                 Key: item.key,
                 SearchCount: String(item.searchCount || 0),
-
             })) || [],
             pageCount: data.pageCount || 1,
             totalCount: data.totalCount || 1
@@ -40,6 +57,7 @@ export async function getData(query: string): Promise<PageResult<Order>> {
         };
     }
 }
+
 
 export async function getDetailedProduct(id: string): Promise<Order> {
     const data = await fetchWrapper.get(`orders/${id}`);
@@ -82,10 +100,17 @@ export async function depositMoneyviaVnPay(money: number, description: string) {
 }
 
 export async function updateProduct(data: FieldValues, id: string) {
-    const res = await fetchWrapper.put(`orders/${id}`, data);
-    revalidatePath(`orders/${id}`);
-    return res;
+    try {
+        const res = await fetchWrapper.put(`orders/${id}`, data);
+        console.log('Response from server:', res);
+        revalidatePath(`orders/${id}`);
+        return res;
+    } catch (error) {
+        console.error('Error updating product:', error);
+        throw error;
+    }
 }
+
 export async function deleteProduct(id: string) {
     await fetchWrapper.del(`orders/${id}`);
 }

@@ -1,6 +1,14 @@
 import React from 'react';
+import Image from 'next/image';
 
 type Article = {
+    title: string;
+    link: string;
+    pubDate: string;
+    thumbnail?: string;
+};
+
+type RSSItem = {
     title: string;
     link: string;
     pubDate: string;
@@ -19,7 +27,7 @@ async function getIGNNews(): Promise<Article[]> {
 
         const data = await res.json();
 
-        const articles = data.items.slice(0, 6).map((item: any) => ({
+        const articles = (data.items as RSSItem[]).slice(0, 6).map((item) => ({
             title: item.title,
             link: item.link,
             pubDate: item.pubDate,
@@ -44,7 +52,15 @@ export default async function BlogPage() {
                 {articles.map((article, index) => (
                     <li key={index} className="border-b pb-4 flex gap-4">
                         {article.thumbnail && (
-                            <img src={article.thumbnail} alt="" className="w-32 h-20 object-cover rounded" />
+                            <div className="relative w-32 h-20 flex-shrink-0">
+                                <Image
+                                    src={article.thumbnail}
+                                    alt={article.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="rounded"
+                                />
+                            </div>
                         )}
                         <div>
                             <a

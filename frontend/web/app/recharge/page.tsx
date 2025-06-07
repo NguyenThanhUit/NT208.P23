@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getCurrentUser } from "../actions/authactions";
 import { depositMoneyviaVnPay, depositMoney, getTotalMoney } from "../actions/orderactions";
 import { User } from "next-auth";
-
+import Image from "next/image";
 export default function RechargePage() {
     const [user, setUser] = useState<User | null>(null);
     const [amount, setAmount] = useState<number>(0);
@@ -88,10 +88,12 @@ export default function RechargePage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-green-100 flex flex-col items-center justify-center px-4 py-10">
             <div className="max-w-lg w-full bg-white rounded-xl shadow-2xl p-8 relative overflow-hidden">
-                <img
+                <Image
                     src="https://cdn.pixabay.com/photo/2021/08/16/23/09/wallet-6551548_1280.png"
                     alt="Wallet"
-                    className="w-24 h-24 mx-auto mb-4 animate-pulse"
+                    width={96}
+                    height={96}
+                    className="mx-auto mb-4 animate-pulse"
                 />
 
                 <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-2">

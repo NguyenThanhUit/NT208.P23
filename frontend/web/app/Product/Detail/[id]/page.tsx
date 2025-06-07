@@ -11,10 +11,11 @@ import DeleteButton from "./DeleteButton";
 import { User } from "next-auth";
 import { useCartStore } from "@/app/function/cartStore";
 import { Order } from "@/index";
+import Image from "next/image";
 
 export default function Details({ params }: { params?: Promise<{ id: string }> }) {
     const { id } = use(params ?? Promise.resolve({ id: "" }));
-    const [product, setProduct] = useState<any | null>(null);
+    const [product, setProduct] = useState<Order | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,12 +37,9 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                     getCurrentUser(),
                 ]);
 
-                console.log("Dữ liệu sản phẩm nhận được từ server:", productData);
-
                 setProduct(productData);
                 setUser(currentUser);
             } catch (err) {
-                console.error("Lỗi khi lấy chi tiết sản phẩm:", err);
                 setError("Không thể tải dữ liệu sản phẩm.");
             } finally {
                 setLoading(false);
@@ -50,6 +48,18 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
 
         fetchData();
     }, [id]);
+
+    if (loading) {
+        return <div className="text-center text-lg font-semibold mt-10">Đang tải...</div>;
+    }
+
+    if (error) {
+        return <div className="min-h-screen text-red-600 text-center mt-10">{error}</div>;
+    }
+
+    if (!product) {
+        return <div className="min-h-screen text-red-600 text-center mt-10">Không tìm thấy sản phẩm</div>;
+    }
 
     const handleAddToCart = (order: Order) => {
         if (!user) {
@@ -60,47 +70,39 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
             return;
         }
 
-        try {
-            if (quantity < 1) {
-                toast.error("Số lượng phải lớn hơn hoặc bằng 1!", {
-                    position: "top-center",
-                    autoClose: 3000,
-                });
-                return;
-            }
-            if (quantity > product.StockQuantity) {
-                toast.error(`Số lượng tối đa có thể mua là ${product.StockQuantity}`, {
-                    position: "top-center",
-                    autoClose: 3000,
-                });
-                return;
-            }
-
-            const cartItem = {
-                id: order.id,
-                name: order.Name,
-                price: order.Price ?? 0,
-                quantity,
-                imageUrl: order.ImageUrl,
-                key: order.Key,
-                productStatus: order.ProductStatus,
-                seller: order.Seller,
-            };
-
-            console.log("Dữ liệu thêm vào giỏ hàng:", cartItem);
-
-            addToCart(cartItem);
-            toast.success("Sản phẩm đã được thêm vào giỏ hàng!", {
+        if (quantity < 1) {
+            toast.error("Số lượng phải lớn hơn hoặc bằng 1!", {
                 position: "top-center",
                 autoClose: 3000,
             });
-        } catch (err) {
-            console.error("Lỗi khi thêm vào giỏ hàng:", err);
-            toast.error("Không thể thêm sản phẩm vào giỏ hàng!", {
-                position: "top-center",
-                autoClose: 3000,
-            });
+            return;
         }
+
+        if (quantity > product.StockQuantity) {
+            toast.error(`Số lượng tối đa có thể mua là ${product.StockQuantity}`, {
+                position: "top-center",
+                autoClose: 3000,
+            });
+            return;
+        }
+
+        const cartItem = {
+            productId: order.id,
+            id: order.id,
+            name: order.Name,
+            price: order.Price ?? 0,
+            quantity,
+            imageUrl: order.ImageUrl,
+            key: order.Key,
+            productStatus: order.ProductStatus,
+            seller: order.Seller,
+        };
+
+        addToCart(cartItem);
+        toast.success("Sản phẩm đã được thêm vào giỏ hàng!", {
+            position: "top-center",
+            autoClose: 3000,
+        });
     };
 
     const increment = () => {
@@ -111,84 +113,77 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
         setQuantity((q) => Math.max(q - 1, 1));
     };
 
-    if (loading) {
-        return <div className="text-center text-lg font-semibold mt-10">Đang tải...</div>;
-    }
-
-    if (error) {
-        return <div className="text-red-500 text-center mt-10">{error}</div>;
-    }
-
-    if (!product) {
-        return <div className="text-red-500 text-center mt-10">Không tìm thấy sản phẩm</div>;
-    }
-
     return (
-        <div className="bg-gray-100 min-h-screen">
+        <div className="bg-gray-50 min-h-screen">
             <Navbar />
             <ToastContainer />
 
-            <div className="max-w-7xl mx-auto px-6 py-10">
-                <div className="bg-white shadow-md rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-10 relative">
-
-                    <div className="w-full">
-                        <img
-                            src={product.ImageUrl || "https://via.placeholder.com/500"}
+            <div className="max-w-6xl mx-auto px-6 py-12">
+                <div className="bg-white shadow-lg rounded-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+                    {/* Image Section */}
+                    <div className="md:col-span-1 flex justify-center items-center">
+                        <Image
+                            src={product.ImageUrl || "/placeholder.png"}
                             alt={product.Name || "Sản phẩm"}
-                            className="w-full h-[500px] object-cover rounded-md border"
+                            width={400}
+                            height={400}
+                            className="rounded-lg border border-gray-300 object-contain"
                         />
                     </div>
 
-
-                    <div className="flex flex-col justify-between">
+                    <div className="md:col-span-2 flex flex-col justify-between">
                         {user?.username === product.Seller && (
-                            <div className="absolute top-4 right-4 flex gap-2 z-10">
+                            <div className="absolute top-6 right-6 flex gap-3 z-20">
                                 <EditButton id={product.id} />
                                 <DeleteButton id={product.id} />
                             </div>
                         )}
 
-                        <div>
-                            <h2 className="text-2xl font-bold text-black">Sản phẩm</h2>
-                            <h1 className="text-5xl font-bold text-red-900 mb-2">{product.Name}</h1>
-                            <p className="text-sm text-gray-500 mb-4">Thể loại: {product.Category}</p>
-
-                            <div className="text-3xl font-bold text-green-600 mb-2">
+                        <section className="mb-6">
+                            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{product.Name}</h2>
+                            <p className="text-sm text-gray-500 mb-4 italic">Thể loại: {product.Category}</p>
+                            <div className="text-4xl font-bold text-green-700 mb-4">
                                 {(product.Price ?? 0).toLocaleString()} <span className="text-lg">VNĐ</span>
                             </div>
+                        </section>
 
-                            <div className="mt-4 text-gray-700 text-base space-y-2">
-                                <p>
-                                    <span className="font-semibold">Người bán: </span>
-                                    <a
-                                        href={`/seller/${product.Seller}`}
-                                        className="text-blue-600 hover:underline cursor-pointer"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {product.Seller}
-                                    </a>
-                                </p>
-                                <p><span className="font-semibold">Số lượng còn:</span> {product.StockQuantity}</p>
-                                <p><span className="font-semibold">Mô tả:</span></p>
+                        <section className="mb-8 space-y-3 text-gray-700 text-base leading-relaxed">
+                            <p>
+                                <span className="font-semibold text-gray-800">Người bán: </span>
+                                <a
+                                    href={`/seller/${product.Seller}`}
+                                    className="text-blue-600 hover:underline"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {product.Seller}
+                                </a>
+                            </p>
+                            <p>
+                                <span className="font-semibold text-gray-800">Số lượng còn: </span>
+                                {product.StockQuantity}
+                            </p>
+                            <div>
+                                <p className="font-semibold text-gray-800 mb-1">Mô tả sản phẩm:</p>
                                 <p className="whitespace-pre-line">{product.Description || "Không có mô tả."}</p>
                             </div>
-                        </div>
+                        </section>
 
-                        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+                        {/* Action buttons */}
+                        <div className="flex flex-col sm:flex-row items-center gap-5">
                             {user?.username !== product.Seller && (
                                 <>
                                     <div className="flex items-center border rounded-md overflow-hidden max-w-[150px]">
                                         <button
                                             onClick={decrement}
-                                            className="px-3 py-1 bg-gray-300 hover:bg-gray-400 transition"
+                                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition"
                                             aria-label="Giảm số lượng"
                                         >
                                             -
                                         </button>
                                         <input
                                             type="number"
-                                            className="w-12 text-center outline-none"
+                                            className="w-14 text-center outline-none bg-white"
                                             value={quantity}
                                             min={1}
                                             max={product.StockQuantity}
@@ -196,7 +191,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                                         />
                                         <button
                                             onClick={increment}
-                                            className="px-3 py-1 bg-gray-300 hover:bg-gray-400 transition"
+                                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition"
                                             aria-label="Tăng số lượng"
                                         >
                                             +
@@ -205,7 +200,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
 
                                     <button
                                         onClick={() => handleAddToCart(product)}
-                                        className="inline-flex items-center justify-center px-5 py-3 bg-blue-600 text-white text-base font-medium rounded hover:bg-blue-700 transition"
+                                        className="flex-1 max-w-xs px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 transition"
                                     >
                                         🛒 Thêm vào giỏ hàng
                                     </button>
@@ -214,7 +209,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
 
                             <button
                                 onClick={() => window.history.back()}
-                                className="inline-flex items-center justify-center px-5 py-3 bg-gray-800 text-white text-base font-medium rounded hover:bg-gray-900 transition"
+                                className="px-6 py-3 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition"
                             >
                                 ← Quay lại
                             </button>
