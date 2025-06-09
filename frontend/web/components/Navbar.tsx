@@ -10,6 +10,13 @@ import { useCartStore } from "@/app/function/cartStore";
 import { Order } from "..";
 import { usePathname, useRouter } from "next/navigation";
 
+interface User {
+    id?: string;
+    username: string;
+    email?: string | null;
+
+}
+
 export default function Navbar({ orders }: { orders: Order[] }) {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);

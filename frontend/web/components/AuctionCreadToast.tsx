@@ -11,7 +11,7 @@ export default function AuctionCreatedToast({ auction }: Props) {
     return (
         <Link
             href={`/auction/details/${auction.id}`}
-            className="flex flex-col items-center p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            className="flex items-center gap-4 p-4 bg-white bg-opacity-90 shadow-lg rounded-lg transition-transform transform hover:scale-105 hover:shadow-xl"
         >
             <div className="flex flex-row items-center gap-4">
                 <Image
@@ -21,10 +21,16 @@ export default function AuctionCreatedToast({ auction }: Props) {
                     width={80}
                     className="rounded-lg w-[80px] h-[80px] object-cover shadow-sm"
                 />
-                <span className="text-gray-800 text-sm font-medium">
-                    New auction: <span className="font-semibold">{auction.name}</span> has been added!
+            </div>
+            <div className="flex flex-col">
+                <span className="font-semibold text-gray-900 text-lg">
+                    Một phiên đấu giá mới được tạo ra
+                </span>
+                <span className="text-gray-700">
+                    {auction.name} ({auction.year})
                 </span>
             </div>
+
         </Link>
 
     )

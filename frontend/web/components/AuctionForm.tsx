@@ -16,16 +16,22 @@ type Props = {
 export default function AuctionForm({ auction }: Props) {
     const router = useRouter();
     const pathname = usePathname();
-    const { control, handleSubmit, setFocus, reset, formState: { isSubmitting, isValid } } = useForm({
+    const {
+        control,
+        handleSubmit,
+        setFocus,
+        reset,
+        formState: { isSubmitting, isValid }
+    } = useForm({
         mode: 'onTouched',
     });
 
     useEffect(() => {
         if (auction) {
-            const { make, model, color, mileage, year, key } = auction;
-            reset({ make, model, color, mileage, year, key });
+            const { name, description, category, year, key } = auction;
+            reset({ name, description, category, year, key });
         }
-        setFocus('make');
+        setFocus('name');
     }, [setFocus, auction, reset]);
 
     async function onSubmit(data: FieldValues) {
@@ -48,78 +54,94 @@ export default function AuctionForm({ auction }: Props) {
                 const { status, message } = error as { status: number; message: string };
                 toast.error(`${status} ${message}`);
             } else {
-                toast.error('An unexpected error occurred.');
+                toast.error('Đã xảy ra lỗi không mong muốn.');
             }
         }
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 flex items-center justify-center px-4 py-10">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-4xl bg-white p-10 rounded-2xl shadow-lg space-y-8"
+                className="w-full max-w-4xl bg-white p-10 md:p-12 rounded-3xl shadow-xl space-y-10 transition-all duration-300 border border-gray-200"
             >
-                <h2 className="text-3xl font-extrabold text-center text-gray-800">
-                    {pathname === '/auctions/create' ? 'Create New Auction' : 'Update Auction'}
-                </h2>
+                <div className="text-center">
+                    <h2 className="text-4xl font-bold text-center text-gray-800 relative mb-6">
+                        {pathname === '/auctions/create' ? '🛒 Tạo đấu giá mới' : '✏️ Cập nhật đấu giá'}
+                    </h2>
+                    <div className="w-16 h-1 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Input label="Make" name="make" control={control} rules={{ required: 'Make is required' }} />
-                    <Input label="Model" name="model" control={control} rules={{ required: 'Model is required' }} />
-                    <Input label="Color" name="color" control={control} rules={{ required: 'Color is required' }} />
-                    <Input label="Key" name="key" control={control} rules={{ required: 'Key is required' }} />
                     <Input
-                        label="Year"
+                        label="🎮 Tên game"
+                        name="name"
+                        control={control}
+                        rules={{ required: 'Tên game là bắt buộc' }}
+                    />
+                    <Input
+                        label="📝 Mô tả"
+                        name="description"
+                        control={control}
+                        rules={{ required: 'Mô tả là bắt buộc' }}
+                    />
+                    <Input
+                        label="📂 Thể loại"
+                        name="category"
+                        control={control}
+                        rules={{ required: 'Thể loại là bắt buộc' }}
+                    />
+                    <Input
+                        label="🔑 Key"
+                        name="key"
+                        control={control}
+                        rules={{ required: 'Key là bắt buộc' }}
+                    />
+                    <Input
+                        label="📅 Năm sản xuất"
                         name="year"
                         type="number"
                         control={control}
-                        rules={{ required: 'Year is required' }}
-                    />
-                    <Input
-                        label="Mileage"
-                        name="mileage"
-                        control={control}
-                        rules={{ required: 'Mileage is required' }}
+                        rules={{ required: 'Năm sản xuất là bắt buộc' }}
                     />
                 </div>
 
                 {pathname === '/auctions/create' && (
                     <>
                         <Input
-                            label="Image URL"
+                            label="🖼️ URL hình ảnh"
                             name="imageUrl"
                             control={control}
-                            rules={{ required: 'Image URL is required' }}
+                            rules={{ required: 'URL hình ảnh là bắt buộc' }}
                         />
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <Input
-                                label="Reserve Price (optional)"
+                                label="💰 Giá dự kiến (tuỳ chọn)"
                                 name="reservePrice"
                                 type="number"
                                 control={control}
                             />
                             <DateInput
-                                label="Auction End Date/Time"
+                                label="⏰ Ngày giờ kết thúc đấu giá"
                                 name="auctionEnd"
                                 dateFormat="dd MMMM yyyy h:mm a"
                                 showTimeSelect
                                 control={control}
-                                rules={{ required: 'Auction end date is required' }}
+                                rules={{ required: 'Ngày kết thúc là bắt buộc' }}
                             />
                         </div>
                     </>
                 )}
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t pt-6">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4">
                     <Button
                         outline
                         color="gray"
                         type="button"
                         onClick={() => router.back()}
-                        className="w-full md:w-auto"
+                        className="w-full md:w-auto hover:scale-105 transition duration-200"
                     >
-                        ← Cancel
+                        ❌ Hủy
                     </Button>
                     <Button
                         isProcessing={isSubmitting}
@@ -127,13 +149,12 @@ export default function AuctionForm({ auction }: Props) {
                         outline
                         color="success"
                         type="submit"
-                        className="w-full md:w-auto"
+                        className="w-full md:w-auto hover:scale-105 transition duration-200"
                     >
-                        Submit
+                        🚀 Gửi
                     </Button>
                 </div>
             </form>
         </div>
-
     );
 }

@@ -71,9 +71,9 @@ export default function Listings() {
             });
     }, [url, setData]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p className='min-h-screen'>Loading...</p>;
 
-    if (error) return <p>{error}</p>;
+    if (error) return <p className="min-h-screen text-center text-red-500">{error}</p>;
 
     if (!auctions || totalCount === 0) return <EmptyFilter showReset />;
 

@@ -6,24 +6,26 @@ import ProductList from "./components/ProductList";
 import SearchFilterBar from "./Paginations/SearchFilterBar";
 import { useParamStore } from "./hooks/useParamStore";
 import { useShallow } from "zustand/shallow";
-import { getData } from "./app/actions/orderactions";
+import { getData, initUserMoneyWallet } from "./app/actions/orderactions";
 import { useOrderStore } from "./hooks/useOrderStore";
 import AppPagination from "./components/AppPagination";
-
-
+import { getCurrentUser } from "./app/actions/authactions";
+import { sendUserInformation } from "./app/actions/useraction";
 
 export default function Homepage() {
     const [loading, setLoading] = useState(true);
+    const [hasSent, setHasSent] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [walletBalance, setWalletBalance] = useState(0);
+    const [user, setUser] = useState<{ username: string, name: string } | null>(null);
+
     const { order, totalCount, pageCount } = useOrderStore(
         useShallow(state => ({
             order: state.orders,
             totalCount: state.totalCount,
             pageCount: state.pageCount
         }))
-    )
-
-    const setData = useOrderStore(state => state.setData);
+    );
 
     const params = useParamStore(useShallow(state => ({
         pageNumber: state.pageNumber,
@@ -37,22 +39,47 @@ export default function Homepage() {
     })));
 
     const setParams = useParamStore(state => state.setParams);
+    const setData = useOrderStore(state => state.setData);
 
     const url = '?' + qs.stringify(params);
-    console.log("Current url fetch:", url);
 
+    useEffect(() => {
+        const fetchUserAndInitWallet = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                if (currentUser?.username) {
+                    setUser({
+                        ...currentUser,
+                        name: currentUser?.username || "",
+                    });
 
-    function setPageNumber(pageNumber: number) {
-        setParams({ pageNumber });
-    }
+                    if (!hasSent) {
+                        await sendUserInformation({
+                            email: currentUser.email,
+                            name: currentUser.username,
+                        });
+                        setHasSent(true);
+                        console.log("Đã gửi thông tin user từ Homepage");
+                    }
+
+                    const initialBalance = 0;
+                    const wallet = await initUserMoneyWallet(currentUser?.username, { balance: initialBalance });
+                    setWalletBalance(wallet.balance);
+                }
+            } catch (error) {
+                console.error("Không thể lấy thông tin người dùng hoặc ví:", error);
+            }
+        };
+
+        fetchUserAndInitWallet();
+    }, [hasSent]);
+
 
     useEffect(() => {
         setLoading(true);
         setError(null);
-        console.log("Request URL:", url);
 
         getData(url).then(data => {
-            console.log("Fetched data (raw):", data.results.map(d => ({ id: d.id, Price: d.Price })));
             setData(data);
             setLoading(false);
         }).catch(err => {
@@ -61,6 +88,9 @@ export default function Homepage() {
         });
     }, [url, setData]);
 
+    function setPageNumber(pageNumber: number) {
+        setParams({ pageNumber });
+    }
 
     return (
         <div>
@@ -68,14 +98,13 @@ export default function Homepage() {
                 <SearchFilterBar />
             </div>
             <main className="bg-white w-full min-h-screen p-4 flex-col">
-                {loading && <p className="text-center text-gray-500">Đang tải sản phẩm...</p>}
+                {loading && <p className="min-h-screen text-center text-gray-500">Đang tải sản phẩm...</p>}
                 {error && <p className="text-center text-red-500">{error}</p>}
-
 
                 {order && order.length > 0 ? (
                     <ProductList orders={order} />
                 ) : (
-                    !loading && !error && <p className="text-center text-gray-500">Không có sản phẩm nào.</p>
+                    !loading && !error && <p className="min-h-screen text-center text-gray-500">Không có sản phẩm nào.</p>
                 )}
 
                 <div className='flex justify-center mt-4'>

@@ -14,7 +14,7 @@ export default function AuctionFinishedToast({ finishedAuction, auction }: Props
             href={`/auction/details/${auction.id}`}
             className="block border rounded-lg shadow-sm hover:shadow-md transition p-4 bg-white"
         >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
                 <Image
                     src={auction.imageUrl}
                     alt="Image of car"
@@ -34,6 +34,9 @@ export default function AuctionFinishedToast({ finishedAuction, auction }: Props
                         <p className="text-sm text-red-500">This item did not sell</p>
                     )}
                 </div>
+            </div>
+            <div className='flex flex-col'>
+                <span>New </span>
             </div>
         </Link>
 
