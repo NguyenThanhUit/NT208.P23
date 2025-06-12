@@ -20,6 +20,7 @@ export default function Listings() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+
     const { auctions, totalCount, pageCount } = useAuctionStore(
         useShallow(state => ({
             auctions: state.auctions,
@@ -64,7 +65,6 @@ export default function Listings() {
                 setLoading(false);
             })
             .catch(err => {
-                console.error(err);
                 setError('Lỗi khi tải dữ liệu.');
                 setLoading(false);
             });
@@ -74,24 +74,26 @@ export default function Listings() {
 
     if (error) return <p className="min-h-screen text-center text-red-500">{error}</p>;
 
-
     if (!auctions || totalCount === 0) return <EmptyFilter showReset />;
 
     return (
         <>
             <AuctionSearchFilterBar />
-            <div className='grid grid-cols-4 gap-6'>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
                 {auctions.map((auction: Auction) => (
                     <AuctionCard auction={auction} key={auction.id} />
                 ))}
             </div>
-            <div className='flex justify-center mt-4'>
+
+            <div className="flex justify-center mt-8">
                 <AppPagination
                     pageChanged={setPageNumber}
                     currentPage={params.pageNumber}
                     pageCount={pageCount}
                 />
             </div>
+
         </>
     );
 }
