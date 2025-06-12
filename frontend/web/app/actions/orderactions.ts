@@ -100,16 +100,15 @@ export async function depositMoneyviaVnPay(money: number, description: string) {
 }
 
 export async function updateProduct(data: FieldValues, id: string) {
-    try {
-        const res = await fetchWrapper.put(`orders/${id}`, data);
-        console.log('Response from server:', res);
-        revalidatePath(`orders/${id}`);
-        return res;
-    } catch (error) {
-        console.error('Error updating product:', error);
-        throw error;
-    }
+    const res = await fetchWrapper.put(`orders/${id}`, data);
+    revalidatePath(`orders/${id}`);
+    return res;
 }
+export async function getProductForSeller(sellerName: string) {
+    const res = await fetchWrapper.get(`orders/by-seller/${sellerName}`);
+    return res;
+}
+
 
 export async function deleteProduct(id: string) {
     await fetchWrapper.del(`orders/${id}`);

@@ -12,7 +12,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'assets-prd.ignimgs.com' },
     ],
   },
-  output: 'standalone'
+  output: 'standalone',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

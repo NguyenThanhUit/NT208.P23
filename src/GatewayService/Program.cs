@@ -11,23 +11,26 @@ var builder = WebApplication.CreateBuilder(args);
 //               .AllowAnyHeader()
 //               .AllowCredentials());
 // });
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
+
+
+// Dung khi chay localhost
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("AllowFrontend", policy =>
+//     {
+//         policy.WithOrigins("http://localhost:3000")
+//               .AllowAnyHeader()
+//               .AllowAnyMethod()
+//               .AllowCredentials();
+//     });
+// });
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
-
-app.UseCors("AllowFrontend");
-// app.UseCors("MyPolicy");
+// //Dung khi chay localhost
+// app.UseCors("AllowFrontend");
+app.UseCors("MyPolicy");
 
 
 app.MapReverseProxy();

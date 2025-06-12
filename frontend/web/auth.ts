@@ -17,14 +17,14 @@ export const { handlers, signIn, auth } = NextAuth({
                 params: {
                     scope: 'openid profile email address orderApp custom.claims',
                 },
-                // url: process.env.ID_URL + '/connect/authorize'
+                url: process.env.ID_URL + '/connect/authorize'
             },
-            // token: {
-            //     url: `${process.env.ID_URL_INTERNAL}/connect/token`
-            // },
-            // userinfo: {
-            //     url: `${process.env.ID_URL_INTERNAL}/connect/token`
-            // }
+            token: {
+                url: `${process.env.ID_URL_INTERNAL}/connect/token`
+            },
+            userinfo: {
+                url: `${process.env.ID_URL_INTERNAL}/connect/token`
+            }
 
         } as OIDCConfig<Omit<Profile, 'username'>>),
     ],
@@ -43,8 +43,8 @@ export const { handlers, signIn, auth } = NextAuth({
             if (profile) {
                 token.username = profile.username;
                 token.email = profile.email;
-                token.address = profile.address;
-                token.id = profile.Id || profile.id || profile.sub;;
+                token.address = profile.address?.formatted ?? undefined;
+                token.id = String(profile.Id || profile.id || profile.sub);
                 token.createdAt = profile.createdAt;
                 token.name = profile.name;
             }
@@ -55,9 +55,9 @@ export const { handlers, signIn, auth } = NextAuth({
         async session({ session, token }) {
             if (token) {
                 session.user.username = token.username;
-                // session.user.id = token.id;
-                // session.user.address = token.address;
-                // session.user.createdAt = token.createdAt;
+                session.user.id = token.id;
+                session.user.address = token.address;
+                session.user.createdAt = token.createdAt;
                 session.user.name = token.name;
                 session.accessToken = token.accessToken;
             }

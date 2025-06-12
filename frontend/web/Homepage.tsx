@@ -35,7 +35,9 @@ export default function Homepage() {
         orderBy: state.orderBy,
         seller: state.Seller,
         filterBy: state.filterBy,
-        buyer: state.Buyer
+        buyer: state.Buyer,
+        minPrice: state.minPrice,
+        maxPrice: state.maxPrice,
     })));
 
     const setParams = useParamStore(state => state.setParams);
@@ -73,7 +75,6 @@ export default function Homepage() {
 
         fetchUserAndInitWallet();
     }, [hasSent]);
-
 
     useEffect(() => {
         setLoading(true);

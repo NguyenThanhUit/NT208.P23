@@ -35,7 +35,6 @@ export default function UserLogged({ user }: Props) {
         fetchUserRole();
     }, []);
 
-
     async function handleCreateProductClick() {
         try {
             const profile = await getUserInformation();
@@ -78,52 +77,40 @@ export default function UserLogged({ user }: Props) {
             <Dropdown
                 inline
                 label={
-                    <span
-                        className="text-black font-semibold cursor-pointer"
-                    >
+                    <span className="font-semibold text-black cursor-pointer hover:text-blue-600 transition">
                         Xin chào, {user.name}
                     </span>
                 }
-                className="w-56"
+                className="w-64 rounded-xl shadow-lg border border-gray-200"
             >
+                <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
+                    <p>Vai trò: <span className="font-medium text-gray-800">{role}</span></p>
+                </div>
 
                 <DropdownItem icon={MdShoppingCartCheckout}>
-                    <Link
-                        href="/order/history"
-                        className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
-                    >
+                    <Link href="/order/history" className="w-full text-left">
                         Lịch sử mua hàng
                     </Link>
                 </DropdownItem>
 
                 {role === "admin" ? (
                     <DropdownItem icon={HiCog} onClick={handleVerifyUserInformation}>
-                        <span className="block w-full text-left text-sm text-gray-700 hover:text-blue-600">
-                            Duyệt hồ sơ
-                        </span>
+                        Duyệt hồ sơ người bán
                     </DropdownItem>
                 ) : (
                     <>
                         <DropdownItem icon={AiFillTrophy}>
-                            <Link
-                                href="/account/Detail"
-                                className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
-                            >
+                            <Link href="/account/Detail" className="w-full text-left">
                                 Thông tin cá nhân
                             </Link>
                         </DropdownItem>
 
                         <DropdownItem icon={AiOutlineProduct} onClick={handleCreateProductClick}>
-                            <span className="block w-full text-left text-sm text-gray-700 hover:text-blue-600">
-                                Tạo sản phẩm
-                            </span>
+                            Tạo sản phẩm
                         </DropdownItem>
 
                         <DropdownItem icon={HiCog}>
-                            <Link
-                                href="/recharge"
-                                className="block w-full text-left text-sm text-gray-700 hover:text-blue-600"
-                            >
+                            <Link href="/recharge" className="w-full text-left">
                                 Nạp tiền
                             </Link>
                         </DropdownItem>
@@ -133,27 +120,32 @@ export default function UserLogged({ user }: Props) {
                 <DropdownDivider />
 
                 <DropdownItem icon={AiOutlineLogout} onClick={handleSignOut}>
-                    <span className="block w-full text-left text-sm text-red-600 hover:text-red-800">Đăng xuất</span>
+                    <span className="text-red-600 hover:text-red-800">
+                        Đăng xuất
+                    </span>
                 </DropdownItem>
             </Dropdown>
 
+            {/* Modal xác minh */}
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] max-w-md text-center">
-                        <h2 className="text-lg font-semibold mb-4">Bạn chưa được xác minh</h2>
-                        <p className="mb-6 text-sm text-gray-600">Bạn cần gửi thông tin xác minh để trở thành người bán.</p>
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
+                    <div className="bg-white rounded-2xl shadow-xl p-6 w-[90%] max-w-md text-center">
+                        <h2 className="text-lg font-bold mb-3 text-gray-800">Tài khoản chưa xác minh</h2>
+                        <p className="text-sm text-gray-600 mb-6">
+                            Bạn cần xác minh thông tin để đăng sản phẩm.
+                        </p>
                         <div className="flex justify-center gap-4">
                             <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                                 onClick={goToSellerPage}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
                             >
-                                Xác thực thông tin cá nhân
+                                Xác minh ngay
                             </button>
                             <button
-                                className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
                                 onClick={() => setShowModal(false)}
+                                className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
                             >
-                                Hủy bỏ
+                                Để sau
                             </button>
                         </div>
                     </div>

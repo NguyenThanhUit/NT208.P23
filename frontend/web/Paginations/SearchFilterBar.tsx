@@ -5,14 +5,19 @@ import { Button, ButtonGroup, Dropdown } from "flowbite-react";
 import { debounce } from "lodash";
 
 export default function SearchFilterBar() {
-    const { setParams, searchValue, setSearchValue, pageSize, orderBy, filterBy } = useParamStore();
-
+    const { setParams, searchValue, setSearchValue, pageSize, orderBy, filterBy, minPrice, maxPrice } = useParamStore();
+    const priceOptions = [
+        { label: "Tất cả giá", min: null, max: null },
+        { label: "Dưới 1 triệu", min: null, max: 1_000_000 },
+        { label: "1 - 5 triệu", min: 1_000_000, max: 5_000_000 },
+        { label: "5 - 10 triệu", min: 5_000_000, max: 10_000_000 },
+        { label: "Trên 10 triệu", min: 10_000_000, max: null },
+    ];
     const orderOptions = [
         { label: "Mới nhất", value: "new" },
         { label: "Giá tăng dần", value: "priceascending" },
         { label: "Giá giảm dần", value: "pricedescending" },
     ];
-
     const filterOptions = [
         "Action",
         "Adventure",
@@ -46,7 +51,17 @@ export default function SearchFilterBar() {
 
     const selectedOrderLabel = orderOptions.find((opt) => opt.value === orderBy)?.label || "Mới nhất";
     const selectedFilterLabel = filterBy || "Tất cả";
+    const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const index = parseInt(e.target.value);
+        const selected = priceOptions[index];
+        setParams({ minPrice: selected.min, maxPrice: selected.max });
+    };
 
+    const getSelectedIndex = () => {
+        return priceOptions.findIndex(
+            (opt) => opt.min === minPrice && opt.max === maxPrice
+        );
+    };
     return (
         <div className="p-6 bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 space-y-6 max-w-full mx-auto transition-all">
             <div className="flex flex-col md:flex-row items-center gap-4 justify-between">
@@ -88,8 +103,8 @@ export default function SearchFilterBar() {
                                 key={genre}
                                 onClick={() => setParams({ filterBy: genre })}
                                 className={`text-base py-2 px-4 ${filterBy === genre
-                                        ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
-                                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
+                                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                     }`}
                             >
                                 {genre}
@@ -98,8 +113,8 @@ export default function SearchFilterBar() {
                         <Dropdown.Item
                             onClick={() => setParams({ filterBy: "" })}
                             className={`text-base py-2 px-4 ${!filterBy
-                                    ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
-                                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
+                                : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                 }`}
                         >
                             Tất cả
@@ -123,8 +138,8 @@ export default function SearchFilterBar() {
                             key={value}
                             onClick={() => setParams({ orderBy: value })}
                             className={`text-base py-2 px-4 ${orderBy === value
-                                    ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
-                                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                ? "text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/20"
+                                : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                 }`}
                         >
                             {label}
@@ -157,14 +172,31 @@ export default function SearchFilterBar() {
                             color={pageSize === value ? "red" : "gray"}
                             size="sm"
                             className={`rounded-full px-5 transition-all ${pageSize === value
-                                    ? "bg-red-500 text-white"
-                                    : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+                                ? "bg-red-500 text-white"
+                                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
                                 }`}
                         >
                             {value}
                         </Button>
                     ))}
                 </ButtonGroup>
+            </div>
+            <div className="flex items-center gap-4 py-2">
+                <label htmlFor="price" className="text-sm font-medium text-gray-700">
+                    Lọc theo giá:
+                </label>
+                <select
+                    id="price"
+                    className="border border-gray-300 px-3 py-1 rounded-md shadow-sm text-sm"
+                    value={getSelectedIndex()}
+                    onChange={handlePriceChange}
+                >
+                    {priceOptions.map((option, idx) => (
+                        <option key={idx} value={idx}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
             </div>
         </div>
     );

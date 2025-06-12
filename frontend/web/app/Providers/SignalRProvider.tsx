@@ -12,7 +12,6 @@ import { Auction, AuctionFinished, Bid } from "@/index";
 import AuctionFinishedToast from "@/components/AuctionFinshiedToast";
 import AuctionCreatedToast from "@/components/AuctionCreatedToast";
 
-
 type Props = {
     children: ReactNode,
 }
@@ -27,29 +26,38 @@ export default function SignalRProvider({ children }: Props) {
     const params = useParams<{ id: string }>();
 
     const handleAuctionFinished = useCallback((finishedAuction: AuctionFinished) => {
-        const auction = getDetailedViewData(finishedAuction.auctionId);
-        return toast.promise(auction, {
-            loading: 'Loading',
-            success: (auction) => <AuctionFinishedToast
-                finishedAuction={finishedAuction}
-                auction={auction} />,
-            error: () => 'Auction finished'
-        }, { success: { duration: 100000, icon: null } });
+
+
+        const auctionPromise = getDetailedViewData(finishedAuction.auctionID);
+        return toast.promise(auctionPromise, {
+            loading: 'Loading auction finished data...',
+            success: (auction) => (
+                <AuctionFinishedToast
+                    finishedAuction={finishedAuction}
+                    auction={auction}
+                />
+            ),
+            error: () => 'Auction finished with error'
+        }, {
+            success: { duration: 100000, icon: null }
+        });
     }, []);
 
+
     const handleAuctionCreated = useCallback((auction: Auction) => {
-
-
         if (user?.username !== auction.seller) {
             return toast(<AuctionCreatedToast auction={auction} />, {
                 duration: 10000,
             });
-        } else {
-            console.log('[SignalR] AuctionCreated event ignored because user is the seller');
         }
     }, [user]);
 
-    const handleBidPlaced = useCallback((bid: Bid) => {
+    const handleBidPlaced = useCallback((bidRaw: any) => {
+        const bid: Bid = {
+            ...bidRaw,
+            auctionId: bidRaw.auctionId ?? bidRaw.auctionID,
+        };
+
         if (bid.bidStatus.includes('Accepted')) {
             setCurrentPrice(bid.auctionId, bid.amount);
         }
@@ -67,33 +75,23 @@ export default function SignalRProvider({ children }: Props) {
                 .build();
 
             connection.current.start()
-                .then(() => console.log('[SignalR] Connected to notification hub'))
                 .catch(err => console.error('[SignalR] Error connecting to SignalR hub:', err));
         }
 
-        connection.current.on('BidPlaced', (bid: Bid) => {
-            handleBidPlaced(bid);
-        });
+        connection.current.off('BidPlaced');
+        connection.current.off('AuctionCreated');
+        connection.current.off('AuctionFinished');
 
-        connection.current.on('AuctionCreated', (auction: Auction) => {
-            handleAuctionCreated(auction);
-        });
-
-        connection.current.on('AuctionFinished', (finishedAuction: AuctionFinished) => {
-            handleAuctionFinished(finishedAuction);
-        });
+        connection.current.on('BidPlaced', handleBidPlaced);
+        connection.current.on('AuctionCreated', handleAuctionCreated);
+        connection.current.on('AuctionFinished', handleAuctionFinished);
 
         return () => {
             connection.current?.off('BidPlaced', handleBidPlaced);
             connection.current?.off('AuctionCreated', handleAuctionCreated);
             connection.current?.off('AuctionFinished', handleAuctionFinished);
         };
-
     }, [handleBidPlaced, handleAuctionCreated, handleAuctionFinished]);
 
-    return (
-        <>
-            {children}
-        </>
-    );
+    return <>{children}</>;
 }

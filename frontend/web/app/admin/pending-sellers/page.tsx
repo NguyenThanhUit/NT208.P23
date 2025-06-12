@@ -52,7 +52,7 @@ export default function PendingSellerPage() {
     }
 
     return (
-        <div className="p-6">
+        <div className="min-h-screen p-6 bg-gray-50">
             <h1 className="text-2xl font-bold mb-4">Danh sách Seller chờ duyệt</h1>
 
             {loading ? (
@@ -67,7 +67,7 @@ export default function PendingSellerPage() {
                             className="border border-gray-300 p-4 rounded-lg shadow hover:shadow-md transition"
                         >
                             <h2 className="font-semibold text-lg">{seller.fullName}</h2>
-                            <p>Email: {seller.email ?? "Chưa có email"}</p>
+                            <p>Id người đăng kí: {seller.userId ?? "Chưa có email"}</p>
                             <p>Ngày đăng ký: {new Date(seller.createdAt).toLocaleDateString()}</p>
                             <button
                                 className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"

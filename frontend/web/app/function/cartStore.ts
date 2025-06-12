@@ -70,10 +70,10 @@ export const useCartStore = create<CartState>((set, get) => {
                 let updatedItems = [...items];
 
                 if (currentItem.quantity <= 1) {
-                    // Nếu còn 1 sản phẩm, xóa sản phẩm đó
+
                     updatedItems = updatedItems.filter((item) => item.id !== id);
 
-                    // Nếu sau khi xóa mà giỏ hàng trống -> gọi clearCart
+
                     if (updatedItems.length === 0) {
                         get().clearCart();
                         return;

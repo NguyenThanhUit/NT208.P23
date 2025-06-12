@@ -30,11 +30,7 @@ export default function DetailedSpecs({ auction }: Props) {
                         <td className="p-2 border">{auction.year}</td>
                     </tr>
                     <tr>
-                        <th className="p-2 font-semibold border">Có reserve price?</th>
-                        <td className="p-2 border">{auction.reservePrice > 0 ? 'Yes' : 'No'}</td>
-                    </tr>
-                    <tr>
-                        <th className="p-2 font-semibold border">Giá dự trữ</th>
+                        <th className="p-2 font-semibold border">Giá mong muốn</th>
                         <td className="p-2 border">{auction.reservePrice.toLocaleString()} VND</td>
                     </tr>
                     <tr>

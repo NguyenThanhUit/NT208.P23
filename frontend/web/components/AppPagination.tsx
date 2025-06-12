@@ -3,9 +3,9 @@
 import { Pagination } from "flowbite-react";
 
 type Props = {
-    currentPage: number; //Trang hien tai
-    pageCount: number; //Tong so trang
-    pageChanged: (page: number) => void; //Ham thay doi so luong trang
+    currentPage: number;
+    pageCount: number;
+    pageChanged: (page: number) => void;
 }
 
 //Ham phan trang
@@ -15,8 +15,8 @@ export default function AppPagination({ currentPage, pageCount, pageChanged }: P
             currentPage={currentPage}
             onPageChange={e => pageChanged(e)}
             totalPages={pageCount}
-            layout="pagination" //bo cuc
-            showIcons={true} //Icon chuyen trang
+            layout="pagination"
+            showIcons={true}
             className="text-blue-500 mb-5"
         ></Pagination>
     )

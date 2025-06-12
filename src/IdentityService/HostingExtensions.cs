@@ -25,7 +25,7 @@ internal static class HostingExtensions
 {
     options.AddPolicy("MyPolicy", policy =>
     {
-        policy.WithOrigins("http://app.nhom6.local")
+        policy.WithOrigins("http://app.nguyenth4nh.xyz")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -40,13 +40,13 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-                //Dung khi dong goi frontend
-                // options.IssuerUri = builder.Configuration["IssuerUri"];
+                // Dung khi dong goi frontend
+                options.IssuerUri = builder.Configuration["IssuerUri"];
 
-                if (builder.Environment.IsEnvironment("Docker"))
-                {
-                    options.IssuerUri = "http://localhost:5001";
-                }
+                // if (builder.Environment.IsEnvironment("Docker"))
+                // {
+                //     options.IssuerUri = "http://localhost:5001";
+                // }
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)

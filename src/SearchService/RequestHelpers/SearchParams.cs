@@ -9,4 +9,6 @@ public class SearchParams
     public string Winner { get; set; }
     public string OrderBy { get; set; } //Dung de sap xep
     public string FilterBy { get; set; } //Dung de loc
+    public int? MinPrice { get; set; }
+    public int? MaxPrice { get; set; }
 }

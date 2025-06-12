@@ -8,19 +8,28 @@ type Props = {
 }
 
 export default function AuctionFinishedToast({ finishedAuction, auction }: Props) {
+    console.log('[AuctionFinishedToast] auction:', auction);
+    console.log('[AuctionFinishedToast] finishedAuction:', finishedAuction);
+
     return (
-        <Link href={`/auctions/details/${auction.id}`} className='flex flex-col items-center'>
+        <Link href={`/auctions/details/${auction?.id}`} className='flex flex-col items-center'>
             <div className='flex flex-row items-center gap-2'>
-                <Image src={auction.imageUrl} alt='Image of car' height={80} width={80} className='rounded-lg w-auto h-auto' />
-                <span>New auction: {auction.name} has finished</span>
+                <Image
+                    src={auction.imageUrl}
+                    alt='Image of car'
+                    height={80}
+                    width={80}
+                    className='rounded-lg w-auto h-auto'
+                />
+                <span>Đấu giá: {auction.name} đã hoàn thành</span>
                 {finishedAuction.itemSold && finishedAuction.amount ? (
-                    <p>Congrats to {finishedAuction.winner} who has won this auction for ${finishedAuction.amount}</p>
+                    <p>Chúc mừng {finishedAuction.winner} đã chiến thắng với giá ${finishedAuction.amount}</p>
                 ) : (
-                    <p>This item did not sell</p>
+                    <p>Sản phẩm đã kết thúc</p>
                 )}
             </div>
             <div className='flex flex-col'>
-                <span>New </span>
+                <span>Mới </span>
             </div>
         </Link>
     )

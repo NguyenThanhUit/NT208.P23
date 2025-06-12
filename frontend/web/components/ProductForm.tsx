@@ -131,7 +131,7 @@ export default function ProductForm({ defaultValues }: ProductFormProps) {
                     placeholder="100000"
                     register={register('Price', {
                         required: 'Bắt buộc',
-                        min: { value: 0, message: 'Phải >= 0' },
+                        min: { value: 10000, message: 'Phải >= 10000' },
                     })}
                     error={errors.Price?.message}
                 />

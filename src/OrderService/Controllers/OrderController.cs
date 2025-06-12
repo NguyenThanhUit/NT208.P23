@@ -129,6 +129,22 @@ public class OrderController : ControllerBase
     }
 
 
+    [HttpGet("by-seller/{sellerName}")]
+    public async Task<ActionResult<List<OrderDto>>> GetOrdersBySeller(string sellerName)
+    {
+        var orders = await _context.Orders
+            .Include(o => o.Product)
+            .Where(o => o.Seller == sellerName)
+            .ProjectTo<OrderDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        if (orders == null || !orders.Any())
+        {
+            return NotFound($"No orders found for seller: {sellerName}");
+        }
+
+        return Ok(orders);
+    }
 
 
 

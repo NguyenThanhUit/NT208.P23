@@ -11,6 +11,8 @@ type State = {
     filterBy: string;
     Seller?: string; // Người bán
     Buyer?: string; // Người mua
+    minPrice?: number | null;
+    maxPrice?: number | null;
 };
 
 type Actions = {
@@ -30,6 +32,8 @@ const initialState: State = {
     orderBy: "new",
     Seller: undefined,
     Buyer: undefined,
+    minPrice: null,
+    maxPrice: null,
 };
 
 // Dùng Zustand để quản lý state

@@ -39,12 +39,17 @@ public class SearchController : ControllerBase
             "Shooter" => query.Match(x => x.Category == "Shooter"),
             _ => query
         };
+        if (searchParams.MinPrice.HasValue)
+        {
+            query = query.Match(x => x.Price >= searchParams.MinPrice.Value);
+        }
 
-
+        if (searchParams.MaxPrice.HasValue)
+        {
+            query = query.Match(x => x.Price <= searchParams.MaxPrice.Value);
+        }
         query.PageNumber(searchParams.PageNumber);
         query.PageSize(searchParams.PageSize);
-
-
 
         var result = await query.ExecuteAsync();
 
@@ -92,6 +97,16 @@ public class SearchController : ControllerBase
         {
             query.Match(x => x.Winner == searchParams.Winner);
         }
+        if (searchParams.MinPrice.HasValue)
+        {
+            query = query.Match(x => x.SoldAmount >= searchParams.MinPrice.Value);
+        }
+
+        if (searchParams.MaxPrice.HasValue)
+        {
+            query = query.Match(x => x.SoldAmount <= searchParams.MaxPrice.Value);
+        }
+
 
         //So trang
         query.PageNumber(searchParams.PageNumber);
