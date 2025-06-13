@@ -3,7 +3,6 @@ import { Order, PageResult } from "@/index";
 import { fetchWrapper } from "../lib/fetchWrapper";
 import { FieldValues } from "react-hook-form";
 import { revalidatePath } from "next/cache";
-
 interface ProductItem {
     id: string;
     totalPrice: number;
@@ -86,18 +85,22 @@ export async function createProduct(data: FieldValues) {
     return result;
 }
 
+
+
 export async function depositMoneyviaVnPay(money: number, description: string) {
-    const res = await fetch(
-        `http://localhost:6001/vnpay/CreatePaymentUrl?money=${money}&description=${encodeURIComponent(description)}`
-    );
-
-    if (!res.ok) {
-        throw new Error("Không thể tạo liên kết thanh toán VNPAY");
-    }
-
-    const url = await res.text();
-    return url;
+    const result = await fetchWrapper.get(`vnpay/CreatePaymentUrl?money=${money}&description=${encodeURIComponent(description)}`);
+    return result;
 }
+export async function handleVnPayReturn(query: string) {
+    const result = await fetchWrapper.get(`vnpay/ReturnAction${query}`);
+    return result;
+}
+export async function handleVnPayIpn(query: string) {
+    const result = await fetchWrapper.get(`vnpay/IpnAction${query}`);
+    return result;
+}
+
+
 
 export async function updateProduct(data: FieldValues, id: string) {
     const res = await fetchWrapper.put(`orders/${id}`, data);

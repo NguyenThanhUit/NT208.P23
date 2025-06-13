@@ -3,6 +3,17 @@ using NotificationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowFrontend", policy =>
+        {
+            policy
+                .WithOrigins("https://app.nguyenth4nh.xyz")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    });
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
@@ -28,5 +39,6 @@ builder.Services.AddMassTransit(x =>
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 app.MapHub<NotificationHub>("/notifications");
 app.Run();

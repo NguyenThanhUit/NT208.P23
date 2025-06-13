@@ -65,7 +65,7 @@ export default function SearchFilterBar() {
     return (
         <div className="p-6 bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 space-y-6 max-w-full mx-auto transition-all">
             <div className="flex flex-col md:flex-row items-center gap-4 justify-between">
-                {/* Search Input */}
+
                 <div className="relative w-full md:w-1/3">
                     <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-300" />
                     <input
@@ -86,7 +86,7 @@ export default function SearchFilterBar() {
                     )}
                 </div>
 
-                {/* Filter Dropdown */}
+
                 <Dropdown
                     label={
                         <span className="text-base font-semibold text-gray-700 dark:text-gray-200 select-none">
@@ -122,7 +122,7 @@ export default function SearchFilterBar() {
                     </div>
                 </Dropdown>
 
-                {/* Order Dropdown */}
+
                 <Dropdown
                     label={
                         <span className="text-base font-semibold text-gray-700 dark:text-gray-200 select-none">
@@ -147,7 +147,7 @@ export default function SearchFilterBar() {
                     ))}
                 </Dropdown>
 
-                {/* Clear Filters Button */}
+
                 <Button
                     onClick={clearFilters}
                     color="gray"
@@ -159,7 +159,7 @@ export default function SearchFilterBar() {
                 </Button>
             </div>
 
-            {/* Page Size Selection */}
+
             <div className="flex items-center justify-end gap-4 select-none">
                 <span className="text-sm text-gray-600 dark:text-gray-300 font-medium whitespace-nowrap">
                     Số sản phẩm mỗi trang:

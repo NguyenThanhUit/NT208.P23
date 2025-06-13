@@ -246,8 +246,8 @@ export default function CartPage() {
                             className="w-full border border-gray-300 rounded px-3 py-2"
                         >
                             <option value="">-- Chọn --</option>
-                            <option value="credit">💳 Thẻ tín dụng</option>
-                            <option value="momo">📱 Ví MoMo</option>
+                            <option value="credit">💳 VNPAY</option>
+                            <option value="momo">📱 Ví nội bộ</option>
                         </select>
                     </div>
 

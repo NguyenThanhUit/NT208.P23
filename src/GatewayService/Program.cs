@@ -3,14 +3,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy("MyPolicy", policy =>
-//         policy.WithOrigins("ClientApp")
-//               .AllowAnyMethod()
-//               .AllowAnyHeader()
-//               .AllowCredentials());
-// });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAppFrontend", policy =>
+    {
+        policy.WithOrigins("https://app.nguyenth4nh.xyz")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 
 // Dung khi chay localhost
@@ -30,7 +32,7 @@ builder.Services.AddReverseProxy()
 var app = builder.Build();
 // //Dung khi chay localhost
 // app.UseCors("AllowFrontend");
-app.UseCors("MyPolicy");
+app.UseCors("AllowAppFrontend");
 
 
 app.MapReverseProxy();

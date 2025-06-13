@@ -36,17 +36,7 @@ export default function AuctionSearchFilterBar() {
 
     return (
         <div className="flex flex-col lg:flex-row flex-wrap items-center justify-between gap-4 p-4 bg-white rounded-md shadow-sm border">
-            {/* Search Box */}
-            <div className="relative flex items-center w-full sm:w-64">
-                <Search className="absolute left-3 h-4 w-4 text-gray-500" />
-                <input
-                    type="text"
-                    placeholder="Tìm kiếm..."
-                    value={searchValue}
-                    onChange={onChange}
-                    className="text-black border rounded-full pl-10 pr-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-                />
-            </div>
+
 
             {/* Filter & Order */}
             <div className="flex flex-wrap gap-4 items-center">

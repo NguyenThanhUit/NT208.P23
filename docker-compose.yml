@@ -217,7 +217,6 @@ services:
       - ID_URL=https://id.nguyenth4nh.xyz
       - ID_URL_INTERNAL=http://identity-svc
       - AUTH_URL_INTERNAL=http://web-app:3000
-      - NOTIFY_URL=https://api.nguyenth4nh.xyz/notifications
       - VIRTUAL_HOST=app.nguyenth4nh.xyz
       - VIRTUAL_PORT=3000
   nginx-proxy:
