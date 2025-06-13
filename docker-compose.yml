@@ -179,8 +179,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - IssuerUri=http://id.nguyenth4nh.xyz
-      - ClientApp=http://app.nguyenth4nh.xyz
+      - IssuerUri=https://id.nguyenth4nh.xyz
+      - ClientApp=https://app.nguyenth4nh.xyz
       - ConnectionStrings__DefaultConnection=Server=postgres;User Id=postgres;Password=postgrespw;Database=identity
       - CLIENTID=${CLIENTID}
       - CLIENTSECRET=${CLIENTSECRET}
@@ -201,7 +201,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - ClientApp=http://app.nguyenth4nh.xyz
+      - ClientApp=https://app.nguyenth4nh.xyz
       - VIRTUAL_HOST=api.nguyenth4nh.xyz
   web-app:
     image: nguyenthanh/web-app:latest
@@ -213,8 +213,8 @@ services:
     environment:
       - AUTH_SECRET=9cf2fe50c9c7ab05a2e4a2b19c7bdbca59b2e031c2f3bb0c350a7889a4c7b8a1
       - API_URL=http://gateway-svc/
-      - AUTH_URL=http://app.nguyenth4nh.xyz
-      - ID_URL=http://id.nguyenth4nh.xyz
+      - AUTH_URL=https://app.nguyenth4nh.xyz
+      - ID_URL=https://id.nguyenth4nh.xyz
       - ID_URL_INTERNAL=http://identity-svc
       - AUTH_URL_INTERNAL=http://web-app:3000
       - NOTIFY_URL=https://api.nguyenth4nh.xyz/notifications
@@ -225,5 +225,7 @@ services:
     container_name: nginx-proxy
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./cert:/etc/nginx/certs
