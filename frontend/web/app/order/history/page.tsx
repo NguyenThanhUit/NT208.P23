@@ -38,9 +38,10 @@ export default function OrderHistoryPage() {
     const [groupedOrders, setGroupedOrders] = useState<Record<string, Order[]>>({});
     const [loading, setLoading] = useState(true);
     const [confirming, setConfirming] = useState<string | null>(null);
+    const [timers, setTimers] = useState<Record<string, NodeJS.Timeout>>({});
 
     useEffect(() => {
-        let timer: NodeJS.Timeout;
+        let refreshTimer: NodeJS.Timeout;
 
         const fetchData = async () => {
             try {
@@ -55,9 +56,26 @@ export default function OrderHistoryPage() {
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
 
+                // Tự động xác nhận mỗi sản phẩm sau 1 phút nếu chưa xác nhận
+                orders.forEach((order: Order) => {
+                    if (order.buyingStatus === 0) {
+                        order.items.forEach((item: Item) => {
+                            const key = `${order.orderId}-${item.productId}`;
+                            if (!timers[key]) {
+                                const timeout = setTimeout(() => {
+                                    handleConfirmItem(order.orderId, item.productId);
+                                }, 60000); // 60 giây
+
+                                setTimers(prev => ({ ...prev, [key]: timeout }));
+                            }
+                        });
+                    }
+                });
+
+                // Nếu vẫn còn đơn đang xử lý, tiếp tục reload sau 10 giây
                 const hasProcessingOrder = orders.some((o: Order) => o.buyingStatus === 0);
                 if (hasProcessingOrder) {
-                    timer = setTimeout(fetchData, 10000);
+                    refreshTimer = setTimeout(fetchData, 10000);
                 }
             } catch (error) {
                 console.error('❌ Lỗi khi lấy lịch sử đơn hàng:', error);
@@ -69,7 +87,8 @@ export default function OrderHistoryPage() {
         fetchData();
 
         return () => {
-            if (timer) clearTimeout(timer);
+            if (refreshTimer) clearTimeout(refreshTimer);
+            Object.values(timers).forEach(clearTimeout);
         };
     }, []);
 
@@ -109,6 +128,7 @@ export default function OrderHistoryPage() {
     }
 
     async function handleConfirmItem(orderId: string, productId: string) {
+        if (confirming) return;
         try {
             setConfirming(productId);
             await confirmOrder(orderId, { itemID: productId });
@@ -128,9 +148,6 @@ export default function OrderHistoryPage() {
                 const price = Number(item.price) || 0;
                 const quantity = item.quantity ?? 1;
                 const amount = quantity * price;
-
-                console.log('[handleConfirmItem] Dữ liệu item:', item);
-                console.log('[handleConfirmItem] Tính toán amount:', amount);
 
                 await addSellerWaller(sellerId, { Amount: amount });
 

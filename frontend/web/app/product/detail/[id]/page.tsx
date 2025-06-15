@@ -50,7 +50,7 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
     }, [id]);
 
     if (loading) {
-        return <div className="text-center text-lg font-semibold mt-10">Đang tải...</div>;
+        return <div className="text-center text-lg font-semibold mt-10 min-h-screen">Đang tải...</div>;
     }
 
     if (error) {
@@ -150,15 +150,35 @@ export default function Details({ params }: { params?: Promise<{ id: string }> }
                         <section className="mb-8 space-y-3 text-gray-700 text-base leading-relaxed">
                             <p>
                                 <span className="font-semibold text-gray-800">Người bán: </span>
-                                <a
-                                    href={`/seller/${product.Seller}`}
-                                    className="text-blue-600 hover:underline"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {product.Seller}
-                                </a>
+                                {product.Seller === "admin" ? (
+                                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-sm font-medium">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-4 w-4 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 10-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                        E-SHOP OFFICIAL
+                                    </span>
+                                ) : (
+                                    <a
+                                        href={`/seller/${product.Seller}`}
+                                        className="text-blue-600 hover:underline inline-flex items-center gap-1"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {product.Seller}
+                                    </a>
+                                )}
                             </p>
+
+
                             <p>
                                 <span className="font-semibold text-gray-800">Số lượng còn: </span>
                                 {product.StockQuantity}

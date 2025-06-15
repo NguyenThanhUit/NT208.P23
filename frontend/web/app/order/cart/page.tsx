@@ -104,10 +104,10 @@ export default function CartPage() {
             await placeBuying(orderID, paymentMethod, buyer, itemsForOrder);
 
             switch (paymentMethod) {
-                case "credit":
+                case "vnpay":
                     setPaymentResult(`✅ Thanh toán thành công bằng thẻ tín dụng: ${formatVND(totalPrice)}`);
                     break;
-                case "momo":
+                case "vinoibo":
                     setPaymentResult("✅ Thanh toán thành công qua ví MoMo.");
                     break;
                 default:
@@ -246,8 +246,8 @@ export default function CartPage() {
                             className="w-full border border-gray-300 rounded px-3 py-2"
                         >
                             <option value="">-- Chọn --</option>
-                            <option value="credit">💳 VNPAY</option>
-                            <option value="momo">📱 Ví nội bộ</option>
+                            <option value="vnpay">💳 VNPAY</option>
+                            <option value="vinoibo">📱 Ví nội bộ</option>
                         </select>
                     </div>
 

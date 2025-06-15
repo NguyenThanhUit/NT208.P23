@@ -143,7 +143,30 @@ export default function ProductList({ orders }: ProductListProps) {
                                 <p className={`font-semibold mb-1 ${isOutOfStock ? "text-red-600" : "text-green-600"}`}>
                                     Số lượng: {order.StockQuantity}
                                 </p>
-                                <p className="text-gray-400 text-xs">Người bán: {order.Seller}</p>
+                                <p className="text-gray-400 text-xs flex items-center gap-1">
+                                    Người bán:{" "}
+                                    {order.Seller === "admin" ? (
+                                        <span
+                                            className="text-blue-600 font-semibold flex items-center gap-1 group relative"
+                                        >
+                                            E-SHOP OFFICIAL
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-4 w-4 text-blue-500"
+                                                fill="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path d="M12 0C5.371 0 0 5.371 0 12c0 6.63 5.371 12 12 12s12-5.37 12-12c0-6.629-5.371-12-12-12zm0 22c-5.525 0-10-4.475-10-10S6.475 2 12 2s10 4.475 10 10-4.475 10-10 10zm1-15h-2v6h2V7zm0 8h-2v2h2v-2z" />
+                                            </svg>
+                                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 px-3 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition z-50 whitespace-nowrap shadow-lg">
+                                                Tài khoản chính chủ của cửa hàng
+                                            </span>
+                                        </span>
+                                    ) : (
+                                        <span>{order.Seller}</span>
+                                    )}
+                                </p>
+
                             </Link>
 
                             {!isSeller && (

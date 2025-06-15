@@ -53,7 +53,7 @@ export default function ReviewSellerPage() {
             <h1 className="text-3xl font-bold mb-6 text-center text-black">Đánh giá người bán</h1>
 
             {success ? (
-                <p className="text-green-600 text-center">🎉 Cảm ơn bạn đã đánh giá!</p>
+                <p className="min-h-screen text-green-600 text-center">🎉 Cảm ơn bạn đã đánh giá!</p>
             ) : (
                 <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 shadow rounded-xl">
                     <div>

@@ -56,7 +56,7 @@ export default function PendingSellerPage() {
             <h1 className="text-2xl font-bold mb-4">Danh sách Seller chờ duyệt</h1>
 
             {loading ? (
-                <p>Đang tải...</p>
+                <p className="min-h-screen">Đang tải...</p>
             ) : pendingSellers.length === 0 ? (
                 <p>Không có người dùng nào đang chờ duyệt.</p>
             ) : (
