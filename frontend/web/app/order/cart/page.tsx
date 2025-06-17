@@ -5,6 +5,7 @@ import Image from "next/image";
 import { getCurrentUser } from "@/app/actions/authactions";
 import { getTotalMoney, placeBuying } from "@/app/actions/orderactions";
 import { useCartStore } from "@/app/function/cartStore";
+import { useRouter } from "next/navigation";
 
 interface User {
     name: string;
@@ -28,6 +29,9 @@ export default function CartPage() {
     const [paymentMethod, setPaymentMethod] = useState("");
     const [paymentResult, setPaymentResult] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
+    const [authError, setAuthError] = useState<string | null>(null);
+    const router = useRouter();
+
 
     const { items, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCartStore();
 
@@ -43,6 +47,13 @@ export default function CartPage() {
         const fetchUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
+                if (!currentUser) {
+                    setAuthError("⚠️ Bạn cần đăng nhập để truy cập giỏ hàng.");
+                    setTimeout(() => {
+                        router.push("/");
+                    }, 3000);
+                    return;
+                }
                 setUser({
                     ...currentUser,
                     name: currentUser?.username || "",
@@ -123,6 +134,16 @@ export default function CartPage() {
             setIsProcessing(false);
         }
     };
+    if (authError) {
+        return (
+            <div className="flex items-center justify-center min-h-[60vh] bg-white text-black">
+                <div className="text-center">
+                    <h2 className="text-2xl font-semibold mb-2">{authError}</h2>
+                    <p>Bạn sẽ được chuyển hướng về trang chủ sau ít giây...</p>
+                </div>
+            </div>
+        );
+    }
 
 
     if (items.length === 0) {

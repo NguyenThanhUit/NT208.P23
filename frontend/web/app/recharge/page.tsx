@@ -5,6 +5,7 @@ import { getCurrentUser } from "../actions/authactions";
 import { depositMoneyviaVnPay, depositMoney, getTotalMoney } from "../actions/orderactions";
 import { User } from "next-auth";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function RechargePage() {
     const [user, setUser] = useState<User | null>(null);
@@ -13,11 +14,17 @@ export default function RechargePage() {
     const [message, setMessage] = useState("");
     const [method, setMethod] = useState<"internal" | "vnpay">("internal");
     const [walletBalance, setWalletBalance] = useState<number | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         const loadUser = async () => {
             try {
                 const currentUser = await getCurrentUser();
+                if (!currentUser) {
+                    alert("❌ Bạn cần đăng nhập để truy cập trang nạp tiền.");
+                    router.push("/");
+                    return;
+                }
                 const wallet = await getTotalMoney(currentUser!.username);
                 setWalletBalance(wallet.balance);
                 setUser(currentUser);

@@ -37,6 +37,7 @@ export default function OrderHistoryPage() {
     const router = useRouter();
     const [groupedOrders, setGroupedOrders] = useState<Record<string, Order[]>>({});
     const [loading, setLoading] = useState(true);
+    const [authError, setAuthError] = useState<string | null>(null);
     const [confirming, setConfirming] = useState<string | null>(null);
     const [timers, setTimers] = useState<Record<string, NodeJS.Timeout>>({});
 
@@ -47,7 +48,8 @@ export default function OrderHistoryPage() {
             try {
                 const user = await getCurrentUser();
                 if (!user || !user.name) {
-                    console.warn('Bạn chưa đăng nhập hoặc không có thông tin người dùng.');
+                    setAuthError("⚠️ Bạn cần đăng nhập để xem lịch sử đơn hàng.");
+                    setTimeout(() => router.push("/"), 3000); // Redirect sau 3 giây
                     setLoading(false);
                     return;
                 }
@@ -56,7 +58,6 @@ export default function OrderHistoryPage() {
                 const grouped = groupOrdersByDate(orders);
                 setGroupedOrders(grouped);
 
-                // Tự động xác nhận mỗi sản phẩm sau 1 phút nếu chưa xác nhận
                 orders.forEach((order: Order) => {
                     if (order.buyingStatus === 0) {
                         order.items.forEach((item: Item) => {
@@ -65,20 +66,20 @@ export default function OrderHistoryPage() {
                                 const timeout = setTimeout(() => {
                                     handleConfirmItem(order.orderId, item.productId);
                                 }, 60000); // 60 giây
-
                                 setTimers(prev => ({ ...prev, [key]: timeout }));
                             }
                         });
                     }
                 });
 
-                // Nếu vẫn còn đơn đang xử lý, tiếp tục reload sau 10 giây
                 const hasProcessingOrder = orders.some((o: Order) => o.buyingStatus === 0);
                 if (hasProcessingOrder) {
                     refreshTimer = setTimeout(fetchData, 10000);
                 }
             } catch (error) {
                 console.error('❌ Lỗi khi lấy lịch sử đơn hàng:', error);
+                setAuthError("❌ Có lỗi xảy ra khi lấy dữ liệu. Vui lòng thử lại sau.");
+                setTimeout(() => router.push("/"), 3000);
             } finally {
                 setLoading(false);
             }
@@ -91,6 +92,23 @@ export default function OrderHistoryPage() {
             Object.values(timers).forEach(clearTimeout);
         };
     }, []);
+
+    if (authError) {
+        return (
+            <div className="min-h-[60vh] flex flex-col justify-center items-center text-center text-red-600">
+                <h2 className="text-2xl font-semibold mb-2">{authError}</h2>
+                <p>Bạn sẽ được chuyển hướng về trang chủ sau ít giây...</p>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div className="min-h-screen p-6 text-center text-gray-600">
+                Đang tải dữ liệu...
+            </div>
+        );
+    }
 
     function groupOrdersByDate(orders: Order[]) {
         const grouped: Record<string, Order[]> = {};
