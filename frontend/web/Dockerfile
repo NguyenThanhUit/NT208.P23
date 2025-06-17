@@ -14,7 +14,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build --no-lint
 
-# production image, copy all files and run next
+
 FROM node:22-alpine AS runner
 WORKDIR /app
 

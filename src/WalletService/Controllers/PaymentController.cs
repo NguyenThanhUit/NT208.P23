@@ -23,7 +23,7 @@ namespace Backend_API_Testing.Controllers
                     _configuration["Vnpay:HashSecret"],
                     _configuration["Vnpay:BaseUrl"],         // Đây là URL thanh toán (paymentUrl)
                     _configuration["Vnpay:CallbackUrl"]     // Đây là URL callback/return
-);
+            );
 
         }
 
@@ -85,52 +85,75 @@ namespace Backend_API_Testing.Controllers
             {
                 try
                 {
-                    var paymentResult = _vnpay.GetPaymentResult(Request.Query);
-                    if (paymentResult.IsSuccess)
+                    // Log tất cả tham số nhận được từ VNPay
+                    Console.WriteLine("[VNPay IPN] Raw Query String:");
+                    foreach (var key in Request.Query.Keys)
                     {
-                        // Thực hiện hành động nếu thanh toán thành công tại đây. Ví dụ: Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu.
-                        return Ok();
+                        Console.WriteLine($"{key}: {Request.Query[key]}");
                     }
 
-                    // Thực hiện hành động nếu thanh toán thất bại tại đây. Ví dụ: Hủy đơn hàng.
-                    return BadRequest("Thanh toán thất bại");
+                    var paymentResult = _vnpay.GetPaymentResult(Request.Query);
+
+                    Console.WriteLine("[VNPay IPN] Parsed Payment Result:");
+                    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(paymentResult));
+
+                    if (paymentResult.IsSuccess)
+                    {
+                        return Ok(new { RspCode = "00", Message = "Confirm Success" });
+                    }
+
+                    return Ok(new { RspCode = "01", Message = "Payment Failed" });
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    Console.WriteLine("[VNPay IPN] Exception: " + ex.Message);
+                    return Ok(new { RspCode = "97", Message = "Exception Error" });
                 }
             }
 
-            return NotFound("Không tìm thấy thông tin thanh toán.");
+            return Ok(new { RspCode = "99", Message = "No Query" });
         }
+
 
         /// <summary>
         /// Trả kết quả thanh toán về cho người dùng
         /// </summary>
         /// <returns></returns>
         [HttpGet("Callback")]
-        public ActionResult<PaymentResult> Callback()
+        public IActionResult Callback()
         {
             if (Request.QueryString.HasValue)
             {
                 try
                 {
-                    var paymentResult = _vnpay.GetPaymentResult(Request.Query);
-
-                    if (paymentResult.IsSuccess)
+                    Console.WriteLine("[VNPay Callback] Raw Query String:");
+                    foreach (var key in Request.Query.Keys)
                     {
-                        return Ok(paymentResult);
+                        Console.WriteLine($"{key}: {Request.Query[key]}");
                     }
 
-                    return BadRequest(paymentResult);
+                    var paymentResult = _vnpay.GetPaymentResult(Request.Query);
+
+                    Console.WriteLine("[VNPay Callback] Parsed Payment Result:");
+                    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(paymentResult));
+
+                    var paymentId = Request.Query["vnp_TxnRef"];
+                    var isSuccess = paymentResult.IsSuccess ? "true" : "false";
+
+                    var redirectUrl = $"https://app.nguyenth4nh.xyz/recharge/result?paymentId={paymentId}&success={isSuccess}";
+
+                    return Redirect(redirectUrl);
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    Console.WriteLine("[VNPay Callback] Exception: " + ex.Message);
+                    return Redirect("http://nguyenth4nh.xyz/recharge/result?success=false&error=exception");
                 }
             }
 
-            return NotFound("Không tìm thấy thông tin thanh toán.");
+            return Redirect("http://nguyenth4nh.xyz/recharge/result?success=false&error=noquery");
         }
+
+
     }
 }

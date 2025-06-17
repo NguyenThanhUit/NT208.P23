@@ -23,7 +23,6 @@ const initialState: State = {
 export const useOrderStore = create<State & Actions>((set) => ({
     ...initialState,
     setData: (data: PageResult<Order>) => {
-        console.log("Setting store data (orders):", data.results.map(d => ({ id: d.id, Price: d.Price })));
         set({
             orders: data.results,
             totalCount: data.totalCount,

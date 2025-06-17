@@ -40,6 +40,7 @@ export default function ProductList({ orders }: ProductListProps) {
         fetchUser();
     }, []);
 
+
     if (error) {
         return <div className="text-red-500 text-center mt-10">{error}</div>;
     }

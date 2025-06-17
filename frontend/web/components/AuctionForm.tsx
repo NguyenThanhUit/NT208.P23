@@ -110,7 +110,13 @@ export default function AuctionForm({ auction }: Props) {
                             label="🖼️ URL hình ảnh"
                             name="imageUrl"
                             control={control}
-                            rules={{ required: 'URL hình ảnh là bắt buộc' }}
+                            rules={{
+                                required: 'URL hình ảnh là bắt buộc',
+                                pattern: {
+                                    value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i,
+                                    message: 'URL hình ảnh không hợp lệ (phải là link ảnh hợp lệ)',
+                                },
+                            }}
                         />
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -119,6 +125,12 @@ export default function AuctionForm({ auction }: Props) {
                                 name="reservePrice"
                                 type="number"
                                 control={control}
+                                rules={{
+                                    validate: (value) =>
+                                        value === undefined || value === null || value === ''
+                                            ? true
+                                            : parseInt(value) > 10000 || 'Giá phải lớn hơn 10,000 đồng',
+                                }}
                             />
                             <DateInput
                                 label="⏰ Ngày giờ kết thúc đấu giá"

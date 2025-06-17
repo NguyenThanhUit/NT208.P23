@@ -73,6 +73,16 @@ export default function Navbar() {
                         Đấu giá
                     </button>
                 </Link>
+                <Link href="/trending">
+                    <button
+                        className={`px-4 py-2 border rounded-md ${pathName.startsWith("/trending")
+                            ? "border-red-500 text-red-600 font-semibold"
+                            : "border-gray-300 text-gray-800 hover:bg-gray-100"
+                            }`}
+                    >
+                        Xếp hạng
+                    </button>
+                </Link>
                 <Link href="/blog">
                     <button
                         className={`px-4 py-2 border rounded-md ${pathName.startsWith("/blog")

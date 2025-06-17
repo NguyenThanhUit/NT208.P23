@@ -5,6 +5,7 @@ import { getCurrentUser } from "../actions/authactions";
 import { depositMoneyviaVnPay, depositMoney, getTotalMoney } from "../actions/orderactions";
 import { User } from "next-auth";
 import Image from "next/image";
+
 export default function RechargePage() {
     const [user, setUser] = useState<User | null>(null);
     const [amount, setAmount] = useState<number>(0);
@@ -18,7 +19,7 @@ export default function RechargePage() {
             try {
                 const currentUser = await getCurrentUser();
                 const wallet = await getTotalMoney(currentUser!.username);
-                setWalletBalance(wallet.balance)
+                setWalletBalance(wallet.balance);
                 setUser(currentUser);
             } catch (err) {
                 console.error("Lỗi khi lấy user:", err);
@@ -57,13 +58,13 @@ export default function RechargePage() {
                     setMessage("❌ Không thể lưu thông tin giao dịch.");
                     return;
                 }
+
                 const description = `Nạp tiền cho tài khoản ${user.username}`;
                 const response = await depositMoneyviaVnPay(amount, description);
 
                 if (typeof response === "string") {
-                    window.open(response, "_blank");
-                    setMessage("✅ Đã chuyển hướng tới VNPAY.");
-                    setAmount(0);
+                    window.location.href = response;
+                    return;
                 } else {
                     setMessage("❌ Không thể tạo liên kết thanh toán.");
                 }
@@ -106,7 +107,6 @@ export default function RechargePage() {
                     </div>
                 )}
 
-
                 {walletBalance !== null && (
                     <div className="bg-green-100 text-green-800 text-center rounded-lg py-3 px-4 mb-6 font-semibold shadow">
                         💰 Số dư ví hiện tại: {walletBalance?.toLocaleString()} VND
@@ -114,7 +114,6 @@ export default function RechargePage() {
                 )}
 
                 <div className="space-y-6">
-                    {/* Mệnh giá nhanh */}
                     <div>
                         <label className="block text-gray-700 font-medium mb-2">Chọn mệnh giá nhanh</label>
                         <div className="grid grid-cols-3 gap-3">
@@ -130,7 +129,7 @@ export default function RechargePage() {
                         </div>
                     </div>
 
-                    {/* Nhập số tiền */}
+
                     <div>
                         <label className="block text-gray-700 font-medium mb-2">Hoặc nhập số tiền</label>
                         <input
@@ -143,7 +142,7 @@ export default function RechargePage() {
                         />
                     </div>
 
-                    {/* Phương thức thanh toán */}
+
                     <div>
                         <label className="block text-gray-700 font-medium mb-2">Phương thức thanh toán</label>
                         <div className="flex flex-col space-y-2">
@@ -168,7 +167,7 @@ export default function RechargePage() {
                         </div>
                     </div>
 
-                    {/* Nút submit */}
+
                     <button
                         onClick={onSubmit}
                         disabled={loading}
@@ -177,7 +176,7 @@ export default function RechargePage() {
                         {loading ? "Đang xử lý..." : "Xác nhận nạp tiền"}
                     </button>
 
-                    {/* Message */}
+
                     {message && (
                         <p className="text-center text-sm text-gray-800 mt-2 whitespace-pre-line bg-gray-100 rounded p-2">
                             {message}
@@ -185,7 +184,6 @@ export default function RechargePage() {
                     )}
                 </div>
 
-                {/* Footer note */}
                 <p className="text-xs text-center text-gray-400 mt-8">
                     © {new Date().getFullYear()} Ví điện tử UIT. Mọi quyền được bảo lưu.
                 </p>

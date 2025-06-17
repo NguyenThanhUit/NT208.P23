@@ -83,9 +83,6 @@ export default function UserLogged({ user }: Props) {
                 }
                 className="w-64 rounded-xl shadow-lg border border-gray-200"
             >
-                <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
-                    <p>Vai trò: <span className="font-medium text-gray-800">{role}</span></p>
-                </div>
 
                 <DropdownItem icon={MdShoppingCartCheckout}>
                     <Link href="/order/history" className="w-full text-left">
@@ -126,7 +123,7 @@ export default function UserLogged({ user }: Props) {
                 </DropdownItem>
             </Dropdown>
 
-            {/* Modal xác minh */}
+
             {showModal && (
                 <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
                     <div className="bg-white rounded-2xl shadow-xl p-6 w-[90%] max-w-md text-center">

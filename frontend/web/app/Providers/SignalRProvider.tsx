@@ -26,8 +26,6 @@ export default function SignalRProvider({ children }: Props) {
     const params = useParams<{ id: string }>();
 
     const handleAuctionFinished = useCallback((finishedAuction: AuctionFinished) => {
-        console.log('[SignalR] 🎯 Received AuctionFinished:', finishedAuction);
-
         const auctionPromise = getDetailedViewData(finishedAuction.auctionID);
         return toast.promise(auctionPromise, {
             loading: 'Loading auction finished data...',
@@ -44,7 +42,6 @@ export default function SignalRProvider({ children }: Props) {
     }, []);
 
     const handleAuctionCreated = useCallback((auction: Auction) => {
-        console.log('[SignalR] 🎯 Received AuctionCreated:', auction);
         if (user?.username !== auction.seller) {
             return toast(<AuctionCreatedToast auction={auction} />, {
                 duration: 10000,
@@ -58,8 +55,6 @@ export default function SignalRProvider({ children }: Props) {
             auctionId: bidRaw.auctionId ?? bidRaw.auctionID,
         };
 
-        console.log('[SignalR] 🎯 Received BidPlaced:', bid);
-
         if (bid.bidStatus.includes('Accepted')) {
             setCurrentPrice(bid.auctionId, bid.amount);
         }
@@ -71,7 +66,6 @@ export default function SignalRProvider({ children }: Props) {
 
     useEffect(() => {
         const notifyUrl = process.env.NEXT_PUBLIC_NOTIFY_URL!;
-        console.log('[SignalR] 🔌 Notify URL:', notifyUrl);
 
         if (!connection.current) {
             connection.current = new HubConnectionBuilder()
@@ -81,28 +75,16 @@ export default function SignalRProvider({ children }: Props) {
 
             connection.current
                 .start()
-                .then(() => {
-                    console.log('[SignalR] ✅ Kết nối thành công tới SignalR hub');
-                })
-                .catch(err => {
-                    console.error('[SignalR] ❌ Lỗi kết nối SignalR:', err);
-                });
+                .catch(() => { });
         }
-
-        console.log('[SignalR] 📡 Đăng ký sự kiện...');
 
         connection.current.off('BidPlaced');
         connection.current.off('AuctionCreated');
         connection.current.off('AuctionFinished');
 
         connection.current.on('BidPlaced', handleBidPlaced);
-        console.log('[SignalR] ✅ Lắng nghe sự kiện: BidPlaced');
-
         connection.current.on('AuctionCreated', handleAuctionCreated);
-        console.log('[SignalR] ✅ Lắng nghe sự kiện: AuctionCreated');
-
         connection.current.on('AuctionFinished', handleAuctionFinished);
-        console.log('[SignalR] ✅ Lắng nghe sự kiện: AuctionFinished');
 
         return () => {
             connection.current?.off('BidPlaced', handleBidPlaced);

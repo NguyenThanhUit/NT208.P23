@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 public interface IUserProfileContext
@@ -279,6 +280,45 @@ public class UserProfileController : ControllerBase
 
         return Ok(response);
     }
+    [AllowAnonymous]
+    [HttpGet("ranked-sellers")]
+    public async Task<IActionResult> GetRankedSellers([FromQuery] string? q = null)
+    {
+        var builder = Builders<UserProfile>.Filter;
+
+        var filter = builder.Eq(p => p.IsSeller, true) &
+                     builder.Eq(p => p.VerificationStatus, "approved");
+
+        if (!string.IsNullOrEmpty(q))
+        {
+            var keyword = q.ToLower();
+            var regexFilter = builder.Or(
+                builder.Regex(p => p.UserName, new BsonRegularExpression(keyword, "i")),
+                builder.Regex(p => p.FullName, new BsonRegularExpression(keyword, "i")),
+                builder.Regex(p => p.Address, new BsonRegularExpression(keyword, "i"))
+            );
+
+            filter &= regexFilter;
+        }
+
+        var sellers = await _context.UserProfiles
+            .Find(filter)
+            .ToListAsync();
+
+        var result = sellers.Select(p => new
+        {
+            p.UserName,
+            p.FullName,
+            AverageRating = Math.Round(p.AverageRating, 2),
+            TotalRatings = p.Ratings?.Count ?? 0,
+            p.Address,
+            p.CreatedAt
+        });
+
+        return Ok(result);
+    }
+
+
 
 
 }

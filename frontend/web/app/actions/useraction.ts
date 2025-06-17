@@ -7,13 +7,8 @@ export async function sendUserInformation(data: FieldValues) {
     return result;
 }
 export async function getUserInformation() {
-    try {
-        const response = await fetchWrapper.get(`users/profile/me`);
-        return response;
-    } catch (error) {
-        console.error("Lỗi khi lấy thông tin người dùng:", error);
-        throw error;
-    }
+    const response = await fetchWrapper.get(`users/profile/me`);
+    return response;
 }
 export async function getSellerInformation(username: string) {
     const response = await fetchWrapper.get(`users/profile/seller/${username}`)
@@ -45,17 +40,16 @@ export async function rejectUser(userId: string, data: FieldValues) {
 }
 
 export async function rateSeller(username: string, review: { sellerUserName: string, stars: number; comment: string }) {
-    try {
-        const response = await fetchWrapper.post(`users/profile/rate-seller/${username}`, review);
-        console.log(`[rateSeller] Phản hồi từ server:`, response);
-        return response;
-    } catch (error) {
-        console.error("[rateSeller] Lỗi khi gửi đánh giá người bán:", error);
-        throw error;
-    }
+    const response = await fetchWrapper.post(`users/profile/rate-seller/${username}`, review);
+    return response;
+
 }
 export async function getRateSeller(username: string) {
     const response = await fetchWrapper.get(`users/profile/seller/rate/${username}`);
+    return response;
+}
+export async function getSellerRank() {
+    const response = await fetchWrapper.get(`users/profile/ranked-sellers`);
     return response;
 }
 
