@@ -49,7 +49,7 @@ export default function OrderHistoryPage() {
                 const user = await getCurrentUser();
                 if (!user || !user.name) {
                     setAuthError("⚠️ Bạn cần đăng nhập để xem lịch sử đơn hàng.");
-                    setTimeout(() => router.push("/"), 3000); // Redirect sau 3 giây
+                    setTimeout(() => router.push("/"), 3000);
                     setLoading(false);
                     return;
                 }

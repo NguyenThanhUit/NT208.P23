@@ -57,7 +57,7 @@ public class CheckAuctionFinished : BackgroundService
             var winningBid = await DB.Find<Bid>()
                 .Match(a => a.AuctionID == auction.ID)
                 .Match(b => b.BidStatus == BidStatus.Accepted)
-                .Sort(x => x.Ascending(s => s.Amount))
+                .Sort(x => x.Descending(s => s.Amount))
                 .ExecuteFirstAsync(stoppingToken);
 
 

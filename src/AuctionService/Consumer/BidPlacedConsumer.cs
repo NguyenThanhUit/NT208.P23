@@ -1,21 +1,21 @@
-using AuctionService.Data;  // DbContext để làm việc với database
-using Contracts;            // Import các contract như BidPlaced
-using MassTransit;          // Thư viện xử lý message broker
+using AuctionService.Data;
+using Contracts;
+using MassTransit;
 
 namespace AuctionService;
 
-// Consumer để xử lý sự kiện BidPlaced
+
 public class BidPlacedConsumer : IConsumer<BidPlaced>
 {
     private readonly AuctionDbContext _dbcontext;
 
-    // Constructor đúng cách
+
     public BidPlacedConsumer(AuctionDbContext dbcontext)
     {
-        _dbcontext = dbcontext;  // Gán DbContext để sử dụng sau này
+        _dbcontext = dbcontext;
     }
 
-    // Phương thức xử lý sự kiện BidPlaced
+
     public async Task Consume(ConsumeContext<BidPlaced> context)
     {
         Console.WriteLine("--> Consuming bid placed");

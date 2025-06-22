@@ -1,36 +1,42 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Auction, AuctionFinished } from '..'
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Auction, AuctionFinished } from '..';
+
 type Props = {
-    finishedAuction: AuctionFinished
-    auction: Auction
-}
+    finishedAuction: AuctionFinished;
+    auction: Auction;
+};
 
 export default function AuctionFinishedToast({ finishedAuction, auction }: Props) {
-    console.log('[AuctionFinishedToast] auction:', auction);
-    console.log('[AuctionFinishedToast] finishedAuction:', finishedAuction);
-
     return (
-        <Link href={`/auctions/details/${auction?.id}`} className='flex flex-col items-center'>
-            <div className='flex flex-row items-center gap-2'>
+        <Link
+            href={`/auctions/details/${auction?.id}`}
+            className='flex items-center gap-4 p-4 rounded-xl shadow-lg bg-white border hover:bg-gray-50 transition duration-200 w-full max-w-md'
+        >
+            <div className='relative w-20 h-20 flex-shrink-0'>
                 <Image
                     src={auction.imageUrl}
-                    alt='Image of car'
-                    height={80}
-                    width={80}
-                    className='rounded-lg w-auto h-auto'
+                    alt='Hình ảnh sản phẩm'
+                    layout='fill'
+                    objectFit='cover'
+                    className='rounded-lg'
                 />
-                <span>Đấu giá: {auction.name} đã hoàn thành</span>
+            </div>
+
+            <div className='flex flex-col'>
+                <span className='text-sm text-gray-600 font-medium'>Đấu giá đã kết thúc</span>
+                <span className='text-lg font-bold text-gray-800'>{auction.name}</span>
+
                 {finishedAuction.itemSold && finishedAuction.amount ? (
-                    <p>Chúc mừng {finishedAuction.winner} đã chiến thắng với giá ${finishedAuction.amount}</p>
+                    <p className='text-green-600 font-medium mt-1'>
+                        🎉 Chúc mừng <span className='font-bold'>{finishedAuction.winner}</span> thắng với giá{' '}
+                        <span className='font-bold'>{finishedAuction.amount.toLocaleString()} VND</span>
+                    </p>
                 ) : (
-                    <p>Sản phẩm đã kết thúc</p>
+                    <p className='text-gray-500 mt-1'>🕓 Phiên đấu giá này đã kết thúc</p>
                 )}
             </div>
-            <div className='flex flex-col'>
-                <span>Mới </span>
-            </div>
         </Link>
-    )
+    );
 }

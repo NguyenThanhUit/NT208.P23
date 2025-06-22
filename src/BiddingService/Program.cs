@@ -43,33 +43,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     // Thêm JWT Bearer handler để xử lý token
     .AddJwtBearer(option =>
     {
-        // Đặt Authority - URL của IdentityServer để xác thực token
+
         option.Authority = builder.Configuration["IdentityServiceUrl"];
 
-        // Cho phép sử dụng HTTP (không HTTPS), tiện cho môi trường phát triển
+
         option.RequireHttpsMetadata = false;
 
-        // Bỏ qua kiểm tra audience (aud) - giúp token có thể dùng cho nhiều dịch vụ
+
         option.TokenValidationParameters.ValidateAudience = false;
 
-        // Xác định tên người dùng dựa trên claim "username" trong token
+
         option.TokenValidationParameters.NameClaimType = "username";
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
 
-//AutoMapper
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//Add grpc Auction Client
+
 builder.Services.AddScoped<GrpcAuctionClient>();
 
-//Them CheckAuctionFinished
+
 builder.Services.AddHostedService<CheckAuctionFinished>();
 
 var app = builder.Build();
 app.UseRouting();
-// Configure the HTTP request pipeline.
+
 app.UseAuthentication();
 
 

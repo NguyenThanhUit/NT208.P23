@@ -89,6 +89,11 @@ export default function UserLogged({ user }: Props) {
                         Lịch sử mua hàng
                     </Link>
                 </DropdownItem>
+                <DropdownItem icon={AiFillTrophy}>
+                    <Link href="/auctions/history" className="w-full text-left">
+                        Đấu giá đã thắng
+                    </Link>
+                </DropdownItem>
 
                 {role === "admin" ? (
                     <DropdownItem icon={HiCog} onClick={handleVerifyUserInformation}>

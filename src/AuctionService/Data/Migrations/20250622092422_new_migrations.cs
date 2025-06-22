@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AuctionService.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class newmi : Migration
+    public partial class new_migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,8 @@ namespace AuctionService.Data.Migrations
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AuctionEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    IsKeyConfirmed = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {

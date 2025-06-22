@@ -33,7 +33,7 @@ namespace WalletService
             else
             {
                 Console.WriteLine($"Không đủ số dư trong ví của {message.Buyer}. Yêu cầu: {message.TotalAmount}, hiện có: {wallet.Balance}");
-                // Nếu cần xử lý lỗi hoặc emit event reject thì thêm vào đây.
+
             }
         }
     }

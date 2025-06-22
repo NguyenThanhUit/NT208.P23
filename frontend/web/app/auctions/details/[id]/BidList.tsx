@@ -118,7 +118,7 @@ export default function BidList({ user, auction }: Props) {
                         Bạn không thể đấu giá vào đấu giá của bạn
                     </div>
                 ) : (
-                    <BidForm auctionId={auction.id} highBid={highBid} />
+                    <BidForm auctionId={auction.id} highBid={highBid} userId={user.username} />
                 )}
             </div>
         </div>

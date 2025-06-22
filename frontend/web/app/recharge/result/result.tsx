@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-export default function RechargeResultPage() {
+export default function ResultPage() {
     const [result, setResult] = useState<any>(null);
     const [error, setError] = useState<string>("");
 
@@ -10,19 +10,27 @@ export default function RechargeResultPage() {
         const fetchCallback = async () => {
             try {
                 const currentUrl = window.location.href;
+                console.log("[VNPay Callback] Current URL:", currentUrl);
+
                 const queryParams = currentUrl.split("?")[1];
+                console.log("[VNPay Callback] Query Params:", queryParams);
 
                 if (!queryParams) {
                     setError("Không có dữ liệu giao dịch.");
                     return;
                 }
 
-                const response = await fetch(`http://localhost:7004/api/Vnpay/Callback?${queryParams}`);
+                const url = `https://api.nguyenth4nh.xyz/Vnpay/Callback?${queryParams}`;
+                console.log("[VNPay Callback] Fetching from:", url);
+
+                const response = await fetch(url);
                 const data = await response.json();
+
+                console.log("[VNPay Callback] API response:", data);
 
                 setResult(data);
             } catch (err) {
-                console.error(err);
+                console.error("[VNPay Callback] Fetch error:", err);
                 setError("Lỗi khi truy vấn kết quả thanh toán.");
             }
         };

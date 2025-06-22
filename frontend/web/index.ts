@@ -45,7 +45,8 @@ export type Auction = {
     year: number
     category: string
     imageUrl: string
-    key: string
+    key: string,
+    isKeyConfirmed?: boolean | null;
 }
 export type Bid = {
     id: string

@@ -20,5 +20,7 @@ public class AuctionDto
     public String Category { get; set; }
     //Key
     public string Key { get; set; }
+    public bool? IsKeyConfirmed { get; set; } = null;
+
 
 }

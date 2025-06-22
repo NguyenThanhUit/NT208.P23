@@ -85,7 +85,7 @@ namespace Backend_API_Testing.Controllers
             {
                 try
                 {
-                    // Log tất cả tham số nhận được từ VNPay
+
                     Console.WriteLine("[VNPay IPN] Raw Query String:");
                     foreach (var key in Request.Query.Keys)
                     {
@@ -147,11 +147,11 @@ namespace Backend_API_Testing.Controllers
                 catch (Exception ex)
                 {
                     Console.WriteLine("[VNPay Callback] Exception: " + ex.Message);
-                    return Redirect("http://nguyenth4nh.xyz/recharge/result?success=false&error=exception");
+                    return Redirect("https://nguyenth4nh.xyz/recharge/result?success=false&error=exception");
                 }
             }
 
-            return Redirect("http://nguyenth4nh.xyz/recharge/result?success=false&error=noquery");
+            return Redirect("https://nguyenth4nh.xyz/recharge/result?success=false&error=noquery");
         }
 
 

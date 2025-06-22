@@ -1,23 +1,26 @@
 'use client'
 
 import { placeBidForAuction } from "@/app/actions/auctionaction"
+import { getTotalMoney } from "@/app/actions/orderactions"
 import { useBidStore } from "@/hooks/useBidStore"
+
 import { FieldValues, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 
 type Props = {
-    auctionId: string
-    highBid: number
-}
+    auctionId: string;
+    highBid: number;
+    userId: string;
+};
 
-export default function BidForm({ auctionId, highBid }: Props) {
+export default function BidForm({ auctionId, highBid, userId }: Props) {
     const { register, handleSubmit, reset } = useForm();
     const addBid = useBidStore(state => state.addBid);
 
     const MIN_INCREMENT = 10000;
     const minBid = highBid + MIN_INCREMENT;
 
-    function onSubmit(data: FieldValues) {
+    async function onSubmit(data: FieldValues) {
         const bidAmount = +data.amount;
 
         if (bidAmount < minBid) {
@@ -25,16 +28,21 @@ export default function BidForm({ auctionId, highBid }: Props) {
             return toast.error(`Giá tối thiểu là ${minBid.toLocaleString()} VND`);
         }
 
-        placeBidForAuction(auctionId, bidAmount)
-            .then(bid => {
-                if (bid.error) throw bid.error;
-                addBid(bid);
+        try {
+            const { balance } = await getTotalMoney(userId);
+            if (bidAmount > balance) {
                 reset();
-            })
-            .catch(err => {
-                console.error(err);
-                toast.error(err.message);
-            });
+                return toast.error(`Số dư không đủ để đặt giá (${balance.toLocaleString()} VND)`);
+            }
+
+            const bid = await placeBidForAuction(auctionId, bidAmount);
+            if (bid.error) throw bid.error;
+            addBid(bid);
+            reset();
+        } catch (err: any) {
+            console.error(err);
+            toast.error(err.message || "Có lỗi xảy ra khi đặt giá");
+        }
     }
 
     return (

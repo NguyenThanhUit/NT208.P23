@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuctionService.Data.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20250530032004_new mi")]
-    partial class newmi
+    [Migration("20250622092422_new_migrations")]
+    partial class new_migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace AuctionService.Data.Migrations
 
                     b.Property<int?>("CurrentHighBid")
                         .HasColumnType("integer");
+
+                    b.Property<bool?>("IsKeyConfirmed")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("ReservePrice")
                         .HasColumnType("integer");

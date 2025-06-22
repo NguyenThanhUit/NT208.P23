@@ -14,12 +14,11 @@ public class BidsController : ControllerBase
     public readonly IPublishEndpoint _publishEndpoint;
     public readonly GrpcAuctionClient _grpcClient;
     public readonly ILogger<BidsController> _logger;
-    public BidsController(IMapper mapper, IPublishEndpoint publishEndpoint, GrpcAuctionClient grpcClient, ILogger<BidsController> logger)
+    public BidsController(IMapper mapper, IPublishEndpoint publishEndpoint, GrpcAuctionClient grpcClient)
     {
         _mapper = mapper;
         _publishEndpoint = publishEndpoint;
         _grpcClient = grpcClient;
-        _logger = logger;
     }
     [Authorize]
     [HttpPost]
@@ -28,18 +27,15 @@ public class BidsController : ControllerBase
         var auction = await DB.Find<Auction>().OneAsync(auctionId);
         if (auction == null)
         {
-            _logger.LogWarning("Auction with ID {AuctionId} not found in DB, trying GRPC service...", auctionId);
+
 
             auction = _grpcClient.GetAuction(auctionId);
             if (auction == null)
             {
-                _logger.LogError("Auction with ID {AuctionId} not found via GRPC service either.", auctionId);
+
                 return BadRequest("Cannot accept bids on this auction at this time");
             }
-            else
-            {
-                _logger.LogInformation("Auction with ID {AuctionId} retrieved successfully via GRPC.", auctionId);
-            }
+
         }
 
         if (auction.Seller == User.Identity.Name)

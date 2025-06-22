@@ -105,6 +105,52 @@ public class AuctionsController : ControllerBase
         if (!result) return BadRequest("Could not update DB");
         return Ok();
     }
+    [Authorize]
+    [HttpGet("my-wins")]
+    public async Task<ActionResult<List<AuctionDto>>> GetAuctionsUserWon()
+    {
+        var username = User.Identity?.Name;
+
+        if (string.IsNullOrEmpty(username))
+        {
+            return Unauthorized("User is not authenticated");
+        }
+        var auctionsWon = await _context.Auctions
+            .Include(a => a.Item)
+            .Where(a => a.Status == Status.Finish && a.Winner == username)
+            .OrderByDescending(a => a.UpdatedAt)
+            .ProjectTo<AuctionDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return auctionsWon;
+    }
+    [Authorize]
+    [HttpPost("confirm-key/{id}")]
+    public async Task<ActionResult> ConfirmKey(Guid id)
+    {
+        var username = User.Identity?.Name;
+        if (string.IsNullOrEmpty(username))
+            return Unauthorized("User is not authenticated");
+
+        var auction = await _context.Auctions.FirstOrDefaultAsync(x => x.Id == id);
+        if (auction == null)
+            return NotFound("Auction not found");
+
+        if (auction.Winner != username)
+            return Forbid("Bạn không phải là người chiến thắng phiên đấu giá này");
+
+        if (auction.IsKeyConfirmed == true)
+            return BadRequest("Bạn đã xác nhận key này trước đó");
+
+        auction.IsKeyConfirmed = true;
+
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) return BadRequest("Không thể lưu xác nhận vào cơ sở dữ liệu");
+
+        return Ok("Đã xác nhận key hợp lệ");
+    }
+
+
 
 
 }

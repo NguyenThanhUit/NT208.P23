@@ -63,10 +63,15 @@ export default function AccountDetailPage() {
             if (user?.username) {
                 try {
                     const res = await getProductForSeller(user.username);
-                    console.log("📦 Dữ liệu sản phẩm trả về:", res);
-                    setProducts(res || []);
+                    if (Array.isArray(res)) {
+                        setProducts(res);
+                    } else {
+                        console.warn("❗Dữ liệu sản phẩm không phải là mảng:", res);
+                        setProducts([]);
+                    }
                 } catch (err) {
                     console.error("Lỗi khi lấy sản phẩm:", err);
+                    setProducts([]);
                 }
             }
         };
@@ -127,33 +132,38 @@ export default function AccountDetailPage() {
                     <h3 className="text-xl font-bold mb-4 text-gray-700">Danh sách sản phẩm</h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {products.map((product, index) => (
-                            <div key={index} className="bg-white border rounded-lg shadow p-4">
-                                <img
-                                    src={product.imageUrl}
-                                    alt={product.name}
-                                    className="w-full h-40 object-cover rounded mb-2"
-                                />
-                                <h4 className="font-semibold text-gray-800">{product.name}</h4>
-                                <p className="text-sm text-gray-500">{product.description}</p>
-                                <p className="text-indigo-600 font-medium mt-1">
-                                    {product.price.toLocaleString('vi-VN')} đ
-                                </p>
-
-                                <span
-                                    className={`inline-block px-2 py-1 mt-2 text-xs font-semibold rounded ${product.status === 'Completed'
-                                        ? 'bg-green-100 text-green-800'
-                                        : 'bg-yellow-100 text-yellow-800'
-                                        }`}
-                                >
-                                    {product.status === 'Completed' ? 'Đã bán' : 'Chưa bán được'}
-                                </span>
+                        {Array.isArray(products) && products.length > 0 ? (
+                            products.map((product, index) => (
+                                <div key={index} className="bg-white border rounded-lg shadow p-4">
+                                    <img
+                                        src={product.imageUrl}
+                                        alt={product.name}
+                                        className="w-full h-40 object-cover rounded mb-2"
+                                    />
+                                    <h4 className="font-semibold text-gray-800">{product.name}</h4>
+                                    <p className="text-sm text-gray-500">{product.description}</p>
+                                    <p className="text-indigo-600 font-medium mt-1">
+                                        {product.price.toLocaleString('vi-VN')} đ
+                                    </p>
+                                    <span
+                                        className={`inline-block px-2 py-1 mt-2 text-xs font-semibold rounded ${product.status === 'Completed'
+                                            ? 'bg-green-100 text-green-800'
+                                            : 'bg-yellow-100 text-yellow-800'
+                                            }`}
+                                    >
+                                        {product.status === 'Completed' ? 'Đã bán' : 'Chưa bán được'}
+                                    </span>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center text-gray-500">
+                                Người dùng chưa đăng bán sản phẩm nào.
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

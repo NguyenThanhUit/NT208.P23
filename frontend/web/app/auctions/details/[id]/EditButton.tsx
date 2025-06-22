@@ -8,7 +8,7 @@ type Props = { id: string };
 export default function EditButton({ id }: Props) {
     return (
         <Link href={`/auctions/update/${id}`}>
-            <Button outline>Update Auction</Button>
+            <Button outline>Cập nhật đấu giá</Button>
         </Link>
     );
 }

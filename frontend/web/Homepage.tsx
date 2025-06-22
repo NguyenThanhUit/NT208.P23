@@ -61,7 +61,6 @@ export default function Homepage() {
                             name: currentUser.username,
                         });
                         setHasSent(true);
-                        console.log("Đã gửi thông tin user từ Homepage");
                     }
 
                     const initialBalance = 0;

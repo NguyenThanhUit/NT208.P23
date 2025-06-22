@@ -14,6 +14,7 @@ builder.Services.AddMassTransit(x =>
 {
 
     x.AddConsumersFromNamespaceContaining<BuyingItemConsumer>();
+    x.AddConsumersFromNamespaceContaining<AuctionFinishedConsumer>();
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("deposits", false));
 
     x.UsingRabbitMq((context, cfg) =>
