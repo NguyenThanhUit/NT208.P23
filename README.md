@@ -74,6 +74,20 @@ Trang đăng nhập / xác thực: https://id.nguyenth4nh.xyz
 
 Hệ thống API backend: https://api.nguyenth4nh.xyz
 
+---
+📊 Google PageSpeed Insights
+
+Hệ thống frontend được tối ưu hiệu năng tốt, kiểm tra thông qua Google PageSpeed Insights:
+
+Hiệu suất được chấm điểm ở mức cao (Desktop/Mobile)
+
+Tối ưu hình ảnh, preload fonts, lazy loading hợp lý
+
+📷 Ảnh minh hoạ kết quả PageSpeed:
+![pagespeed-desktop](./docs/page1.png)
+![pagespeed-desktop](./docs/pagespeed-page2.png)
+![pagespeed-desktop](./docs/pagespeed-page3.png)
+
 ### 🛠 Hệ thống hỗ trợ:
 
 * **Realtime**: sử dụng `SignalR` để cập nhật thông tin đấu giá tức thì.
