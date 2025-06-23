@@ -61,10 +61,12 @@ export default function Listings() {
 
         getData(url)
             .then(data => {
+                console.log("📦 Dữ liệu nhận được từ getData:", data);
                 setData(data);
                 setLoading(false);
             })
             .catch(err => {
+                console.error("❌ Lỗi khi gọi getData:", err);
                 setError('Lỗi khi tải dữ liệu.');
                 setLoading(false);
             });

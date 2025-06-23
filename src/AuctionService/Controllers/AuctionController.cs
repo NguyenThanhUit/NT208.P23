@@ -147,8 +147,16 @@ public class AuctionsController : ControllerBase
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) return BadRequest("Không thể lưu xác nhận vào cơ sở dữ liệu");
 
-        return Ok("Đã xác nhận key hợp lệ");
+        await _publishEndpoint.Publish(new AuctionKeyConfirmed
+        {
+            AuctionID = auction.Id,
+            Seller = auction.Seller,
+            Amount = auction.SoldAmount ?? 0
+        });
+
+        return Ok("Đã xác nhận key hợp lệ và sẽ xử lý thanh toán cho người bán.");
     }
+
 
 
 

@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityService.Pages.ExternalLogin;
 
+using System.Text.Json;
+
 [AllowAnonymous]
 [SecurityHeaders]
 public class Callback : PageModel
@@ -38,77 +40,97 @@ public class Callback : PageModel
         _logger = logger;
         _events = events;
     }
-        
+
     public async Task<IActionResult> OnGet()
     {
-        // read external identity from the temporary cookie
+        // 1. Xác thực từ cookie tạm
         var result = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-        if (result.Succeeded != true)
-        {
-            throw new InvalidOperationException($"External authentication error: { result.Failure }");
-        }
+        if (!result.Succeeded || result.Principal == null)
+            throw new InvalidOperationException("External authentication failed");
 
-        var externalUser = result.Principal ?? 
-            throw new InvalidOperationException("External authentication produced a null Principal");
-		
-        if (_logger.IsEnabled(LogLevel.Debug))
-        {
-            var externalClaims = externalUser.Claims.Select(c => $"{c.Type}: {c.Value}");
-            _logger.ExternalClaims(externalClaims);
-        }
-
-        // lookup our user and external provider info
-        // try to determine the unique id of the external user (issued by the provider)
-        // the most common claim type for that are the sub claim and the NameIdentifier
-        // depending on the external provider, some other claim type might be used
-        var userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ??
-                          externalUser.FindFirst(ClaimTypes.NameIdentifier) ??
-                          throw new InvalidOperationException("Unknown userid");
-
-        var provider = result.Properties.Items["scheme"] ?? throw new InvalidOperationException("Null scheme in authentiation properties");
+        ClaimsPrincipal externalUser = result.Principal;
+        string provider = result.Properties.Items["scheme"] ?? "";
+        Claim userIdClaim = externalUser.FindFirst(JwtClaimTypes.Subject) ?? externalUser.FindFirst(ClaimTypes.NameIdentifier)
+            ?? throw new InvalidOperationException("Cannot determine external user ID");
         var providerUserId = userIdClaim.Value;
 
-        // find external user
+        // 2. Kiểm tra xem user đã tồn tại chưa
         var user = await _userManager.FindByLoginAsync(provider, providerUserId);
+
+        // Chưa sẽ lấy thông tin người dùng từ tài khoản Google
         if (user == null)
         {
-            // this might be where you might initiate a custom workflow for user registration
-            // in this sample we don't show how that would be done, as our sample implementation
-            // simply auto-provisions new external user
-            user = await AutoProvisionUserAsync(provider, providerUserId, externalUser.Claims);
+            // Lấy access token
+            var accessToken = result.Properties.GetTokenValue("access_token");
+
+            string fullName = externalUser.FindFirst(ClaimTypes.Name)?.Value ?? "";
+            string email = externalUser.FindFirst(ClaimTypes.Email)?.Value ?? "";
+            string userName = email.Split("@")[0];
+            string phoneNumber = "";
+            string address = "";
+
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                using var http = new HttpClient();
+                http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                var peopleApiUrl = "https://people.googleapis.com/v1/people/me?personFields=names,phoneNumbers,addresses";
+                var response = await http.GetAsync(peopleApiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var json = JsonDocument.Parse(content);
+
+                    // Full Name (từ Google People API)
+                    fullName = json.RootElement.GetProperty("names")[0].GetProperty("displayName").GetString() ?? "";
+
+                    // Phone Number
+                    if (json.RootElement.TryGetProperty("phoneNumbers", out var phones))
+                        phoneNumber = phones[0].GetProperty("value").GetString() ?? "";
+
+                    // Address
+                    if (json.RootElement.TryGetProperty("addresses", out var addrs))
+                        address = addrs[0].GetProperty("formattedValue").GetString() ?? "";
+                }
+            }
+
+            // 3. Tạo đối tượng user
+            user = new ApplicationUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = userName,
+                Email = email,
+                EmailConfirmed = true,
+                PhoneNumber = phoneNumber,
+                Address = address,
+                FullName = fullName
+            };
+
+            var createResult = await _userManager.CreateAsync(user);
+            if (!createResult.Succeeded)
+                throw new Exception("Không thể tạo người dùng mới: " + createResult.Errors.First().Description);
+
+            await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
+
+            // Thêm claim 
+            var claims = new List<Claim>();
+            if (fullName != null)
+                claims.Add(new Claim(JwtClaimTypes.Name, fullName));
+            if (email != null)
+                claims.Add(new Claim(JwtClaimTypes.Email, email));
+            if (claims.Count > 0)
+                await _userManager.AddClaimsAsync(user, claims);
         }
 
-        // this allows us to collect any additional claims or properties
-        // for the specific protocols used and store them in the local auth cookie.
-        // this is typically used to store data needed for signout from those protocols.
-        var additionalLocalClaims = new List<Claim>();
-        var localSignInProps = new AuthenticationProperties();
-        CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
-            
-        // issue authentication cookie for user
-        await _signInManager.SignInWithClaimsAsync(user, localSignInProps, additionalLocalClaims);
+        // 4. Đăng nhập & redirect
+        var additionalClaims = new List<Claim>();
+        var signInProps = new AuthenticationProperties();
+        CaptureExternalLoginContext(result, additionalClaims, signInProps);
 
-        // delete temporary cookie used during external authentication
+        await _signInManager.SignInWithClaimsAsync(user, signInProps, additionalClaims);
         await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
-        // retrieve return URL
         var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
-
-        // check if external login is in the context of an OIDC request
-        var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-        await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true, context?.Client.ClientId));
-        Telemetry.Metrics.UserLogin(context?.Client.ClientId, provider!);
-
-        if (context != null)
-        {
-            if (context.IsNativeClient())
-            {
-                // The client is native, so this change in how to
-                // return the response is for better UX for the end user.
-                return this.LoadingPage(returnUrl);
-            }
-        }
-
         return Redirect(returnUrl);
     }
 
@@ -116,7 +138,7 @@ public class Callback : PageModel
     private async Task<ApplicationUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
     {
         var sub = Guid.NewGuid().ToString();
-            
+
         var user = new ApplicationUser
         {
             Id = sub,
@@ -130,7 +152,7 @@ public class Callback : PageModel
         {
             user.Email = email;
         }
-            
+
         // create a list of claims that we want to transfer into our store
         var filtered = new List<Claim>();
 

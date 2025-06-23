@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using MongoDB.Entities;
 using VNPAY.NET;
 using WalletService;
+using WalletService.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddMassTransit(x =>
 
     x.AddConsumersFromNamespaceContaining<BuyingItemConsumer>();
     x.AddConsumersFromNamespaceContaining<AuctionFinishedConsumer>();
+    x.AddConsumersFromNamespaceContaining<AuctionKeyConfirmedConsumer>();
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("deposits", false));
 
     x.UsingRabbitMq((context, cfg) =>

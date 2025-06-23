@@ -61,6 +61,7 @@ docker compose up -d
 - **Hệ thống Escrow bảo vệ người mua**:
   - Sau khi thanh toán, người mua sẽ nhận được **key sản phẩm**.
   - Nếu **key sai hoặc không hợp lệ**, tiền sẽ được **hoàn lại (refund)** cho người mua.
+  - Số **tiền giao dịch** sẽ được hệ thống giữ lại, người dùng có trách nhiệm **xác nhận** để hoàn thành đơn hàng
   - Nếu **key đúng**, tiền sẽ được **chuyển cho người bán**.
 - Tính năng **đánh giá người bán** sau giao dịch.
 - Xem **bảng xếp hạng người bán** dựa trên điểm đánh giá và số lượt bán.

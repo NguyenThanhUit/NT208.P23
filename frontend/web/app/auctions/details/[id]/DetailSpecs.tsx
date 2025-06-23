@@ -7,6 +7,10 @@ type Props = {
 };
 
 export default function DetailedSpecs({ auction }: Props) {
+    console.log("🔍 Dữ liệu auction nhận được:", auction);
+
+    if (!auction) return <p>Đang tải dữ liệu sản phẩm...</p>;
+
     return (
         <div className="bg-white p-6 rounded-xl shadow-lg">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">🔍 Thông tin chi tiết của sản phẩm: </h2>
@@ -31,7 +35,9 @@ export default function DetailedSpecs({ auction }: Props) {
                     </tr>
                     <tr>
                         <th className="p-2 font-semibold border">Giá mong muốn</th>
-                        <td className="p-2 border">{auction.reservePrice.toLocaleString()} VND</td>
+                        <td className="p-2 border">
+                            {auction.reservePrice?.toLocaleString()} VND
+                        </td>
                     </tr>
                     <tr>
                         <th className="p-2 font-semibold border">Trạng thái</th>
@@ -39,7 +45,9 @@ export default function DetailedSpecs({ auction }: Props) {
                     </tr>
                     <tr>
                         <th className="p-2 font-semibold border">Ngày kết thúc</th>
-                        <td className="p-2 border">{new Date(auction.auctionEnd).toLocaleString()}</td>
+                        <td className="p-2 border">
+                            {auction.auctionEnd && new Date(auction.auctionEnd).toLocaleString()}
+                        </td>
                     </tr>
                 </tbody>
             </table>

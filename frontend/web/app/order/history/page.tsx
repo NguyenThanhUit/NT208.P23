@@ -169,7 +169,7 @@ export default function OrderHistoryPage() {
 
                 await addSellerWaller(sellerId, { Amount: amount });
 
-                alert(`✅ Đã cộng ${amount.toLocaleString()} VNĐ vào ví người bán ${sellerId}`);
+                alert(` Đã cộng ${amount.toLocaleString()} VNĐ vào ví người bán ${sellerId}`);
             }
         } catch (error) {
             console.error('❌ Lỗi xác nhận đơn hàng:', error);

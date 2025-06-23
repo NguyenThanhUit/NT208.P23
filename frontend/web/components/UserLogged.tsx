@@ -10,6 +10,7 @@ import { User } from "next-auth";
 import { getUserInformation } from "@/app/actions/useraction";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { HiOutlineTag } from "react-icons/hi";
 
 type Props = {
     user: User
@@ -89,9 +90,9 @@ export default function UserLogged({ user }: Props) {
                         Lịch sử mua hàng
                     </Link>
                 </DropdownItem>
-                <DropdownItem icon={AiFillTrophy}>
+                <DropdownItem icon={HiOutlineTag}>
                     <Link href="/auctions/history" className="w-full text-left">
-                        Đấu giá đã thắng
+                        Lịch sử trúng đấu giá
                     </Link>
                 </DropdownItem>
 
