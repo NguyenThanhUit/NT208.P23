@@ -177,6 +177,12 @@ docker compose up -d --build
 > ✅ Tính năng giúc bảo vệ người dùng khỏi gian lận hoặc giao dịch lỗi.
 
 ---
+### 🏪 Mua sản phẩm
+
+* Người dùng có thể tạo giỏ hàng, mua được nhiều sản phẩm cùng lúc, sản phẩm sẽ được gửi qua mail
+* Người dùng cần xác thực sản phẩm để đảm bảo quyền lời cho mình
+
+---
 
 ### 🏪 Bán sản phẩm
 
