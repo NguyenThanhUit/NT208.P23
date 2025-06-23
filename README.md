@@ -85,8 +85,8 @@ Tối ưu hình ảnh, preload fonts, lazy loading hợp lý
 
 📷 Ảnh minh hoạ kết quả PageSpeed:
 ![pagespeed-desktop](./docs/page1.png)
-![pagespeed-desktop](./docs/pagespeed-page2.png)
-![pagespeed-desktop](./docs/pagespeed-page3.png)
+![pagespeed-desktop1](./docs/pagespeed-page2.png)
+![pagespeed-desktop2](./docs/pagespeed-page3.png)
 
 ### 🛠 Hệ thống hỗ trợ:
 
