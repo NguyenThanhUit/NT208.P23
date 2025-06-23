@@ -64,6 +64,16 @@ Hệ thống được xây dựng theo kiến trúc **microservices**, chia nh�
 
 ---
 
+🌍 Website đã triển khai thực tế
+
+Hệ thống đã được triển khai và hoạt động tại các tên miền sau:
+
+Website chính: https://nguyenth4nh.xyz👉 Tự động chuyển hướng đến: https://app.nguyenth4nh.xyz
+
+Trang đăng nhập / xác thực: https://id.nguyenth4nh.xyz
+
+Hệ thống API backend: https://api.nguyenth4nh.xyz
+
 ### 🛠 Hệ thống hỗ trợ:
 
 * **Realtime**: sử dụng `SignalR` để cập nhật thông tin đấu giá tức thì.
@@ -78,21 +88,59 @@ Hệ thống được xây dựng theo kiến trúc **microservices**, chia nh�
 
 * Tải và cài đặt tại: [https://www.docker.com/](https://www.docker.com/)
 
-### 2️⃣ Khởi chạy Backend
+### 2️⃣ Chạy ứng dụng theo môi trường
+
+#### 🧪 Môi trường **Test (backup2)**
+
+* Sử dụng file: `docker-compose.backup2`
+* Đổi tên file này thành `docker-compose.yml`:
 
 ```bash
-docker compose up -d
+mv docker-compose.backup2 docker-compose.yml
 ```
+ Khởi chạy Frontend
 
-### 3️⃣ Khởi chạy Frontend
-
-```bash
+* bash
 cd frontend/web
 npm install
 npm run dev
 ```
 
+* Khởi chạy Backend:
+
+```bash
+docker compose up -d --build
+```
+
+#### 💻 Môi trường **Production cục bộ (Local)**
+
+* Sử dụng file: `docker-compose.backup3`
+* Đổi tên file này thành `docker-compose.yml`:
+
+```bash
+mv docker-compose.backup3 docker-compose.yml
+```
+
+* Khởi chạy Backend:
+
+```bash
+docker compose up -d --build
+```
+
+#### 🌐 Môi trường **Production triển khai Internet**
+
+* Sử dụng file: `docker-compose.yml` hiện tại (mặc định)
+* Chạy lệnh:
+
+```bash
+docker compose up -d --build
+```
+
 ---
+
+
+
+
 
 ## 🚀 Tính năng chính
 

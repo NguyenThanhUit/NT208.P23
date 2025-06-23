@@ -32,29 +32,16 @@ export default function AuctionHistoryPage() {
             .finally(() => setLoading(false));
     }, [status]);
 
-    const handleConfirm = async (auctionId: string, auto = false) => {
+    const handleConfirm = async (auctionId: string) => {
+        setConfirmingId(auctionId);
         try {
-            setConfirmingId(auctionId);
-            const res = await confirmAuctionKey(auctionId);
-
-            if (res && typeof res === 'object' && 'success' in res && res.success === true) {
-                setMessage(auto
-                    ? `✅ Đã tự động xác nhận key cho đấu giá ${auctionId}`
-                    : `✅ Bạn đã xác nhận key thành công`);
-                setTimeout(() => {
-                    router.refresh?.();
-                    window.location.reload();
-                }, 1000);
-            } else {
-                setMessage(`❌ Không thể xác nhận key cho đấu giá ${auctionId}`);
-            }
-        } catch (err) {
-            setMessage(`❌ Lỗi khi xác nhận key`);
+            await confirmAuctionKey(auctionId);
         } finally {
             setConfirmingId(null);
-            setTimeout(() => setMessage(null), 4000);
+            window.location.reload();
         }
     };
+
 
 
     const toggleShowKey = (auctionId: string) => {
