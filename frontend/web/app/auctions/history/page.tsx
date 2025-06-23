@@ -37,7 +37,7 @@ export default function AuctionHistoryPage() {
             setConfirmingId(auctionId);
             const res = await confirmAuctionKey(auctionId);
 
-            if (res?.success) {
+            if (res && typeof res === 'object' && 'success' in res && res.success === true) {
                 setMessage(auto
                     ? `✅ Đã tự động xác nhận key cho đấu giá ${auctionId}`
                     : `✅ Bạn đã xác nhận key thành công`);
@@ -49,13 +49,13 @@ export default function AuctionHistoryPage() {
                 setMessage(`❌ Không thể xác nhận key cho đấu giá ${auctionId}`);
             }
         } catch (err) {
-            console.error('Lỗi xác nhận key:', err);
             setMessage(`❌ Lỗi khi xác nhận key`);
         } finally {
             setConfirmingId(null);
             setTimeout(() => setMessage(null), 4000);
         }
     };
+
 
     const toggleShowKey = (auctionId: string) => {
         setShowKeys((prev) => ({

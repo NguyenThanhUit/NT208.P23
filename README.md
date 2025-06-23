@@ -1,85 +1,179 @@
-# LẬP TRÌNH ỨNG DỤNG WEB - NHÓM 6
+# 💪 ĐỒ ÁN CUỐI KỲ - NHÓM 6
 
-## TÊN ĐỀ TÀI: WEBSITE MUA BÁN VẬT PHẨM, TÀI SẢN ẢO ONLINE, TIN CẬY (VD: GAME'S ITEMS, ACCOUNTS, CD-KEY,...)
+## 🌐 Lập Trình Ứng Dụng Web
 
-### 📘 Hướng Dẫn Sử Dụng
-#### 1. Cài Đặt Docker
-- Tải và cài đặt Docker tại: [https://www.docker.com/](https://www.docker.com/)
-#### 2. Chạy Project
-2.1 Backend  
-- Mở terminal và điều hướng đến thư mục gốc của project  
-- Chạy lệnh sau để khởi động backend:
+### 🎯 ĐỀ TÀI: WEBSITE MUA BÁN VẢT PHẨM, TÀI SẢN ẢO ONLINE, TIN CẤY
+
+> Ví dụ: Game items, tài khoản game, CD-Key phần mềm, v.v.
+
+---
+
+## 🚀 Giới thiệu
+
+Website cung cấp nền tảng trung gian giúc người dùng **mua bán tài sản ảo** một cách an toàn và đáng tin cậy. Hệ thống tích hợp các tính năng hiện đại như:
+
+* **Thanh toán an toàn qua cơ chế Escrow**
+* **Đấu giá trực tuyến thời gian thực bằng SignalR**
+* **Đánh giá và xếp hạng người bán**
+* **Tìm kiếm sản phẩm thông minh**
+
+---
+
+## 🧑‍💻 Thành viên & Đóng góp
+
+| STT | Họ tên            | Đóng góp chính                                                                 | Tỷ lệ |
+| --- | ----------------- | ------------------------------------------------------------------------------ | ----- |
+| 1   | Nguyễn Thanh      | Gateway Service, Order Service, Buying Service, Notification, Search, Frontend | 40%   |
+| 2   | Nguyễn Nhất Dương | Auction Service, Bidding Service, Frontend                                     | 20%   |
+| 3   | Nguyễn Hoàng Phúc | Identity Service, Wallet Service, Frontend                                     | 20%   |
+| 4   | Huỳnh Anh Khôi    | Auction Service, Bidding Service, Frontend                                     | 20%   |
+
+---
+
+## ⚙️ Công nghệ sử dụng
+
+* **Ngôn ngữ:** C#, TypeScript
+* **Backend:** ASP.NET Core
+* **Frontend:** Next.js (TypeScript + Tailwind)
+* **Realtime Communication:** SignalR
+* **Database:** PostgreSQL, MongoDB
+* **Thiết kế UI:** Figma
+* **Triển khai:** Docker Compose
+* **Message Broker:** RabbitMQ
+
+---
+
+## 🧠 Tổng quan hệ thống
+
+Hệ thống được xây dựng theo kiến trúc **microservices**, chia nhỏ chức năng thành các dịch vụ độc lập, dễ bảo trì và mở rộng. Mỗi service đảm nhận một vai trò cụ thể và giao tiếp với nhau thông qua **RabbitMQ** – giúp tăng khả năng xử lý bất đồng bộ, giảm độ trễ và tăng độ ổn định hệ thống.
+
+### 🏗️ Các thành phần chính trong hệ thống:
+
+| Service                | Vai trò chính                                                        |
+| ---------------------- | -------------------------------------------------------------------- |
+| `Identity Service`     | Xác thực người dùng, quản lý đăng nhập, đăng ký, xác minh OAuth2     |
+| `Wallet Service`       | Quản lý ví điện tử, số dư, giao dịch, tích hợp cổng nạp tiền VNPAY   |
+| `Order Service`        | Xử lý đơn hàng mua hàng trực tiếp, tích hợp cơ chế Escrow            |
+| `Buying Service`       | Quản lý giỏ hàng, xử lý quá trình thanh toán sản phẩm                |
+| `Auction Service`      | Tạo phiên đấu giá, quản lý thông tin sản phẩm đấu giá                |
+| `Bidding Service`      | Đặt giá đấu thầu thời gian thực thông qua SignalR                    |
+| `Notification Service` | Gửi thông báo realtime đến người dùng khi có sự kiện                 |
+| `Search Service`       | Tìm kiếm sản phẩm theo tên, từ khóa, loại, người bán,...             |
+| `Gateway Service`      | API Gateway trung tâm – định tuyến request đến các service tương ứng |
+| `Frontend`             | Giao diện người dùng xây dựng bằng Next.js + Tailwind CSS            |
+
+---
+
+### 🛠 Hệ thống hỗ trợ:
+
+* **Realtime**: sử dụng `SignalR` để cập nhật thông tin đấu giá tức thì.
+* **An toàn**: triển khai mô hình **Escrow** giúp bảo vệ người mua và người bán khỏi gian lận.
+* **Tin cậy**: hỗ trợ đánh giá, bảng xếp hạng người bán, và lịch sử giao dịch rõ ràng.
+* **Mở rộng dễ dàng**: nhờ kiến trúc microservices và container hóa bằng Docker.
+
+
+## 🔧 Hướng dẫn chạy ứng dụng
+
+### 1️⃣ Cài đặt Docker
+
+* Tải và cài đặt tại: [https://www.docker.com/](https://www.docker.com/)
+
+### 2️⃣ Khởi chạy Backend
+
 ```bash
 docker compose up -d
 ```
 
-2.2 Frontend
-- Điều hướng đến thư mục `frontend/web`
-- Cài đặt các package cần thiết:
-```bash
-  npm install
-```
-- Chạy ứng dụng frontend:
-```bash
-  npm run dev
-```
-## Đóng góp vào đồ án của các thành viên
+### 3️⃣ Khởi chạy Frontend
 
-| **STT** | **Thành viên**         | **Đóng góp**                                                                 | **%** |
-|---------|------------------------|-------------------------------------------------------------------------------|-------------|
-| 1       | Nguyễn Thanh             | Gateway Service, Order Service, Buying Service, Notification Service, Search Service, Frontend | 40% |
-| 2       | Nguyễn Nhất Dương         | Auction Service, Bidding Service, Frontend | 20% |
-| 3       | Nguyễn Hoàng Phúc            | Identity Service, Wallet Service, Frontend | 20% |
-| 4       | Huỳnh Anh Khôi           | Auction Service, Bidding Service, Frontend | 20% |
----
-
-## Công nghệ sử dụng:
-- **Ngôn ngữ lập trình**: C#, TypeScript  
-- **Framework**: ASP.NET Core, Next.js  
-- **Cơ sở dữ liệu**: PostgreSQL, MongoDB  
-- **Công cụ thiết kế**: Figma  
-- **Container**: Docker  
-- **Message Broker**: RabbitMQ
+```bash
+cd frontend/web
+npm install
+npm run dev
+```
 
 ---
 
-## Tính năng:
 ## 🚀 Tính năng chính
 
-### 🔐 Xác thực & Quản lý người dùng (Identity Service)
-- Hỗ trợ **đăng ký, đăng nhập** bằng tài khoản hệ thống hoặc qua **Google OAuth2**.
-- Tích hợp **xác thực đa yếu tố** thông qua **email** và **số điện thoại**.
-- Bảo mật thông tin người dùng với hệ thống xác thực hiện đại.
+### 🔐 Xác thực người dùng (Identity Service)
 
-### 💳 Ví điện tử (Wallet Service)
-- Hỗ trợ **nạp tiền** thông qua **VNPAY (sandbox)**.
-- Quản lý **số dư ví**, **lịch sử giao dịch** minh bạch.
-
-
-### 🛒 Mua sản phẩm (Order & Escrow System)
-- Tìm kiếm, lọc sản phẩm, thêm vào giỏ hàng, và thanh toán dễ dàng.
-- **Hệ thống Escrow bảo vệ người mua**:
-  - Sau khi thanh toán, người mua sẽ nhận được **key sản phẩm**.
-  - Nếu **key sai hoặc không hợp lệ**, tiền sẽ được **hoàn lại (refund)** cho người mua.
-  - Số **tiền giao dịch** sẽ được hệ thống giữ lại, người dùng có trách nhiệm **xác nhận** để hoàn thành đơn hàng
-  - Nếu **key đúng**, tiền sẽ được **chuyển cho người bán**.
-- Tính năng **đánh giá người bán** sau giao dịch.
-- Xem **bảng xếp hạng người bán** dựa trên điểm đánh giá và số lượt bán.
-
-### 🛍️ Bán sản phẩm
-- Đăng bán sản phẩm mới với thông tin đầy đủ: tên, mô tả, giá, hình ảnh, số lượng,...
-- Quản lý sản phẩm đã đăng bán.
-- Xử lý đơn hàng từ người mua: xác nhận key, giao hàng, nhận tiền thông qua **escrow**.
-
-### 🏆 Đấu giá trực tuyến
-- Tạo các phiên đấu giá với thông tin chi tiết và thời gian kết thúc.
-- Tham gia **đấu giá thời gian thực**, cập nhật giá tự động.
-- Khi đấu giá kết thúc:
-  - Người thắng nhận **key sản phẩm**.
-  - Áp dụng **hệ thống Escrow** như phần mua hàng:
-    - Nếu **key đúng**, tiền được chuyển cho người bán.
-    - Nếu **key sai**, người thắng được **hoàn tiền**.
+* Đăng ký / đăng nhập hệ thống hoặc qua **Google OAuth2**
+* Hỗ trợ xác thực đa yếu tố qua email hoặc số điện thoại
+* Bảo mật thông qua JWT Token
 
 ---
 
-> 🔒 **Lưu ý**: Hệ thống Escrow được thiết kế nhằm đảm bảo **sự an toàn và công bằng** cho cả người mua và người bán.
+### 💳 Ví điện tử (Wallet Service)
+
+* Nạp tiền qua cổng **VNPAY (sandbox)**
+* Quản lý số dư, rút tiền và xem lịch sử giao dịch minh bạch
+
+---
+
+### 🛒 Hệ thống mua hàng & cơ chế **Escrow**
+
+#### ⚙️ Mô hình Escrow là gì?
+
+**Escrow** là cơ chế trung gian giúp đảm bảo an toàn khi giao dịch online. Hệ thống sẽ **giữ tiền** của người mua cho đến khi người bán giao **key sản phẩm** hợp lệ.
+
+#### 👉 Quy trình Escrow:
+
+1. Người mua thanh toán → **hệ thống giữ tiền**
+2. Người bán giao **key sản phẩm**
+3. Người mua xác nhận:
+
+   * ✅ Nếu key hợp lệ → tiền được **giải phóng** cho người bán
+   * ❌ Nếu key sai → tiền được **hoàn lại** cho người mua
+
+> ✅ Tính năng giúc bảo vệ người dùng khỏi gian lận hoặc giao dịch lỗi.
+
+---
+
+### 🏪 Bán sản phẩm
+
+* Đăng bán sản phẩm kèm ảnh, mô tả, giá, số lượng
+* Quản lý danh sách sản phẩm
+* Xử lý đơn hàng từ người mua: xác nhận giao hàng, nhận tiền từ Escrow
+
+---
+
+### 🏆 Đấu giá trực tuyến (Auction Service)
+
+#### 📡 Sử dụng SignalR cho realtime
+
+* Cập nhật **giá đấu mới nhất** và người thắng **theo thời gian thực**
+* Không cần reload trang, trải nghiệm mượt mà
+
+#### ⏱️ Quy trình:
+
+1. Người bán tạo phiên đấu giá với thời gian kết thúc cụ thể
+2. Người dùng tham gia đặt giá
+3. Khi đấu giá kết thúc:
+
+   * Người thắng sẽ nhận **key**
+   * Tiền được giữ lại bởi **Escrow**
+   * Người thắng xác nhận key → tiền chuyển cho người bán hoặc được hoàn lại
+
+---
+
+### 📈 Đánh giá & bảng xếp hạng người bán
+
+* Sau mỗi giao dịch, người mua có thể **đánh giá người bán**
+* Bảng xếp hạng người bán dựa trên:
+
+  * Điểm trung bình đánh giá
+  * Số lượt bán hàng thành công
+
+---
+
+## 📌 Tổng kết
+
+Đồ án là một hệ thống giao dịch thương mại điện tử chuyên biệt cho tài sản ảo với:
+
+* Kiến trúc **microservices** phân tách rõ ràng, dễ mở rộng
+* Giao tiếp giữa các service qua **RabbitMQ**
+* Hệ thống **Escrow** và **đấu giá realtime** nâng cao độ tin cậy
+
+
+
