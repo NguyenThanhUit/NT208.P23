@@ -1,4 +1,4 @@
-# 💪 ĐỒ ÁN CUỐI KỲ - NHÓM 6
+#  ĐỒ ÁN CUỐI KỲ - NHÓM 6
 
 ## 🌐 Lập Trình Ứng Dụng Web
 
