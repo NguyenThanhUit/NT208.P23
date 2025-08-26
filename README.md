@@ -68,7 +68,7 @@ Hệ thống được xây dựng theo kiến trúc **microservices**, chia nh�
 
 Hệ thống đã được triển khai và hoạt động tại các tên miền sau:
 
-Website chính: https://nguyenth4nh.xyz👉 Tự động chuyển hướng đến: https://app.nguyenth4nh.xyz
+Website chính: https://nguyenth4nh.xyz => Tự động chuyển hướng đến: https://app.nguyenth4nh.xyz
 
 Trang đăng nhập / xác thực: https://id.nguyenth4nh.xyz
 
