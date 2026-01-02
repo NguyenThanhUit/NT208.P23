@@ -1,0 +1,12 @@
+C:\Users\Legion\NT208.P23\src\Contracts\bin\Debug\net8.0\Contracts.deps.json
+C:\Users\Legion\NT208.P23\src\Contracts\bin\Debug\net8.0\Contracts.dll
+C:\Users\Legion\NT208.P23\src\Contracts\bin\Debug\net8.0\Contracts.pdb
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfoInputs.cache
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfo.cs
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.csproj.CoreCompileInputs.cache
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.sourcelink.json
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.dll
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\refint\Contracts.dll
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\Contracts.pdb
+C:\Users\Legion\NT208.P23\src\Contracts\obj\Debug\net8.0\ref\Contracts.dll

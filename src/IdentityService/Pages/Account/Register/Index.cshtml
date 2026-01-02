@@ -1,0 +1,89 @@
+@* Razor Page *@
+@page
+
+@* Liên kết trang này với lớp Index trong phần xử lý (chứa logic xử lý: OnGet, OnPost). *@
+@model IdentityService.Pages.Register.Index
+
+<head>
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="~/css/register.css">
+</head>
+
+<body>
+    <div class="row justify-content-center">
+        <div class="register-page">
+            <div class="box">
+                @* Tiêu đề  *@
+                <h2>Đăng Ký</h2>
+                @* asp-page: khi gửi form, dữ liệu sẽ được gửi đến trang /Account/Register/Index *@
+                <form asp-page="/Account/Register/Index">
+                    @* Tạo một thẻ <input> ẩn để lưu giá trị ReturnUrl (đường dẫn chuyển hướng sau đăng ký) *@
+                    <input type="hidden" asp-for="Input.ReturnUrl" />
+
+                    @* Các thông tin đăng ký *@
+                    <div class="form-group">
+                        <label asp-for="Input.FullName">Họ tên</label>
+                        <input type="text" placeholder="Họ tên" asp-for="Input.FullName" autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.Email">Email</label>
+                        <input type="email" placeholder="Email" asp-for="Input.Email">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.UserName">Tên tài khoản</label>
+                        <input type="text" placeholder="Tên tài khoản" asp-for="Input.UserName">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.Telephone">Số điện thoại</label>
+                        <input type="number" placeholder="Số điện thoại" asp-for="Input.Telephone">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.PassWord">Mật khẩu</label>
+                        <input type="password" placeholder="Mật khẩu" asp-for="Input.PassWord" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.Address">Địa chỉ</label>
+                        <input type="text" placeholder="Địa chỉ" asp-for="Input.Address">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.VerificationMethod">Phương thức xác thực: </label>
+                        <select asp-for="Input.VerificationMethod" class="form-control">
+                            <option value="Email">Email</option>
+                            <option value="SMS">SMS</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-between w-100">
+                        <a class="mt-2 text-decoration:none text-primary" asp-page="../Login/Index"
+                            asp-route-returnUrl="@Model.Input.ReturnUrl">
+                            Quay lại đăng nhập
+                        </a>
+
+                        @* Nút đăng ký *@
+                        <button class="btn btn-dark text-white rounded-pill px-4" type="submit" name="Input.Button"
+                            value="Register">Đăng ký</button>
+                    </div>
+
+                </form>
+
+                @* Thông báo đăng ký thành công: Kiểm tra RegisterSuccess từ phần Index (PageModel) *@
+                @if (Model.RegisterSuccess)
+                {
+                    <div class="alert alert-success mt-2">
+                        <strong>Đăng ký thành công</strong>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* Hiển thị thông báo lỗi nếu dữ liệu người dùng nhập không hợp lệ
+        Đây là một partial view (một đoạn HTML tái sử dụng). *@
+    <partial name="_ValidationSummary" />
+</body>

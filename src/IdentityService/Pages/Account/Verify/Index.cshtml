@@ -1,0 +1,48 @@
+@page
+@model IdentityService.Pages.Verify.Index
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực tài khoản</title>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+
+<body>
+    <div class="row justify-content-center">
+        <div class="login-page">
+            <div class="box">
+                <h2>Xác Thực Tài Khoản</h2>
+                <form method="post">
+                    <input type="hidden" asp-for="Input.ReturnUrl" />
+                    <input type="hidden" asp-for="Input.Username" />
+                    <input type="hidden" asp-for="Input.VerificationMethod" />
+                    <input type="hidden" asp-for="Input.RememberLogin" />
+
+                    <div class="form-group">
+                        <label asp-for="Input.OTPCode">Mã OTP</label>
+                        <input type="text" placeholder="Mã OTP" asp-for="Input.OTPCode" autofocus>
+                    </div><br>
+                    <button class="btn btn-dark text-white rounded-pill px-5 py-2" type="submit" name="Input.Button"
+                        value="Verify">
+                        Xác nhận
+                    </button> <br>
+
+                    <p>Mã OTP đã được gửi đến bạn</p>
+
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger mt-3">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
